@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Cohérence">
@@ -17,545 +16,442 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-html,
-body {
+html, body {
     margin: 0;
     padding: 0;
     width: 100%;
-    min-height: 100%;
-    background: #06243a;
+    height: 100%;
+    background: #06253a;
     color: white;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Display",
-        "SF Pro Text",
-        Arial,
-        sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
+    overflow: hidden;
 }
 
 body {
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-button {
-    font-family: inherit;
+    display: flex;
+    justify-content: center;
 }
 
 .app {
     width: 100%;
     max-width: 520px;
-    min-height: 100vh;
-    margin: auto;
-    padding:
-        max(28px, env(safe-area-inset-top))
-        22px
-        calc(85px + env(safe-area-inset-bottom))
-        22px;
-
-    background:
-        radial-gradient(
-            circle at 50% 38%,
-            rgba(32, 112, 135, .25),
-            transparent 38%
-        ),
-        linear-gradient(
-            180deg,
-            #06243a 0%,
-            #062b42 100%
-        );
+    height: 100vh;
+    min-height: 620px;
+    padding: max(18px, env(safe-area-inset-top)) 20px 15px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* --------------------------------------------------
-   HEADER
--------------------------------------------------- */
+/* =========================
+   TITRE
+========================= */
 
 .header {
-    position: relative;
     text-align: center;
-    margin-bottom: 8px;
+    flex-shrink: 0;
 }
 
 .title {
-    font-size: 29px;
+    font-size: 27px;
     font-weight: 500;
-    letter-spacing: -0.7px;
-    margin: 8px 40px 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 .subtitle {
-    color: #d5e0e7;
-    font-size: 16px;
-    letter-spacing: .1px;
+    color: #c5d6dd;
+    font-size: 14px;
 }
 
-.settings {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 42px;
-    height: 42px;
-    border: none;
-    background: transparent;
-    color: #62e3bb;
-    font-size: 29px;
-}
-
-/* --------------------------------------------------
-   RESPIRATION
--------------------------------------------------- */
+/* =========================
+   CERCLE
+========================= */
 
 .breathing-area {
-    height: 450px;
+    flex: 1;
+    min-height: 225px;
+    max-height: 330px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: relative;
+    justify-content: center;
 }
 
 .breathing-ring {
-    width: 265px;
-    height: 265px;
+    width: min(245px, 54vw);
+    height: min(245px, 54vw);
+
     border-radius: 50%;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background:
         radial-gradient(
             circle,
-            rgba(16, 56, 72, .95) 0%,
-            rgba(8, 42, 57, .95) 58%,
-            rgba(8, 42, 57, .65) 100%
+            #103e50 0%,
+            #0b3446 70%,
+            #092e40 100%
         );
 
-    border: 7px solid transparent;
-
-    position: relative;
+    border: 7px solid #54dcae;
 
     box-shadow:
-        0 0 0 3px rgba(65, 213, 178, .15),
-        0 0 35px rgba(56, 212, 179, .12);
+        0 0 25px rgba(82,220,174,.12),
+        inset 0 0 30px rgba(0,0,0,.12);
+
+    transform: scale(.84);
 
     transition:
-        transform var(--breath-duration) ease-in-out,
+        transform var(--breath-duration, 5s) ease-in-out,
         border-color .5s ease;
-
-    transform: scale(.88);
 }
 
-.breathing-ring::before {
+.breathing-ring::after {
     content: "";
     position: absolute;
     inset: -7px;
     border-radius: 50%;
-
-    background:
-        conic-gradient(
-            from -35deg,
-            #46b8ff,
-            #62e6b5,
-            #61e6a8,
-            #46b8ff
-        );
-
-    z-index: -1;
-
-    mask:
-        radial-gradient(
-            farthest-side,
-            transparent calc(100% - 7px),
-            #000 calc(100% - 6px)
-        );
+    border: 3px solid rgba(67,183,255,.75);
+    border-right-color: #60dfa9;
+    border-bottom-color: #60dfa9;
+    pointer-events: none;
 }
 
 .breathing-ring.inhale {
-    transform: scale(1.08);
+    transform: scale(1.02);
 }
 
 .breathing-ring.exhale {
-    transform: scale(.88);
+    transform: scale(.84);
 }
 
 .breathing-content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
+
+    position: relative;
+    z-index: 2;
 }
 
 .phase {
-    color: #62e7ad;
-    font-size: 31px;
+    color: #61e3ae;
+    font-size: 28px;
     font-weight: 500;
-    margin-bottom: 8px;
+    line-height: 1.1;
+    margin: 0;
 }
 
 .seconds {
-    font-size: 22px;
+    font-size: 18px;
+    margin-top: 7px;
     color: white;
-    font-weight: 400;
 }
 
 .lungs {
-    margin-top: 25px;
-    font-size: 45px;
+    font-size: 38px;
     line-height: 1;
+    margin-top: 13px;
 }
 
-/* --------------------------------------------------
-   MESSAGE
--------------------------------------------------- */
+/* =========================
+   INSTRUCTION
+========================= */
 
 .instruction {
     text-align: center;
-    color: #b9cbd4;
-    font-size: 16px;
-    margin-top: -14px;
-    margin-bottom: 20px;
+    color: #aebfc7;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 
-/* --------------------------------------------------
+/* =========================
    CARDS
--------------------------------------------------- */
+========================= */
 
 .card {
-    width: 100%;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25, 69, 88, .78),
-            rgba(13, 53, 71, .78)
-        );
-
-    border: 1px solid rgba(153, 208, 221, .16);
-
-    border-radius: 18px;
-
-    padding: 17px 18px;
-
-    margin-bottom: 12px;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.035),
-        0 8px 25px rgba(0,0,0,.10);
-}
-
-/* --------------------------------------------------
-   DURATION
--------------------------------------------------- */
-
-.card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background: rgba(19,67,87,.76);
+    border: 1px solid rgba(180,220,230,.13);
+    border-radius: 16px;
+    padding: 11px 15px;
+    margin-bottom: 9px;
+    flex-shrink: 0;
 }
 
 .card-title {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 17px;
+    gap: 9px;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .card-icon {
-    color: #50b8ff;
-    font-size: 27px;
+    font-size: 21px;
+    color: #52b9ff;
+}
+
+/* =========================
+   RYTHME
+========================= */
+
+.breath-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 7px;
+}
+
+.control-label {
+    color: #dbe5e9;
+    font-size: 14px;
+}
+
+.adjust {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.small-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.07);
+    color: white;
+    font-size: 21px;
+    line-height: 1;
+}
+
+.value {
+    min-width: 72px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* =========================
+   DURÉE
+========================= */
+
+.duration-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .remaining {
-    color: #65e6ae;
-    font-size: 28px;
-    font-weight: 400;
+    color: #63e3ae;
+    font-size: 20px;
 }
 
 .duration-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 42px;
-    margin-top: 15px;
-}
-
-.round-button {
-    width: 45px;
-    height: 45px;
-
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.12);
-
-    background: rgba(255,255,255,.06);
-
-    color: white;
-
-    font-size: 29px;
-    font-weight: 300;
+    gap: 25px;
+    margin-top: 5px;
 }
 
 .duration-value {
-    min-width: 95px;
+    min-width: 75px;
     text-align: center;
-    font-size: 22px;
+    font-size: 17px;
     font-weight: 600;
 }
 
 .slider {
     width: 100%;
-    margin-top: 18px;
+    height: 5px;
+    margin-top: 6px;
 
     appearance: none;
-    height: 6px;
-    border-radius: 6px;
+    border-radius: 5px;
 
     background:
         linear-gradient(
             90deg,
-            #60e4ad 0%,
-            #60e4ad var(--slider-progress),
-            rgba(255,255,255,.18) var(--slider-progress),
-            rgba(255,255,255,.18) 100%
+            #61dfab var(--progress),
+            rgba(255,255,255,.18) var(--progress)
         );
 }
 
 .slider::-webkit-slider-thumb {
     appearance: none;
-
-    width: 29px;
-    height: 29px;
-
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-
-    background: #63dfae;
-
-    border: 4px solid #174d55;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    background: #62dfac;
+    border: 3px solid #174c56;
 }
 
 .slider-labels {
     display: flex;
     justify-content: space-between;
-
-    color: #9db4be;
-    font-size: 13px;
-
-    margin-top: 5px;
+    color: #8faab5;
+    font-size: 10px;
+    margin-top: 2px;
 }
 
-/* --------------------------------------------------
+/* =========================
    SONS
--------------------------------------------------- */
+========================= */
 
-.sound-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 7px 0;
-
-    font-size: 17px;
+.sound-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 7px;
 }
 
-.sound-left {
+.sound-column {
+    background: rgba(0,0,0,.10);
+    border-radius: 10px;
+    padding: 6px 8px;
+}
+
+.sound-heading {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 7px;
+    font-size: 13px;
+    margin-bottom: 4px;
 }
 
 .sound-dot {
-    width: 26px;
-    height: 26px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
 }
 
-.sound-dot.green {
-    background: #62e0ad;
+.green {
+    background: #61dfa9;
 }
 
-.sound-dot.blue {
-    background: #48a7ff;
+.blue {
+    background: #48a9ff;
 }
 
-.sound-name {
-    color: #e4edf0;
+.sound-option {
+    width: 100%;
+    height: 28px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #b8cbd3;
+
+    text-align: left;
+
+    padding: 0 6px;
+
+    font-size: 12px;
 }
 
-.sound-choice {
-    color: #c4d1d7;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.sound-option.selected {
+    background: rgba(98,225,174,.18);
+    color: white;
 }
 
-.arrow {
-    font-size: 25px;
-    color: #d2dce0;
-}
-
-/* --------------------------------------------------
-   BUTTON
--------------------------------------------------- */
+/* =========================
+   BOUTON
+========================= */
 
 .start-button {
     width: 100%;
-    height: 61px;
-
-    margin-top: 17px;
+    height: 51px;
 
     border: none;
-    border-radius: 17px;
+    border-radius: 15px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #62dfa9,
-            #61dbaa
-        );
+    background: linear-gradient(
+        90deg,
+        #61dfa9,
+        #5edbaa
+    );
 
     color: white;
 
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
 
-    box-shadow:
-        0 8px 25px rgba(43, 185, 139, .15);
+    flex-shrink: 0;
+
+    margin-top: 1px;
+}
+
+.stop-button {
+    display: none;
+    background: linear-gradient(
+        90deg,
+        #db686d,
+        #c85862
+    );
 }
 
 .start-button:active {
     transform: scale(.985);
 }
 
-.stop-button {
-    background:
-        linear-gradient(
-            90deg,
-            #e06b70,
-            #c85662
-        );
+/* =========================
+   PETITS ÉCRANS
+========================= */
 
-    display: none;
-}
+@media (max-height: 700px) {
 
-/* --------------------------------------------------
-   BOTTOM NAVIGATION
--------------------------------------------------- */
+    .title {
+        font-size: 24px;
+    }
 
-.bottom-nav {
-    position: fixed;
+    .subtitle {
+        font-size: 12px;
+    }
 
-    left: 50%;
-    bottom: 0;
+    .breathing-area {
+        min-height: 190px;
+        max-height: 230px;
+    }
 
-    transform: translateX(-50%);
+    .breathing-ring {
+        width: 190px;
+        height: 190px;
+    }
 
-    width: min(520px, 100%);
+    .phase {
+        font-size: 23px;
+    }
 
-    height: calc(72px + env(safe-area-inset-bottom));
+    .seconds {
+        font-size: 16px;
+    }
 
-    padding-bottom: env(safe-area-inset-bottom);
+    .lungs {
+        font-size: 30px;
+        margin-top: 8px;
+    }
 
-    background: rgba(4, 34, 53, .96);
+    .card {
+        padding: 8px 12px;
+        margin-bottom: 6px;
+    }
 
-    border-top:
-        1px solid rgba(255,255,255,.08);
+    .instruction {
+        margin-bottom: 6px;
+    }
 
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    z-index: 50;
-
-    backdrop-filter: blur(12px);
-}
-
-.nav-item {
-    flex: 1;
-    text-align: center;
-
-    color: #91a6b0;
-
-    font-size: 13px;
-}
-
-.nav-icon {
-    display: block;
-    font-size: 25px;
-    margin-bottom: 3px;
-}
-
-.nav-item.active {
-    color: #61dfad;
-}
-
-/* --------------------------------------------------
-   MODAL
--------------------------------------------------- */
-
-.modal {
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0,0,0,.65);
-
-    display: none;
-    align-items: flex-end;
-
-    z-index: 100;
-}
-
-.modal-box {
-    width: 100%;
-    max-width: 520px;
-
-    margin: auto;
-
-    background: #10384b;
-
-    border-radius: 25px 25px 0 0;
-
-    padding: 25px;
-
-    border-top: 1px solid rgba(255,255,255,.1);
-}
-
-.modal-title {
-    font-size: 22px;
-    margin-bottom: 20px;
-}
-
-.modal-option {
-    width: 100%;
-    padding: 16px 5px;
-
-    background: transparent;
-    border: none;
-
-    border-bottom: 1px solid rgba(255,255,255,.08);
-
-    color: white;
-
-    text-align: left;
-
-    font-size: 17px;
-}
-
-.close-modal {
-    width: 100%;
-    margin-top: 20px;
-
-    height: 50px;
-
-    border: none;
-    border-radius: 14px;
-
-    background: rgba(255,255,255,.1);
-
-    color: white;
-
-    font-size: 17px;
-}
-
-/* --------------------------------------------------
-   SESSION
--------------------------------------------------- */
-
-.session-active .card {
-    opacity: .92;
 }
 
 </style>
@@ -565,16 +461,9 @@ button {
 
 <div class="app">
 
-    <!-- HEADER -->
+    <!-- TITRE -->
 
     <header class="header">
-
-        <button
-            class="settings"
-            onclick="openSettings()"
-            aria-label="Réglages">
-            ⚙
-        </button>
 
         <div class="title">
             Cohérence cardiaque
@@ -589,7 +478,7 @@ button {
     </header>
 
 
-    <!-- CERCLE RESPIRATOIRE -->
+    <!-- CERCLE -->
 
     <section class="breathing-area">
 
@@ -599,12 +488,15 @@ button {
 
             <div class="breathing-content">
 
-                <div id="phase" class="phase">
-                    Inspiration
+                <div
+                    id="phase"
+                    class="phase">
+                    Prêt
                 </div>
 
                 <div class="seconds">
-                    <span id="phaseSeconds">5</span> secondes
+                    <span id="phaseSeconds">5</span>
+                    secondes
                 </div>
 
                 <div class="lungs">
@@ -623,20 +515,55 @@ button {
     </div>
 
 
+    <!-- RYTHME -->
+
+    <section class="card">
+
+        <div class="card-title">
+            <span class="card-icon">〰</span>
+            <span>Rythme respiratoire</span>
+        </div>
+
+        <div class="breath-controls">
+
+            <div class="control-label">
+                Inspiration / expiration
+            </div>
+
+            <div class="adjust">
+
+                <button
+                    class="small-button"
+                    onclick="changeBreath(-1)">
+                    −
+                </button>
+
+                <div class="value">
+                    <span id="breathValue">5</span> s
+                </div>
+
+                <button
+                    class="small-button"
+                    onclick="changeBreath(1)">
+                    +
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
     <!-- DURÉE -->
 
     <section class="card">
 
-        <div class="card-header">
+        <div class="duration-top">
 
             <div class="card-title">
-
                 <span class="card-icon">◷</span>
-
-                <span>
-                    Durée de la séance
-                </span>
-
+                <span>Durée</span>
             </div>
 
             <div
@@ -651,7 +578,7 @@ button {
         <div class="duration-controls">
 
             <button
-                class="round-button"
+                class="small-button"
                 onclick="changeDuration(-1)">
                 −
             </button>
@@ -663,7 +590,7 @@ button {
             </div>
 
             <button
-                class="round-button"
+                class="small-button"
                 onclick="changeDuration(1)">
                 +
             </button>
@@ -700,58 +627,76 @@ button {
         </div>
 
 
-        <div
-            class="sound-row"
-            onclick="chooseSound('inhale')">
+        <div class="sound-grid">
 
-            <div class="sound-left">
+            <!-- INSPIRATION -->
 
-                <div class="sound-dot green"></div>
+            <div class="sound-column">
 
-                <div class="sound-name">
+                <div class="sound-heading">
+
+                    <div class="sound-dot green"></div>
+
                     Inspiration
+
                 </div>
 
+                <button
+                    id="inspireBell"
+                    class="sound-option selected"
+                    onclick="selectSound('inhale','bell')">
+                    🔔 Cloche douce
+                </button>
+
+                <button
+                    id="inspireTone"
+                    class="sound-option"
+                    onclick="selectSound('inhale','tone')">
+                    ✨ Ton cristallin
+                </button>
+
+                <button
+                    id="inspirePulse"
+                    class="sound-option"
+                    onclick="selectSound('inhale','pulse')">
+                    🔔 Pulsation douce
+                </button>
+
             </div>
 
-            <div class="sound-choice">
 
-                <span id="inhaleSoundName">
-                    Cloche douce
-                </span>
+            <!-- EXPIRATION -->
 
-                <span class="arrow">
-                    ›
-                </span>
+            <div class="sound-column">
 
-            </div>
+                <div class="sound-heading">
 
-        </div>
+                    <div class="sound-dot blue"></div>
 
-
-        <div
-            class="sound-row"
-            onclick="chooseSound('exhale')">
-
-            <div class="sound-left">
-
-                <div class="sound-dot blue"></div>
-
-                <div class="sound-name">
                     Expiration
+
                 </div>
 
-            </div>
+                <button
+                    id="expireBowl"
+                    class="sound-option selected"
+                    onclick="selectSound('exhale','bowl')">
+                    🪷 Bol tibétain
+                </button>
 
-            <div class="sound-choice">
+                <button
+                    id="expireTone"
+                    class="sound-option"
+                    onclick="selectSound('exhale','tone')">
+                    ✨ Ton profond
+                </button>
 
-                <span id="exhaleSoundName">
-                    Bol tibétain
-                </span>
-
-                <span class="arrow">
-                    ›
-                </span>
+                <button
+                    id="expirePulse"
+                    class="sound-option"
+                    onclick="selectSound('exhale','pulse')">
+                    🌊 Pulsation douce
+                </button>
 
             </div>
 
@@ -760,7 +705,7 @@ button {
     </section>
 
 
-    <!-- BOUTONS -->
+    <!-- DÉMARRER -->
 
     <button
         id="startButton"
@@ -784,95 +729,11 @@ button {
 </div>
 
 
-<!-- NAVIGATION -->
-
-<nav class="bottom-nav">
-
-    <div
-        class="nav-item active"
-        onclick="showSession()">
-
-        <span class="nav-icon">〰</span>
-        Séance
-
-    </div>
-
-    <div
-        class="nav-item"
-        onclick="showHistory()">
-
-        <span class="nav-icon">♧</span>
-        Historique
-
-    </div>
-
-    <div
-        class="nav-item"
-        onclick="showInfo()">
-
-        <span class="nav-icon">ⓘ</span>
-        Infos
-
-    </div>
-
-</nav>
-
-
-<!-- MODAL -->
-
-<div
-    id="modal"
-    class="modal"
-    onclick="closeModal(event)">
-
-    <div
-        class="modal-box"
-        onclick="event.stopPropagation()">
-
-        <div
-            id="modalTitle"
-            class="modal-title">
-            Réglages
-        </div>
-
-        <button
-            class="modal-option"
-            onclick="changeBreath(-1)">
-            − Diminuer le rythme respiratoire
-        </button>
-
-        <button
-            class="modal-option"
-            onclick="changeBreath(1)">
-            + Augmenter le rythme respiratoire
-        </button>
-
-        <button
-            class="modal-option"
-            onclick="toggleSounds()">
-
-            🔊 Tester les sons
-
-        </button>
-
-        <button
-            class="close-modal"
-            onclick="closeModal()">
-
-            Fermer
-
-        </button>
-
-    </div>
-
-</div>
-
-
 <script>
 
-/* ==================================================
+/* ============================================
    VARIABLES
-================================================== */
+============================================ */
 
 let breathSeconds = 5;
 
@@ -897,20 +758,175 @@ let inhaleSound = "bell";
 let exhaleSound = "bowl";
 
 
-/* ==================================================
-   INITIALISATION
-================================================== */
+/* ============================================
+   AUDIO
+============================================ */
 
-updateDurationDisplay();
+function createAudio() {
 
-updateBreathDisplay();
+    if (!audioContext) {
 
-updateSlider();
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+    if (
+        audioContext.state === "suspended"
+    ) {
+
+        audioContext.resume();
+
+    }
+
+}
 
 
-/* ==================================================
-   RYTHME RESPIRATOIRE
-================================================== */
+function playTone(
+    frequency,
+    duration,
+    type = "sine"
+) {
+
+    createAudio();
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    oscillator.connect(gain);
+
+    gain.connect(
+        audioContext.destination
+    );
+
+    oscillator.type = type;
+
+    oscillator.frequency.value =
+        frequency;
+
+    const now =
+        audioContext.currentTime;
+
+    gain.gain.setValueAtTime(
+        .0001,
+        now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .22,
+        now + .03
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        now + duration
+    );
+
+    oscillator.start(now);
+
+    oscillator.stop(
+        now + duration + .05
+    );
+
+}
+
+
+function playBreathSound(sound) {
+
+    createAudio();
+
+    if (sound === "bell") {
+
+        playTone(
+            660,
+            .55
+        );
+
+    }
+
+    else if (sound === "tone") {
+
+        playTone(
+            520,
+            .65
+        );
+
+    }
+
+    else if (sound === "pulse") {
+
+        playTone(
+            440,
+            .25
+        );
+
+        setTimeout(
+            () => playTone(
+                520,
+                .25
+            ),
+            180
+        );
+
+    }
+
+    else if (sound === "bowl") {
+
+        playTone(
+            390,
+            .9
+        );
+
+        setTimeout(
+            () => playTone(
+                520,
+                .7
+            ),
+            120
+        );
+
+    }
+
+}
+
+
+/* ============================================
+   SON FIN
+============================================ */
+
+function playEndSound() {
+
+    createAudio();
+
+    const notes =
+        [523, 659, 784, 1046];
+
+    notes.forEach(
+        (frequency, index) => {
+
+            setTimeout(
+                () => playTone(
+                    frequency,
+                    .65
+                ),
+                index * 190
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================
+   RYTHME
+============================================ */
 
 function changeBreath(amount) {
 
@@ -931,27 +947,34 @@ function changeBreath(amount) {
 }
 
 
-/* ==================================================
-   AFFICHAGE RYTHME
-================================================== */
-
 function updateBreathDisplay() {
 
-    document.getElementById("headerBreath").textContent =
+    document.getElementById(
+        "breathValue"
+    ).textContent =
         breathSeconds;
 
-    document.getElementById("headerBreath2").textContent =
+    document.getElementById(
+        "headerBreath"
+    ).textContent =
         breathSeconds;
 
-    document.getElementById("phaseSeconds").textContent =
+    document.getElementById(
+        "headerBreath2"
+    ).textContent =
+        breathSeconds;
+
+    document.getElementById(
+        "phaseSeconds"
+    ).textContent =
         breathSeconds;
 
 }
 
 
-/* ==================================================
+/* ============================================
    DURÉE
-================================================== */
+============================================ */
 
 function changeDuration(amount) {
 
@@ -967,9 +990,7 @@ function changeDuration(amount) {
         durationMinutes = 60;
     }
 
-    updateDurationDisplay();
-
-    updateSlider();
+    updateDuration();
 
 }
 
@@ -978,188 +999,120 @@ function sliderDuration(value) {
 
     if (running) return;
 
-    durationMinutes = parseInt(value);
+    durationMinutes =
+        parseInt(value);
 
-    updateDurationDisplay();
-
-    updateSlider();
+    updateDuration();
 
 }
 
 
-function updateDurationDisplay() {
+function updateDuration() {
 
-    document.getElementById("durationValue").textContent =
+    document.getElementById(
+        "durationValue"
+    ).textContent =
         durationMinutes + " min";
 
-    updateRemaining(durationMinutes * 60);
+    document.getElementById(
+        "durationSlider"
+    ).value =
+        durationMinutes;
 
-}
-
-
-function updateSlider() {
-
-    const slider =
-        document.getElementById("durationSlider");
-
-    slider.value = durationMinutes;
-
-    const percentage =
+    const progress =
         ((durationMinutes - 1) / 59) * 100;
 
-    slider.style.setProperty(
-        "--slider-progress",
-        percentage + "%"
+    document.getElementById(
+        "durationSlider"
+    ).style.setProperty(
+        "--progress",
+        progress + "%"
+    );
+
+    updateRemaining(
+        durationMinutes * 60
     );
 
 }
 
 
-/* ==================================================
-   AUDIO
-================================================== */
+/* ============================================
+   SÉLECTION DES SONS
+============================================ */
 
-function createAudio() {
+function selectSound(
+    type,
+    sound
+) {
 
-    if (!audioContext) {
+    if (running) return;
 
-        audioContext =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
+    if (type === "inhale") {
 
-    }
+        inhaleSound = sound;
 
-    if (audioContext.state === "suspended") {
+        document
+            .querySelectorAll(
+                "#inspireBell, #inspireTone, #inspirePulse"
+            )
+            .forEach(
+                button =>
+                    button.classList.remove(
+                        "selected"
+                    )
+            );
 
-        audioContext.resume();
+        document.getElementById(
+            "inspire" +
+            capitalize(sound)
+        ).classList.add(
+            "selected"
+        );
 
-    }
-
-}
-
-
-/* ==================================================
-   SON
-================================================== */
-
-function playSound(type) {
-
-    createAudio();
-
-    if (!audioContext) return;
-
-
-    if (type === "bell") {
-
-        playTone(660, .45);
-
-    }
-
-    else if (type === "bowl") {
-
-        playTone(390, .8);
-
-        setTimeout(() => {
-            playTone(520, .6);
-        }, 100);
+        playBreathSound(sound);
 
     }
 
     else {
 
-        playTone(500, .4);
+        exhaleSound = sound;
+
+        document
+            .querySelectorAll(
+                "#expireBowl, #expireTone, #expirePulse"
+            )
+            .forEach(
+                button =>
+                    button.classList.remove(
+                        "selected"
+                    )
+            );
+
+        document.getElementById(
+            "expire" +
+            capitalize(sound)
+        ).classList.add(
+            "selected"
+        );
+
+        playBreathSound(sound);
 
     }
 
 }
 
 
-function playTone(frequency, duration) {
+function capitalize(text) {
 
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
-
-    oscillator.connect(gain);
-
-    gain.connect(
-        audioContext.destination
-    );
-
-
-    oscillator.type = "sine";
-
-    oscillator.frequency.value =
-        frequency;
-
-
-    const now =
-        audioContext.currentTime;
-
-
-    gain.gain.setValueAtTime(
-        .0001,
-        now
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        .20,
-        now + .025
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        .0001,
-        now + duration
-    );
-
-
-    oscillator.start(now);
-
-    oscillator.stop(
-        now + duration + .05
-    );
+    return text.charAt(0).toUpperCase()
+        + text.slice(1);
 
 }
 
 
-/* ==================================================
-   SON DE FIN
-================================================== */
-
-function playEndSound() {
-
-    createAudio();
-
-    const notes =
-        [523, 659, 784, 1046];
-
-
-    notes.forEach(
-        (frequency, index) => {
-
-            setTimeout(() => {
-
-                playTone(
-                    frequency,
-                    .65
-                );
-
-            }, index * 180);
-
-        }
-    );
-
-}
-
-
-/* ==================================================
+/* ============================================
    DÉMARRER
-================================================== */
+============================================ */
 
 function startSession() {
 
@@ -1167,65 +1120,55 @@ function startSession() {
 
     running = true;
 
-    document.body.classList.add(
-        "session-active"
-    );
-
-
     sessionRemaining =
         durationMinutes * 60;
 
-
-    phase = "inhale";
+    phase =
+        "inhale";
 
     phaseRemaining =
         breathSeconds;
 
-
     document.getElementById(
         "startButton"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "stopButton"
-    ).style.display = "block";
-
-
-    updateRemaining(
-        sessionRemaining
-    );
-
+    ).style.display =
+        "block";
 
     beginPhase();
 
-
     sessionTimer =
-        setInterval(() => {
+        setInterval(
+            () => {
 
-            sessionRemaining--;
+                sessionRemaining--;
 
-            updateRemaining(
-                sessionRemaining
-            );
+                updateRemaining(
+                    sessionRemaining
+                );
 
+                if (
+                    sessionRemaining <= 0
+                ) {
 
-            if (
-                sessionRemaining <= 0
-            ) {
+                    finishSession();
 
-                finishSession();
+                }
 
-            }
-
-        }, 1000);
+            },
+            1000
+        );
 
 }
 
 
-/* ==================================================
-   PHASE
-================================================== */
+/* ============================================
+   RESPIRATION
+============================================ */
 
 function beginPhase() {
 
@@ -1233,22 +1176,18 @@ function beginPhase() {
         phaseTimer
     );
 
-
     phaseRemaining =
         breathSeconds;
-
 
     const ring =
         document.getElementById(
             "breathingRing"
         );
 
-
     const phaseText =
         document.getElementById(
             "phase"
         );
-
 
     ring.style.setProperty(
         "--breath-duration",
@@ -1256,7 +1195,9 @@ function beginPhase() {
     );
 
 
-    if (phase === "inhale") {
+    if (
+        phase === "inhale"
+    ) {
 
         phaseText.textContent =
             "Inspiration";
@@ -1269,7 +1210,7 @@ function beginPhase() {
             "inhale"
         );
 
-        playSound(
+        playBreathSound(
             inhaleSound
         );
 
@@ -1288,7 +1229,7 @@ function beginPhase() {
             "exhale"
         );
 
-        playSound(
+        playBreathSound(
             exhaleSound
         );
 
@@ -1302,52 +1243,56 @@ function beginPhase() {
 
 
     phaseTimer =
-        setInterval(() => {
+        setInterval(
+            () => {
 
-            phaseRemaining--;
+                phaseRemaining--;
 
-            if (
-                phaseRemaining < 0
-            ) {
-                phaseRemaining = 0;
-            }
+                if (
+                    phaseRemaining < 0
+                ) {
 
+                    phaseRemaining = 0;
 
-            document.getElementById(
-                "phaseSeconds"
-            ).textContent =
-                phaseRemaining;
+                }
 
-
-            if (
-                phaseRemaining <= 0
-            ) {
-
-                clearInterval(
-                    phaseTimer
-                );
+                document.getElementById(
+                    "phaseSeconds"
+                ).textContent =
+                    phaseRemaining;
 
 
-                phase =
-                    phase === "inhale"
-                        ? "exhale"
-                        : "inhale";
+                if (
+                    phaseRemaining <= 0
+                ) {
 
+                    clearInterval(
+                        phaseTimer
+                    );
 
-                beginPhase();
+                    phase =
+                        phase === "inhale"
+                            ? "exhale"
+                            : "inhale";
 
-            }
+                    beginPhase();
 
-        }, 1000);
+                }
+
+            },
+            1000
+        );
 
 }
 
 
-/* ==================================================
+/* ============================================
    TEMPS RESTANT
-================================================== */
+============================================ */
 
-function updateRemaining(seconds) {
+function updateRemaining(
+    seconds
+) {
 
     const minutes =
         Math.floor(seconds / 60);
@@ -1355,12 +1300,12 @@ function updateRemaining(seconds) {
     const secs =
         seconds % 60;
 
-
     const formatted =
-        String(minutes).padStart(2, "0")
+        String(minutes)
+            .padStart(2, "0")
         + ":" +
-        String(secs).padStart(2, "0");
-
+        String(secs)
+            .padStart(2, "0");
 
     document.getElementById(
         "remaining"
@@ -1370,14 +1315,13 @@ function updateRemaining(seconds) {
 }
 
 
-/* ==================================================
+/* ============================================
    ARRÊTER
-================================================== */
+============================================ */
 
 function stopSession() {
 
     running = false;
-
 
     clearInterval(
         phaseTimer
@@ -1387,12 +1331,10 @@ function stopSession() {
         sessionTimer
     );
 
-
     const ring =
         document.getElementById(
             "breathingRing"
         );
-
 
     ring.classList.remove(
         "inhale"
@@ -1402,30 +1344,25 @@ function stopSession() {
         "exhale"
     );
 
-
     document.getElementById(
         "phase"
     ).textContent =
         "Prêt";
-
 
     document.getElementById(
         "phaseSeconds"
     ).textContent =
         breathSeconds;
 
-
     document.getElementById(
         "startButton"
     ).style.display =
         "block";
 
-
     document.getElementById(
         "stopButton"
     ).style.display =
         "none";
-
 
     updateRemaining(
         durationMinutes * 60
@@ -1434,14 +1371,13 @@ function stopSession() {
 }
 
 
-/* ==================================================
-   FIN
-================================================== */
+/* ============================================
+   FIN DE SESSION
+============================================ */
 
 function finishSession() {
 
     running = false;
-
 
     clearInterval(
         phaseTimer
@@ -1451,218 +1387,43 @@ function finishSession() {
         sessionTimer
     );
 
-
-    document.getElementById(
-        "breathingRing"
-    ).classList.remove(
-        "inhale"
-    );
-
-
-    document.getElementById(
-        "breathingRing"
-    ).classList.add(
-        "exhale"
-    );
-
-
     document.getElementById(
         "phase"
     ).textContent =
         "Terminé";
-
 
     document.getElementById(
         "phaseSeconds"
     ).textContent =
         "✓";
 
-
     document.getElementById(
         "remaining"
     ).textContent =
         "00:00";
-
 
     document.getElementById(
         "startButton"
     ).style.display =
         "block";
 
-
     document.getElementById(
         "stopButton"
     ).style.display =
         "none";
-
 
     playEndSound();
 
 }
 
 
-/* ==================================================
-   SÉLECTION DES SONS
-================================================== */
+/* ============================================
+   INITIALISATION
+============================================ */
 
-function chooseSound(type) {
+updateBreathDisplay();
 
-    createAudio();
-
-
-    if (type === "inhale") {
-
-        if (inhaleSound === "bell") {
-
-            inhaleSound = "tone";
-
-            document.getElementById(
-                "inhaleSoundName"
-            ).textContent =
-                "Son doux";
-
-        }
-
-        else {
-
-            inhaleSound = "bell";
-
-            document.getElementById(
-                "inhaleSoundName"
-            ).textContent =
-                "Cloche douce";
-
-        }
-
-        playSound(
-            inhaleSound
-        );
-
-    }
-
-
-    if (type === "exhale") {
-
-        if (exhaleSound === "bowl") {
-
-            exhaleSound = "tone";
-
-            document.getElementById(
-                "exhaleSoundName"
-            ).textContent =
-                "Son doux";
-
-        }
-
-        else {
-
-            exhaleSound = "bowl";
-
-            document.getElementById(
-                "exhaleSoundName"
-            ).textContent =
-                "Bol tibétain";
-
-        }
-
-        playSound(
-            exhaleSound
-        );
-
-    }
-
-}
-
-
-/* ==================================================
-   RÉGLAGES
-================================================== */
-
-function openSettings() {
-
-    document.getElementById(
-        "modal"
-    ).style.display =
-        "flex";
-
-}
-
-
-function closeModal() {
-
-    document.getElementById(
-        "modal"
-    ).style.display =
-        "none";
-
-}
-
-
-function toggleSounds() {
-
-    createAudio();
-
-    playSound("bell");
-
-    setTimeout(() => {
-
-        playSound("bowl");
-
-    }, 700);
-
-}
-
-
-function closeModal(event) {
-
-    if (
-        !event ||
-        event.target.id === "modal"
-    ) {
-
-        document.getElementById(
-            "modal"
-        ).style.display =
-            "none";
-
-    }
-
-}
-
-
-/* ==================================================
-   NAVIGATION
-================================================== */
-
-function showSession() {
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
-
-
-function showHistory() {
-
-    alert(
-        "L'historique des séances sera ajouté dans une prochaine version."
-    );
-
-}
-
-
-function showInfo() {
-
-    alert(
-        "Cohérence cardiaque\n\n" +
-        "Respirez au rythme du cercle. " +
-        "Par défaut : 5 secondes d'inspiration " +
-        "et 5 secondes d'expiration."
-    );
-
-}
+updateDuration();
 
 </script>
 
