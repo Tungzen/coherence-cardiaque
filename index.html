@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Cohérence">
+<title>Cohérence cardiaque</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: #f4f7f5;
+        color: #1d2b24;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        display: flex;
+        justify-content: center;
+    }
+
+    .app {
+        width: 100%;
+        max-width: 500px;
+        min-height: 100vh;
+        padding: 35px 22px 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .subtitle {
+        margin-top: 7px;
+        color: #6d7b73;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .circle-area {
+        height: 310px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 15px 0 5px;
+    }
+
+    .breathing-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: #8fc9aa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 12px 35px rgba(70, 110, 90, 0.18);
+        transform: scale(0.72);
+        transition: transform 5s ease-in-out;
+    }
+
+    .breathing-circle.exhale {
+        transform: scale(0.72);
+    }
+
+    .breathing-circle.inhale {
+        transform: scale(1.35);
+    }
+
+    .phase {
+        text-align: center;
+        color: white;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .counter {
+        margin-top: 5px;
+        font-size: 44px;
+        font-weight: 300;
+        letter-spacing: 1px;
+    }
+
+    .remaining {
+        margin-top: 3px;
+        color: #6d7b73;
+        font-size: 15px;
+    }
+
+    .controls {
+        width: 100%;
+        margin-top: 25px;
+    }
+
+    .control-box {
+        background: white;
+        border-radius: 18px;
+        padding: 16px 18px;
+        margin-bottom: 12px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+    }
+
+    .control-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .label {
+        font-size: 17px;
+        font-weight: 600;
+    }
+
+    .value {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    button.small {
+        width: 38px;
+        height: 38px;
+        border: none;
+        border-radius: 50%;
+        background: #e7eee9;
+        color: #315441;
+        font-size: 25px;
+        line-height: 1;
+    }
+
+    .number {
+        min-width: 62px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .start {
+        width: 100%;
+        height: 58px;
+        margin-top: 8px;
+        border: none;
+        border-radius: 18px;
+        background: #477c60;
+        color: white;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    .start:active {
+        transform: scale(0.98);
+    }
+
+    .stop {
+        background: #a65d5d;
+        display: none;
+    }
+
+    .status {
+        min-height: 24px;
+        margin-top: 13px;
+        text-align: center;
+        color: #6d7b73;
+        font-size: 14px;
+    }
+
+    .sound-note {
+        margin-top: 18px;
+        font-size: 12px;
+        color: #89958e;
+        text-align: center;
+        line-height: 1.4;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <h1>Cohérence cardiaque</h1>
+    <div class="subtitle">Respirez simplement, au rythme du son.</div>
+
+    <div class="circle-area">
+        <div id="circle" class="breathing-circle exhale">
+            <div id="phase" class="phase">Prêt</div>
+        </div>
+    </div>
+
+    <div id="counter" class="counter">5</div>
+    <div id="remaining" class="remaining">Durée : 5:00</div>
+
+    <div class="controls">
+
+        <div class="control-box">
+            <div class="control-row">
+                <div class="label">Rythme</div>
+
+                <div class="value">
+                    <button class="small" onclick="changeBreath(-1)">−</button>
+                    <div class="number"><span id="breathValue">5</span> s</div>
+                    <button class="small" onclick="changeBreath(1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-box">
+            <div class="control-row">
+                <div class="label">Durée</div>
+
+                <div class="value">
+                    <button class="small" onclick="changeDuration(-1)">−</button>
+                    <div class="number"><span id="durationValue">5</span> min</div>
+                    <button class="small" onclick="changeDuration(1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <button id="startButton" class="start" onclick="startSession()">
+            ▶ Commencer
+        </button>
+
+        <button id="stopButton" class="start stop" onclick="stopSession()">
+            ■ Arrêter
+        </button>
+
+        <div id="status" class="status"></div>
+
+        <div class="sound-note">
+            Un son indique chaque changement de respiration.
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+let breathSeconds = 5;
+let durationMinutes = 5;
+
+let running = false;
+let phase = "inhale";
+
+let phaseTimer = null;
+let sessionTimer = null;
+let audioContext = null;
+
+let phaseRemaining = 5;
+let sessionRemaining = 300;
+
+
+// -----------------------------
+// RÉGLAGES
+// -----------------------------
+
+function changeBreath(amount) {
+
+    if (running) return;
+
+    breathSeconds += amount;
+
+    if (breathSeconds < 2) breathSeconds = 2;
+    if (breathSeconds > 20) breathSeconds = 20;
+
+    document.getElementById("breathValue").textContent = breathSeconds;
+    document.getElementById("counter").textContent = breathSeconds;
+}
+
+
+// -----------------------------
+// DURÉE
+// -----------------------------
+
+function changeDuration(amount) {
+
+    if (running) return;
+
+    durationMinutes += amount;
+
+    if (durationMinutes < 1) durationMinutes = 1;
+    if (durationMinutes > 60) durationMinutes = 60;
+
+    document.getElementById("durationValue").textContent = durationMinutes;
+
+    updateRemaining(durationMinutes * 60);
+}
+
+
+// -----------------------------
+// SON
+// -----------------------------
+
+function createAudio() {
+
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    if (audioContext.state === "suspended") {
+        audioContext.resume();
+    }
+}
+
+
+function playBreathSound(type) {
+
+    if (!audioContext) return;
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    if (type === "inhale") {
+        oscillator.frequency.value = 520;
+    } else {
+        oscillator.frequency.value = 390;
+    }
+
+    oscillator.type = "sine";
+
+    const now = audioContext.currentTime;
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.22, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.4);
+}
+
+
+// -----------------------------
+// SON DE FIN
+// -----------------------------
+
+function playEndSound() {
+
+    if (!audioContext) return;
+
+    [523, 659, 784].forEach((frequency, index) => {
+
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.frequency.value = frequency;
+        oscillator.type = "sine";
+
+        const start = audioContext.currentTime + index * 0.22;
+
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.25, start + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.5);
+
+        oscillator.start(start);
+        oscillator.stop(start + 0.55);
+    });
+}
+
+
+// -----------------------------
+// DÉMARRER
+// -----------------------------
+
+function startSession() {
+
+    createAudio();
+
+    running = true;
+
+    sessionRemaining = durationMinutes * 60;
+
+    phase = "inhale";
+    phaseRemaining = breathSeconds;
+
+    document.getElementById("startButton").style.display = "none";
+    document.getElementById("stopButton").style.display = "block";
+
+    document.querySelectorAll(".small").forEach(button => {
+        button.disabled = true;
+    });
+
+    beginPhase();
+
+    sessionTimer = setInterval(() => {
+
+        sessionRemaining--;
+
+        updateRemaining(sessionRemaining);
+
+        if (sessionRemaining <= 0) {
+            finishSession();
+        }
+
+    }, 1000);
+}
+
+
+// -----------------------------
+// PHASE RESPIRATOIRE
+// -----------------------------
+
+function beginPhase() {
+
+    phaseRemaining = breathSeconds;
+
+    const circle = document.getElementById("circle");
+    const phaseText = document.getElementById("phase");
+
+    if (phase === "inhale") {
+
+        phaseText.textContent = "Inspirez";
+
+        circle.classList.remove("exhale");
+        circle.classList.add("inhale");
+
+        playBreathSound("inhale");
+
+    } else {
+
+        phaseText.textContent = "Expirez";
+
+        circle.classList.remove("inhale");
+        circle.classList.add("exhale");
+
+        playBreathSound("exhale");
+    }
+
+    document.getElementById("counter").textContent = phaseRemaining;
+
+    clearInterval(phaseTimer);
+
+    phaseTimer = setInterval(() => {
+
+        phaseRemaining--;
+
+        document.getElementById("counter").textContent = phaseRemaining;
+
+        if (phaseRemaining <= 0) {
+
+            clearInterval(phaseTimer);
+
+            phase = phase === "inhale" ? "exhale" : "inhale";
+
+            beginPhase();
+        }
+
+    }, 1000);
+}
+
+
+// -----------------------------
+// ARRÊTER
+// -----------------------------
+
+function stopSession() {
+
+    running = false;
+
+    clearInterval(phaseTimer);
+    clearInterval(sessionTimer);
+
+    document.getElementById("circle").classList.remove("inhale");
+    document.getElementById("circle").classList.add("exhale");
+
+    document.getElementById("phase").textContent = "Arrêté";
+    document.getElementById("counter").textContent = breathSeconds;
+
+    document.getElementById("startButton").style.display = "block";
+    document.getElementById("stopButton").style.display = "none";
+
+    document.querySelectorAll(".small").forEach(button => {
+        button.disabled = false;
+    });
+
+    document.getElementById("status").textContent = "";
+}
+
+
+// -----------------------------
+// FIN DE SESSION
+// -----------------------------
+
+function finishSession() {
+
+    running = false;
+
+    clearInterval(phaseTimer);
+    clearInterval(sessionTimer);
+
+    playEndSound();
+
+    document.getElementById("circle").classList.remove("inhale");
+    document.getElementById("circle").classList.add("exhale");
+
+    document.getElementById("phase").textContent = "Terminé";
+    document.getElementById("counter").textContent = "✓";
+
+    document.getElementById("remaining").textContent = "Séance terminée";
+
+    document.getElementById("startButton").style.display = "block";
+    document.getElementById("stopButton").style.display = "none";
+
+    document.querySelectorAll(".small").forEach(button => {
+        button.disabled = false;
+    });
+
+    document.getElementById("status").textContent =
+        "Prenez un moment avant de reprendre vos activités.";
+}
+
+
+// -----------------------------
+// AFFICHAGE DU TEMPS
+// -----------------------------
+
+function updateRemaining(seconds) {
+
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+
+    const formatted =
+        minutes + ":" + String(secs).padStart(2, "0");
+
+    document.getElementById("remaining").textContent =
+        "Durée restante : " + formatted;
+}
+
+
+// État initial
+
+updateRemaining(durationMinutes * 60);
+
+</script>
+
+</body>
+</html>
