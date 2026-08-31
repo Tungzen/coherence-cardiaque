@@ -45,24 +45,25 @@ body {
     overflow-y: auto;
 
     -webkit-overflow-scrolling: touch;
+
+    overscroll-behavior-y: auto;
 }
 
 .app {
     width: 100%;
     max-width: 520px;
 
+    margin: 0 auto;
+
     min-height: 100vh;
     height: auto;
 
-    margin: 0 auto;
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-right: 18px;
+    padding-left: 18px;
+    padding-bottom: max(50px, env(safe-area-inset-bottom));
 
-    padding:
-        max(18px, env(safe-area-inset-top))
-        18px
-        max(30px, env(safe-area-inset-bottom));
-
-    display: flex;
-    flex-direction: column;
+    display: block;
 }
 
 
@@ -72,7 +73,6 @@ body {
 
 .header {
     text-align: center;
-    flex-shrink: 0;
 }
 
 .title {
@@ -99,8 +99,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    flex-shrink: 0;
 }
 
 
@@ -153,7 +151,6 @@ body {
     content: "";
 
     position: absolute;
-
     inset: -7px;
 
     border-radius: 50%;
@@ -170,13 +167,7 @@ body {
         ease-in-out;
 }
 
-
-/* =========================================================
-   INSPIRATION
-========================================================= */
-
 .breathing-ring.inhale {
-
     transform: scale(1.02);
 
     background:
@@ -194,13 +185,7 @@ body {
         inset 0 0 35px rgba(0,0,0,.08);
 }
 
-
-/* =========================================================
-   EXPIRATION
-========================================================= */
-
 .breathing-ring.exhale {
-
     transform: scale(.84);
 
     background:
@@ -224,12 +209,10 @@ body {
 ========================================================= */
 
 .breathing-content {
-
     width: 100%;
     height: 100%;
 
     display: flex;
-
     flex-direction: column;
 
     align-items: center;
@@ -238,25 +221,20 @@ body {
     text-align: center;
 
     position: relative;
-
     z-index: 2;
 }
 
 .phase {
-
     color: #61e3ae;
 
     font-size: clamp(22px, 7vw, 28px);
 
     font-weight: 500;
-
     line-height: 1.1;
-
     margin: 0;
 }
 
 .seconds {
-
     font-size: clamp(14px, 4.5vw, 18px);
 
     margin-top: 7px;
@@ -264,13 +242,7 @@ body {
     color: white;
 }
 
-
-/* =========================================================
-   PERSONNE EN MÉDITATION
-========================================================= */
-
 .meditation {
-
     font-size: clamp(32px, 10vw, 42px);
 
     line-height: 1;
@@ -289,7 +261,6 @@ body {
 ========================================================= */
 
 .instruction {
-
     text-align: center;
 
     color: #aebfc7;
@@ -297,8 +268,6 @@ body {
     font-size: clamp(12px, 3.5vw, 14px);
 
     margin-bottom: 12px;
-
-    flex-shrink: 0;
 }
 
 
@@ -307,7 +276,6 @@ body {
 ========================================================= */
 
 .card {
-
     background:
         rgba(19,67,87,.76);
 
@@ -319,14 +287,10 @@ body {
     padding: 12px 15px;
 
     margin-bottom: 10px;
-
-    flex-shrink: 0;
 }
 
 .card-title {
-
     display: flex;
-
     align-items: center;
 
     gap: 9px;
@@ -337,9 +301,7 @@ body {
 }
 
 .card-icon {
-
     font-size: 21px;
-
     color: #52b9ff;
 }
 
@@ -349,11 +311,9 @@ body {
 ========================================================= */
 
 .breath-controls {
-
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
     margin-top: 8px;
@@ -362,14 +322,12 @@ body {
 }
 
 .control-label {
-
     color: #dbe5e9;
 
     font-size: clamp(12px, 3.5vw, 14px);
 }
 
 .adjust {
-
     display: flex;
 
     align-items: center;
@@ -378,7 +336,6 @@ body {
 }
 
 .small-button {
-
     width: 34px;
     height: 34px;
 
@@ -400,7 +357,6 @@ body {
 }
 
 .value {
-
     min-width: 62px;
 
     text-align: center;
@@ -416,27 +372,22 @@ body {
 ========================================================= */
 
 .duration-top {
-
     display: flex;
 
     justify-content: space-between;
-
     align-items: center;
 }
 
 .remaining {
-
     color: #63e3ae;
 
     font-size: 20px;
 }
 
 .duration-controls {
-
     display: flex;
 
     justify-content: center;
-
     align-items: center;
 
     gap: 24px;
@@ -445,7 +396,6 @@ body {
 }
 
 .duration-value {
-
     min-width: 75px;
 
     text-align: center;
@@ -456,7 +406,6 @@ body {
 }
 
 .slider {
-
     width: 100%;
 
     height: 5px;
@@ -476,7 +425,6 @@ body {
 }
 
 .slider::-webkit-slider-thumb {
-
     appearance: none;
 
     width: 22px;
@@ -490,7 +438,6 @@ body {
 }
 
 .slider-labels {
-
     display: flex;
 
     justify-content: space-between;
@@ -508,7 +455,6 @@ body {
 ========================================================= */
 
 .sound-grid {
-
     display: grid;
 
     grid-template-columns: 1fr 1fr;
@@ -519,7 +465,6 @@ body {
 }
 
 .sound-column {
-
     background:
         rgba(0,0,0,.10);
 
@@ -529,7 +474,6 @@ body {
 }
 
 .sound-heading {
-
     display: flex;
 
     align-items: center;
@@ -542,7 +486,6 @@ body {
 }
 
 .sound-dot {
-
     width: 13px;
     height: 13px;
 
@@ -558,7 +501,6 @@ body {
 }
 
 .sound-option {
-
     width: 100%;
 
     height: 29px;
@@ -579,7 +521,6 @@ body {
 }
 
 .sound-option.selected {
-
     background:
         rgba(98,225,174,.18);
 
@@ -592,7 +533,6 @@ body {
 ========================================================= */
 
 .start-button {
-
     width: 100%;
 
     height: 51px;
@@ -614,13 +554,10 @@ body {
 
     font-weight: 600;
 
-    flex-shrink: 0;
-
     margin-top: 2px;
 }
 
 .stop-button {
-
     display: none;
 
     background:
@@ -632,7 +569,6 @@ body {
 }
 
 .start-button:active {
-
     transform: scale(.985);
 }
 
@@ -642,7 +578,6 @@ body {
 ========================================================= */
 
 .settings-button {
-
     width: 100%;
 
     height: 43px;
@@ -659,13 +594,12 @@ body {
     color: #c9d8de;
 
     font-size: 14px;
-
-    flex-shrink: 0;
 }
 
 .settings-panel {
-
     display: none;
+
+    width: 100%;
 
     background:
         rgba(12,48,65,.96);
@@ -679,25 +613,20 @@ body {
 
     margin-top: 8px;
 
-    margin-bottom: 10px;
-
-    flex-shrink: 0;
+    margin-bottom: 15px;
 }
 
 .settings-panel.open {
-
     display: block;
 }
 
 .settings-row {
-
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
-    min-height: 44px;
+    min-height: 48px;
 
     border-bottom:
         1px solid rgba(255,255,255,.07);
@@ -706,12 +635,10 @@ body {
 }
 
 .settings-row:last-child {
-
     border-bottom: none;
 }
 
 .settings-label {
-
     color: #d9e5e9;
 
     font-size: 13px;
@@ -723,10 +650,9 @@ body {
 ========================================================= */
 
 .settings-row select {
-
     min-width: 125px;
 
-    padding: 7px 9px;
+    padding: 8px 9px;
 
     border-radius: 8px;
 
@@ -746,7 +672,6 @@ body {
 ========================================================= */
 
 .switch {
-
     position: relative;
 
     width: 48px;
@@ -756,7 +681,6 @@ body {
 }
 
 .switch input {
-
     opacity: 0;
 
     width: 0;
@@ -764,7 +688,6 @@ body {
 }
 
 .switch-slider {
-
     position: absolute;
 
     inset: 0;
@@ -777,7 +700,6 @@ body {
 }
 
 .switch-slider::before {
-
     content: "";
 
     position: absolute;
@@ -796,98 +718,70 @@ body {
 }
 
 .switch input:checked + .switch-slider {
-
     background: #61dfa9;
 }
 
 .switch input:checked + .switch-slider::before {
-
     transform: translateX(20px);
 }
 
 
 /* =========================================================
-   PETITS ÉCRANS EN LARGEUR
+   PETITS ÉCRANS
 ========================================================= */
 
 @media (max-width: 360px) {
 
     .app {
-
         padding-left: 12px;
         padding-right: 12px;
+        padding-bottom: 55px;
     }
 
     .breathing-area {
-
         height: 270px;
     }
 
     .breathing-ring {
-
         width: 200px;
         height: 200px;
     }
 
     .sound-grid {
-
         gap: 5px;
     }
 
     .sound-column {
-
         padding-left: 5px;
         padding-right: 5px;
     }
 
     .sound-option {
-
         font-size: 10px;
         padding-left: 4px;
     }
 
     .settings-row select {
-
         min-width: 105px;
-
         font-size: 11px;
     }
 }
 
 
 /* =========================================================
-   PETITS ÉCRANS EN HAUTEUR
+   ÉCRANS TRÈS COURTS
 ========================================================= */
 
 @media (max-height: 650px) {
 
     .breathing-area {
-
-        height: 250px;
+        height: 245px;
     }
 
     .breathing-ring {
-
         width: 190px;
         height: 190px;
     }
-}
-
-
-/* =========================================================
-   ACCESSIBILITÉ
-========================================================= */
-
-button,
-select,
-input {
-
-    font-family: inherit;
-}
-
-button {
-
-    cursor: pointer;
 }
 
 </style>
@@ -962,10 +856,6 @@ button {
 </section>
 
 
-<!-- =====================================================
-     INSTRUCTION
-===================================================== -->
-
 <div class="instruction">
 
     Restez détendu et respirez naturellement.
@@ -993,9 +883,7 @@ button {
     <div class="breath-controls">
 
         <div class="control-label">
-
             Inspiration / expiration
-
         </div>
 
 
@@ -1004,18 +892,13 @@ button {
             <button
                 class="small-button"
                 onclick="changeBreath(-1)">
-
                 −
-
             </button>
 
 
             <div class="value">
 
-                <span id="breathValue">
-                    5
-                </span>
-                s
+                <span id="breathValue">5</span> s
 
             </div>
 
@@ -1023,9 +906,7 @@ button {
             <button
                 class="small-button"
                 onclick="changeBreath(1)">
-
                 +
-
             </button>
 
         </div>
@@ -1070,9 +951,7 @@ button {
         <button
             class="small-button"
             onclick="changeDuration(-1)">
-
             −
-
         </button>
 
 
@@ -1088,9 +967,7 @@ button {
         <button
             class="small-button"
             onclick="changeDuration(1)">
-
             +
-
         </button>
 
     </div>
@@ -1235,7 +1112,7 @@ button {
 
 
 <!-- =====================================================
-     DÉMARRER
+     DÉMARRER / ARRÊTER
 ===================================================== -->
 
 <button
@@ -1259,7 +1136,7 @@ button {
 
 
 <!-- =====================================================
-     PARAMÈTRES DE L'ALARME
+     PARAMÈTRES
 ===================================================== -->
 
 <button
@@ -1277,7 +1154,7 @@ button {
     class="settings-panel">
 
 
-    <!-- ALARME ON/OFF -->
+    <!-- ALARME ON / OFF -->
 
     <div class="settings-row">
 
@@ -1314,8 +1191,7 @@ button {
         </div>
 
 
-        <select
-            id="snoozeInterval">
+        <select id="snoozeInterval">
 
             <option value="0">
                 Aucun
@@ -1342,7 +1218,7 @@ button {
     </div>
 
 
-    <!-- SON ALARME -->
+    <!-- SON -->
 
     <div class="settings-row">
 
@@ -1353,8 +1229,7 @@ button {
         </div>
 
 
-        <select
-            id="alarmSound">
+        <select id="alarmSound">
 
             <option value="gong" selected>
                 Gong
@@ -1447,10 +1322,6 @@ function createAudio() {
 }
 
 
-/* =========================================================
-   NOTE
-========================================================= */
-
 function playTone(
     frequency,
     duration,
@@ -1475,7 +1346,8 @@ function playTone(
     );
 
 
-    oscillator.type = type;
+    oscillator.type =
+        type;
 
     oscillator.frequency.value =
         frequency;
@@ -1663,9 +1535,7 @@ function playAlarm() {
     createAudio();
 
 
-    /* -----------------------------------------
-       GONG — MINIMUM 5 SECONDES
-    ----------------------------------------- */
+    /* GONG : AU MOINS 5 SECONDES */
 
     if (alarmSound === "gong") {
 
@@ -1729,21 +1599,37 @@ function playAlarm() {
 
 
         setTimeout(
-            () => playTone(
-                988,
-                1.0,
-                "sine"
-            ),
+            () => {
+
+                if (audioContext) {
+
+                    playTone(
+                        988,
+                        1.0,
+                        "sine"
+                    );
+
+                }
+
+            },
             350
         );
 
 
         setTimeout(
-            () => playTone(
-                1175,
-                1.4,
-                "sine"
-            ),
+            () => {
+
+                if (audioContext) {
+
+                    playTone(
+                        1175,
+                        1.4,
+                        "sine"
+                    );
+
+                }
+
+            },
             750
         );
 
@@ -1758,11 +1644,19 @@ function playAlarm() {
             (frequency, index) => {
 
                 setTimeout(
-                    () => playTone(
-                        frequency,
-                        .8,
-                        "sine"
-                    ),
+                    () => {
+
+                        if (audioContext) {
+
+                            playTone(
+                                frequency,
+                                .8,
+                                "sine"
+                            );
+
+                        }
+
+                    },
                     index * 500
                 );
 
@@ -1821,9 +1715,39 @@ function toggleSettings() {
             "settingsPanel"
         );
 
+
+    const isOpening =
+        !panel.classList.contains(
+            "open"
+        );
+
+
     panel.classList.toggle(
         "open"
     );
+
+
+    /*
+       Sur iPhone, on force le navigateur
+       à faire défiler la page lorsque
+       le panneau est ouvert.
+    */
+
+    if (isOpening) {
+
+        setTimeout(
+            () => {
+
+                panel.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest"
+                });
+
+            },
+            100
+        );
+
+    }
 
 }
 
@@ -2326,8 +2250,7 @@ function updateRemaining(
     const formatted =
         String(minutes)
             .padStart(2, "0")
-        + ":"
-        +
+        + ":" +
         String(secs)
             .padStart(2, "0");
 
