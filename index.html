@@ -2,12 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,21 +12,24 @@
 
 <style>
 
-/* =========================================================
-   BASE
-========================================================= */
-
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
 
-html,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #06253a;
+}
+
 body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
 
     background: #06253a;
     color: white;
@@ -43,25 +41,25 @@ body {
         Arial,
         sans-serif;
 
-    overflow: hidden;
-}
+    overflow-x: hidden;
+    overflow-y: auto;
 
-body {
-    display: flex;
-    justify-content: center;
+    -webkit-overflow-scrolling: touch;
 }
 
 .app {
     width: 100%;
     max-width: 520px;
-    height: 100vh;
 
-    min-height: 580px;
+    min-height: 100vh;
+    height: auto;
+
+    margin: 0 auto;
 
     padding:
-        max(16px, env(safe-area-inset-top))
+        max(18px, env(safe-area-inset-top))
         18px
-        max(12px, env(safe-area-inset-bottom));
+        max(30px, env(safe-area-inset-bottom));
 
     display: flex;
     flex-direction: column;
@@ -78,16 +76,15 @@ body {
 }
 
 .title {
-    font-size: clamp(22px, 6vw, 27px);
+    font-size: clamp(23px, 6vw, 27px);
     font-weight: 500;
-
     margin-top: 2px;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
 }
 
 .subtitle {
     color: #c5d6dd;
-    font-size: clamp(11px, 3.5vw, 14px);
+    font-size: clamp(12px, 3.5vw, 14px);
 }
 
 
@@ -96,28 +93,27 @@ body {
 ========================================================= */
 
 .breathing-area {
-    flex: 1;
-
-    min-height: 190px;
-    max-height: 330px;
+    width: 100%;
+    height: 300px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    flex-shrink: 0;
 }
 
 
 /* =========================================================
-   CERCLE RESPIRATOIRE
+   CERCLE
 ========================================================= */
 
 .breathing-ring {
+    width: min(245px, 60vw);
+    height: min(245px, 60vw);
 
-    width: min(245px, 54vw);
-    height: min(245px, 54vw);
-
-    min-width: 165px;
-    min-height: 165px;
+    min-width: 180px;
+    min-height: 180px;
 
     max-width: 245px;
     max-height: 245px;
@@ -153,11 +149,7 @@ body {
         box-shadow var(--breath-duration, 5s) ease-in-out;
 }
 
-
-/* Anneau extérieur */
-
 .breathing-ring::after {
-
     content: "";
 
     position: absolute;
@@ -179,7 +171,9 @@ body {
 }
 
 
-/* INSPIRATION */
+/* =========================================================
+   INSPIRATION
+========================================================= */
 
 .breathing-ring.inhale {
 
@@ -201,7 +195,9 @@ body {
 }
 
 
-/* EXPIRATION */
+/* =========================================================
+   EXPIRATION
+========================================================= */
 
 .breathing-ring.exhale {
 
@@ -224,7 +220,7 @@ body {
 
 
 /* =========================================================
-   CONTENU DU CERCLE
+   CONTENU CERCLE
 ========================================================= */
 
 .breathing-content {
@@ -233,6 +229,7 @@ body {
     height: 100%;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
@@ -274,14 +271,16 @@ body {
 
 .meditation {
 
-    font-size: clamp(31px, 10vw, 42px);
+    font-size: clamp(32px, 10vw, 42px);
 
     line-height: 1;
 
     margin-top: 11px;
 
     filter:
-        drop-shadow(0 2px 3px rgba(0,0,0,.2));
+        drop-shadow(
+            0 2px 3px rgba(0,0,0,.2)
+        );
 }
 
 
@@ -295,9 +294,9 @@ body {
 
     color: #aebfc7;
 
-    font-size: clamp(11px, 3.5vw, 14px);
+    font-size: clamp(12px, 3.5vw, 14px);
 
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 
     flex-shrink: 0;
 }
@@ -317,9 +316,9 @@ body {
 
     border-radius: 16px;
 
-    padding: 10px 13px;
+    padding: 12px 15px;
 
-    margin-bottom: 7px;
+    margin-bottom: 10px;
 
     flex-shrink: 0;
 }
@@ -330,16 +329,16 @@ body {
 
     align-items: center;
 
-    gap: 8px;
+    gap: 9px;
 
-    font-size: clamp(13px, 3.8vw, 15px);
+    font-size: clamp(14px, 3.8vw, 15px);
 
     font-weight: 500;
 }
 
 .card-icon {
 
-    font-size: 20px;
+    font-size: 21px;
 
     color: #52b9ff;
 }
@@ -357,7 +356,9 @@ body {
 
     justify-content: space-between;
 
-    margin-top: 6px;
+    margin-top: 8px;
+
+    gap: 10px;
 }
 
 .control-label {
@@ -373,15 +374,15 @@ body {
 
     align-items: center;
 
-    gap: 10px;
+    gap: 11px;
 }
 
 .small-button {
 
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
 
-    min-width: 32px;
+    min-width: 34px;
 
     border-radius: 50%;
 
@@ -404,7 +405,7 @@ body {
 
     text-align: center;
 
-    font-size: 15px;
+    font-size: 16px;
 
     font-weight: 600;
 }
@@ -427,7 +428,7 @@ body {
 
     color: #63e3ae;
 
-    font-size: 19px;
+    font-size: 20px;
 }
 
 .duration-controls {
@@ -438,18 +439,18 @@ body {
 
     align-items: center;
 
-    gap: 22px;
+    gap: 24px;
 
-    margin-top: 4px;
+    margin-top: 7px;
 }
 
 .duration-value {
 
-    min-width: 70px;
+    min-width: 75px;
 
     text-align: center;
 
-    font-size: 16px;
+    font-size: 17px;
 
     font-weight: 600;
 }
@@ -460,7 +461,7 @@ body {
 
     height: 5px;
 
-    margin-top: 5px;
+    margin-top: 8px;
 
     appearance: none;
 
@@ -496,9 +497,9 @@ body {
 
     color: #8faab5;
 
-    font-size: 9px;
+    font-size: 10px;
 
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 
@@ -512,9 +513,9 @@ body {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 7px;
+    gap: 9px;
 
-    margin-top: 6px;
+    margin-top: 8px;
 }
 
 .sound-column {
@@ -524,7 +525,7 @@ body {
 
     border-radius: 10px;
 
-    padding: 5px 7px;
+    padding: 7px 8px;
 }
 
 .sound-heading {
@@ -533,17 +534,17 @@ body {
 
     align-items: center;
 
-    gap: 6px;
+    gap: 7px;
 
-    font-size: 12px;
+    font-size: 13px;
 
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
 .sound-dot {
 
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
 
     border-radius: 50%;
 }
@@ -560,7 +561,7 @@ body {
 
     width: 100%;
 
-    height: 27px;
+    height: 29px;
 
     border: none;
 
@@ -572,9 +573,9 @@ body {
 
     text-align: left;
 
-    padding: 0 5px;
+    padding: 0 6px;
 
-    font-size: 11px;
+    font-size: 11.5px;
 }
 
 .sound-option.selected {
@@ -594,7 +595,7 @@ body {
 
     width: 100%;
 
-    height: 49px;
+    height: 51px;
 
     border: none;
 
@@ -609,13 +610,13 @@ body {
 
     color: white;
 
-    font-size: 17px;
+    font-size: 18px;
 
     font-weight: 600;
 
     flex-shrink: 0;
 
-    margin-top: 1px;
+    margin-top: 2px;
 }
 
 .stop-button {
@@ -644,9 +645,9 @@ body {
 
     width: 100%;
 
-    height: 40px;
+    height: 43px;
 
-    margin-top: 7px;
+    margin-top: 9px;
 
     border: none;
 
@@ -657,7 +658,7 @@ body {
 
     color: #c9d8de;
 
-    font-size: 13px;
+    font-size: 14px;
 
     flex-shrink: 0;
 }
@@ -674,16 +675,17 @@ body {
 
     border-radius: 15px;
 
-    padding: 12px;
+    padding: 12px 13px;
 
-    margin-top: 7px;
+    margin-top: 8px;
 
-    margin-bottom: 7px;
+    margin-bottom: 10px;
 
     flex-shrink: 0;
 }
 
 .settings-panel.open {
+
     display: block;
 }
 
@@ -695,15 +697,16 @@ body {
 
     justify-content: space-between;
 
-    min-height: 38px;
+    min-height: 44px;
 
     border-bottom:
         1px solid rgba(255,255,255,.07);
 
-    gap: 10px;
+    gap: 12px;
 }
 
 .settings-row:last-child {
+
     border-bottom: none;
 }
 
@@ -716,7 +719,30 @@ body {
 
 
 /* =========================================================
-   INTERRUPTEUR ALARME
+   SELECTS
+========================================================= */
+
+.settings-row select {
+
+    min-width: 125px;
+
+    padding: 7px 9px;
+
+    border-radius: 8px;
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    background: #174254;
+
+    color: white;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   INTERRUPTEUR
 ========================================================= */
 
 .switch {
@@ -740,8 +766,6 @@ body {
 .switch-slider {
 
     position: absolute;
-
-    cursor: pointer;
 
     inset: 0;
 
@@ -783,173 +807,87 @@ body {
 
 
 /* =========================================================
-   PETIT ÉCRAN
+   PETITS ÉCRANS EN LARGEUR
 ========================================================= */
 
-@media (max-height: 700px) {
+@media (max-width: 360px) {
 
     .app {
 
-        padding-top:
-            max(10px, env(safe-area-inset-top));
-
-        padding-left: 14px;
-        padding-right: 14px;
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
     .breathing-area {
 
-        min-height: 165px;
-
-        max-height: 205px;
+        height: 270px;
     }
 
     .breathing-ring {
 
-        width: 180px;
-        height: 180px;
+        width: 200px;
+        height: 200px;
     }
 
-    .phase {
+    .sound-grid {
 
-        font-size: 22px;
+        gap: 5px;
     }
 
-    .seconds {
+    .sound-column {
 
-        font-size: 14px;
-    }
-
-    .meditation {
-
-        font-size: 30px;
-
-        margin-top: 7px;
-    }
-
-    .card {
-
-        padding: 7px 10px;
-
-        margin-bottom: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
     .sound-option {
 
-        height: 24px;
-
         font-size: 10px;
+        padding-left: 4px;
     }
 
-    .start-button {
+    .settings-row select {
 
-        height: 45px;
-    }
+        min-width: 105px;
 
-    .settings-button {
-
-        height: 35px;
-
-        margin-top: 5px;
+        font-size: 11px;
     }
 }
 
 
 /* =========================================================
-   TRÈS PETITS ÉCRANS
+   PETITS ÉCRANS EN HAUTEUR
 ========================================================= */
 
-@media (max-height: 620px) {
-
-    .header .title {
-
-        font-size: 20px;
-    }
+@media (max-height: 650px) {
 
     .breathing-area {
 
-        min-height: 135px;
-
-        max-height: 160px;
+        height: 250px;
     }
 
     .breathing-ring {
 
-        width: 145px;
-        height: 145px;
-
-        border-width: 5px;
+        width: 190px;
+        height: 190px;
     }
+}
 
-    .phase {
 
-        font-size: 18px;
-    }
+/* =========================================================
+   ACCESSIBILITÉ
+========================================================= */
 
-    .seconds {
+button,
+select,
+input {
 
-        font-size: 12px;
+    font-family: inherit;
+}
 
-        margin-top: 4px;
-    }
+button {
 
-    .meditation {
-
-        font-size: 25px;
-
-        margin-top: 5px;
-    }
-
-    .instruction {
-
-        display: none;
-    }
-
-    .card {
-
-        padding: 5px 8px;
-
-        margin-bottom: 4px;
-    }
-
-    .card-title {
-
-        font-size: 12px;
-    }
-
-    .sound-grid {
-
-        gap: 4px;
-    }
-
-    .sound-column {
-
-        padding: 4px 5px;
-    }
-
-    .sound-option {
-
-        height: 21px;
-
-        font-size: 9px;
-    }
-
-    .small-button {
-
-        width: 28px;
-        height: 28px;
-
-        min-width: 28px;
-
-        font-size: 18px;
-    }
-
-    .start-button {
-
-        height: 42px;
-
-        font-size: 15px;
-    }
+    cursor: pointer;
 }
 
 </style>
@@ -977,7 +915,7 @@ body {
         secondes inspiration
 
         •
-        
+
         <span id="headerBreath2">5</span>
         secondes expiration
 
@@ -1013,8 +951,6 @@ body {
 
             </div>
 
-            <!-- PERSONNE EN MÉDITATION -->
-
             <div class="meditation">
                 🧘
             </div>
@@ -1025,6 +961,10 @@ body {
 
 </section>
 
+
+<!-- =====================================================
+     INSTRUCTION
+===================================================== -->
 
 <div class="instruction">
 
@@ -1337,7 +1277,7 @@ body {
     class="settings-panel">
 
 
-    <!-- ACTIVATION ALARME -->
+    <!-- ALARME ON/OFF -->
 
     <div class="settings-row">
 
@@ -1375,14 +1315,7 @@ body {
 
 
         <select
-            id="snoozeInterval"
-            style="
-                background:#163d4d;
-                color:white;
-                border:none;
-                border-radius:8px;
-                padding:7px;
-            ">
+            id="snoozeInterval">
 
             <option value="0">
                 Aucun
@@ -1421,14 +1354,7 @@ body {
 
 
         <select
-            id="alarmSound"
-            style="
-                background:#163d4d;
-                color:white;
-                border:none;
-                border-radius:8px;
-                padding:7px;
-            ">
+            id="alarmSound">
 
             <option value="gong" selected>
                 Gong
@@ -1595,9 +1521,7 @@ function playBreathSound(sound) {
     createAudio();
 
 
-    /* -----------------------------------------
-       1 NOTE
-    ----------------------------------------- */
+    /* 1 NOTE */
 
     if (sound === "bell") {
 
@@ -1610,9 +1534,7 @@ function playBreathSound(sound) {
     }
 
 
-    /* -----------------------------------------
-       2 NOTES
-    ----------------------------------------- */
+    /* 2 NOTES */
 
     else if (sound === "tone") {
 
@@ -1643,9 +1565,7 @@ function playBreathSound(sound) {
     }
 
 
-    /* -----------------------------------------
-       3 NOTES : HAUTE / BASSE / HAUTE
-    ----------------------------------------- */
+    /* 3 NOTES : HAUTE / BASSE / HAUTE */
 
     else if (sound === "pulse") {
 
@@ -1694,9 +1614,7 @@ function playBreathSound(sound) {
     }
 
 
-    /* -----------------------------------------
-       BOL TIBÉTAIN
-    ----------------------------------------- */
+    /* BOL */
 
     else if (sound === "bowl") {
 
@@ -1736,21 +1654,20 @@ function playBreathSound(sound) {
 function playAlarm() {
 
     if (!alarmEnabled) {
+
         return;
+
     }
 
 
     createAudio();
 
 
-    if (alarmSound === "gong") {
+    /* -----------------------------------------
+       GONG — MINIMUM 5 SECONDES
+    ----------------------------------------- */
 
-        /*
-         * GONG D'AU MOINS 5 SECONDES
-         *
-         * Plusieurs harmoniques sont lancées
-         * avec une longue décroissance.
-         */
+    if (alarmSound === "gong") {
 
         playTone(
             196,
@@ -1800,6 +1717,8 @@ function playAlarm() {
     }
 
 
+    /* CARILLON */
+
     else if (alarmSound === "chime") {
 
         playTone(
@@ -1831,6 +1750,8 @@ function playAlarm() {
     }
 
 
+    /* CLOCHES */
+
     else if (alarmSound === "bells") {
 
         [523,659,784,659,523].forEach(
@@ -1859,7 +1780,9 @@ function playAlarm() {
 
 function scheduleSnooze() {
 
-    clearTimeout(alarmTimer);
+    clearTimeout(
+        alarmTimer
+    );
 
 
     if (
@@ -1913,6 +1836,7 @@ document.getElementById(
 
         alarmEnabled =
             this.checked;
+
 
         if (!alarmEnabled) {
 
@@ -1978,13 +1902,6 @@ function changeBreath(amount) {
 
 
     updateBreathDisplay();
-
-
-    /*
-     * Si la séance est en cours,
-     * le nouveau rythme sera utilisé
-     * à la prochaine phase.
-     */
 
 }
 
@@ -2098,14 +2015,13 @@ function updateDuration() {
 
 
 /* =========================================================
-   SÉLECTION DES SONS
+   SONS
 ========================================================= */
 
 function selectSound(
     type,
     sound
 ) {
-
 
     if (type === "inhale") {
 
@@ -2264,11 +2180,6 @@ function beginPhase() {
         phaseTimer
     );
 
-
-    /*
-     * Utilise toujours la valeur
-     * actuelle de breathSeconds.
-     */
 
     phaseRemaining =
         breathSeconds;
@@ -2548,11 +2459,6 @@ function finishSession() {
     ).style.display =
         "none";
 
-
-    /*
-     * Si l'alarme est désactivée,
-     * absolument aucun son.
-     */
 
     if (alarmEnabled) {
 
