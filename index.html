@@ -1,37 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Cohérence">
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+>
+
+<meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+>
+
+<meta
+    name="apple-mobile-web-app-title"
+    content="Cohérence"
+>
 
 <title>Cohérence cardiaque</title>
 
+
 <style>
+
+/* =========================================================
+   BASE
+========================================================= */
 
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
 
-html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-    background: #06253a;
-}
-
+html,
 body {
+
     margin: 0;
     padding: 0;
+
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
 
     background: #06253a;
+
     color: white;
 
     font-family:
@@ -41,28 +58,57 @@ body {
         Arial,
         sans-serif;
 
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: auto;
+    overflow: hidden;
 }
 
+body {
+
+    display: flex;
+
+    justify-content: center;
+}
+
+
+/* =========================================================
+   APPLICATION
+========================================================= */
+
 .app {
+
     width: 100%;
     max-width: 520px;
 
-    margin: 0 auto;
+    height: 100vh;
 
-    min-height: 100vh;
-    height: auto;
+    min-height: 620px;
 
-    padding-top: max(18px, env(safe-area-inset-top));
-    padding-right: 18px;
-    padding-left: 18px;
-    padding-bottom: max(50px, env(safe-area-inset-bottom));
+    padding:
+        max(18px, env(safe-area-inset-top))
+        20px
+        env(safe-area-inset-bottom);
 
-    display: block;
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   PARTIE FIXE DU HAUT
+   TITRE + CERCLE + INSTRUCTION
+========================================================= */
+
+.fixed-top {
+
+    flex-shrink: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
 }
 
 
@@ -71,32 +117,47 @@ body {
 ========================================================= */
 
 .header {
+
     text-align: center;
+
+    flex-shrink: 0;
 }
 
 .title {
-    font-size: clamp(23px, 6vw, 27px);
+
+    font-size: 27px;
+
     font-weight: 500;
-    margin-top: 2px;
-    margin-bottom: 4px;
+
+    margin-top: 3px;
+
+    margin-bottom: 3px;
 }
 
 .subtitle {
+
     color: #c5d6dd;
-    font-size: clamp(12px, 3.5vw, 14px);
+
+    font-size: 14px;
 }
 
 
 /* =========================================================
-   ZONE RESPIRATION
+   ZONE DU CERCLE
 ========================================================= */
 
 .breathing-area {
+
     width: 100%;
+
     height: 300px;
 
+    flex-shrink: 0;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 }
 
@@ -106,21 +167,19 @@ body {
 ========================================================= */
 
 .breathing-ring {
-    width: min(245px, 60vw);
-    height: min(245px, 60vw);
 
-    min-width: 180px;
-    min-height: 180px;
+    width: min(245px, 54vw);
 
-    max-width: 245px;
-    max-height: 245px;
+    height: min(245px, 54vw);
 
     border-radius: 50%;
 
     position: relative;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     background:
@@ -141,400 +200,168 @@ body {
 
     transition:
         transform var(--breath-duration, 5s) ease-in-out,
-        border-color var(--breath-duration, 5s) ease-in-out,
-        background var(--breath-duration, 5s) ease-in-out,
-        box-shadow var(--breath-duration, 5s) ease-in-out;
+        border-color .5s ease;
 }
 
 .breathing-ring::after {
+
     content: "";
 
     position: absolute;
+
     inset: -7px;
 
     border-radius: 50%;
 
-    border: 3px solid rgba(67,183,255,.65);
+    border: 3px solid rgba(67,183,255,.75);
 
     border-right-color: #60dfa9;
+
     border-bottom-color: #60dfa9;
 
     pointer-events: none;
-
-    transition:
-        border-color var(--breath-duration, 5s)
-        ease-in-out;
 }
 
 .breathing-ring.inhale {
+
     transform: scale(1.02);
-
-    background:
-        radial-gradient(
-            circle,
-            #15536a 0%,
-            #10455a 65%,
-            #0d394d 100%
-        );
-
-    border-color: #62e8b1;
-
-    box-shadow:
-        0 0 38px rgba(98,232,177,.25),
-        inset 0 0 35px rgba(0,0,0,.08);
 }
 
 .breathing-ring.exhale {
+
     transform: scale(.84);
-
-    background:
-        radial-gradient(
-            circle,
-            #123c61 0%,
-            #0d3451 65%,
-            #092c45 100%
-        );
-
-    border-color: #54baff;
-
-    box-shadow:
-        0 0 30px rgba(84,186,255,.18),
-        inset 0 0 35px rgba(0,0,0,.12);
 }
 
 
 /* =========================================================
-   CONTENU CERCLE
+   CONTENU DU CERCLE
 ========================================================= */
 
 .breathing-content {
+
     width: 100%;
     height: 100%;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     text-align: center;
 
     position: relative;
+
     z-index: 2;
 }
 
 .phase {
+
     color: #61e3ae;
 
-    font-size: clamp(22px, 7vw, 28px);
+    font-size: 28px;
 
     font-weight: 500;
+
     line-height: 1.1;
+
     margin: 0;
 }
 
 .seconds {
-    font-size: clamp(14px, 4.5vw, 18px);
+
+    font-size: 18px;
 
     margin-top: 7px;
 
     color: white;
 }
 
-.meditation {
-    font-size: clamp(32px, 10vw, 42px);
+.lungs {
+
+    font-size: 38px;
 
     line-height: 1;
 
-    margin-top: 11px;
-
-    filter:
-        drop-shadow(
-            0 2px 3px rgba(0,0,0,.2)
-        );
+    margin-top: 13px;
 }
 
 
 /* =========================================================
-   INSTRUCTION
+   INSTRUCTION FIXE
 ========================================================= */
 
 .instruction {
+
     text-align: center;
 
     color: #aebfc7;
 
-    font-size: clamp(12px, 3.5vw, 14px);
-
-    margin-bottom: 12px;
-}
-
-
-/* =========================================================
-   CARTES
-========================================================= */
-
-.card {
-    background:
-        rgba(19,67,87,.76);
-
-    border:
-        1px solid rgba(180,220,230,.13);
-
-    border-radius: 16px;
-
-    padding: 12px 15px;
+    font-size: 14px;
 
     margin-bottom: 10px;
-}
 
-.card-title {
-    display: flex;
-    align-items: center;
-
-    gap: 9px;
-
-    font-size: clamp(14px, 3.8vw, 15px);
-
-    font-weight: 500;
-}
-
-.card-icon {
-    font-size: 21px;
-    color: #52b9ff;
+    flex-shrink: 0;
 }
 
 
 /* =========================================================
-   RYTHME
+   ZONE DÉFILANTE
 ========================================================= */
 
-.breath-controls {
-    display: flex;
+.scroll-area {
 
-    align-items: center;
-    justify-content: space-between;
+    flex: 1;
 
-    margin-top: 8px;
+    min-height: 0;
 
-    gap: 10px;
-}
+    overflow-y: auto;
 
-.control-label {
-    color: #dbe5e9;
+    overflow-x: hidden;
 
-    font-size: clamp(12px, 3.5vw, 14px);
-}
+    -webkit-overflow-scrolling: touch;
 
-.adjust {
-    display: flex;
+    overscroll-behavior-y: contain;
 
-    align-items: center;
+    padding-top: 2px;
 
-    gap: 11px;
-}
-
-.small-button {
-    width: 34px;
-    height: 34px;
-
-    min-width: 34px;
-
-    border-radius: 50%;
-
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    background:
-        rgba(255,255,255,.07);
-
-    color: white;
-
-    font-size: 21px;
-
-    line-height: 1;
-}
-
-.value {
-    min-width: 62px;
-
-    text-align: center;
-
-    font-size: 16px;
-
-    font-weight: 600;
+    padding-bottom: 20px;
 }
 
 
 /* =========================================================
-   DURÉE
+   BARRE DE DÉFILEMENT
 ========================================================= */
 
-.duration-top {
-    display: flex;
+.scroll-area::-webkit-scrollbar {
 
-    justify-content: space-between;
-    align-items: center;
+    width: 4px;
 }
 
-.remaining {
-    color: #63e3ae;
-
-    font-size: 20px;
-}
-
-.duration-controls {
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    gap: 24px;
-
-    margin-top: 7px;
-}
-
-.duration-value {
-    min-width: 75px;
-
-    text-align: center;
-
-    font-size: 17px;
-
-    font-weight: 600;
-}
-
-.slider {
-    width: 100%;
-
-    height: 5px;
-
-    margin-top: 8px;
-
-    appearance: none;
-
-    border-radius: 5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #61dfab var(--progress),
-            rgba(255,255,255,.18) var(--progress)
-        );
-}
-
-.slider::-webkit-slider-thumb {
-    appearance: none;
-
-    width: 22px;
-    height: 22px;
-
-    border-radius: 50%;
-
-    background: #62dfac;
-
-    border: 3px solid #174c56;
-}
-
-.slider-labels {
-    display: flex;
-
-    justify-content: space-between;
-
-    color: #8faab5;
-
-    font-size: 10px;
-
-    margin-top: 3px;
-}
-
-
-/* =========================================================
-   SONS
-========================================================= */
-
-.sound-grid {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 9px;
-
-    margin-top: 8px;
-}
-
-.sound-column {
-    background:
-        rgba(0,0,0,.10);
-
-    border-radius: 10px;
-
-    padding: 7px 8px;
-}
-
-.sound-heading {
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    font-size: 13px;
-
-    margin-bottom: 5px;
-}
-
-.sound-dot {
-    width: 13px;
-    height: 13px;
-
-    border-radius: 50%;
-}
-
-.green {
-    background: #61dfa9;
-}
-
-.blue {
-    background: #48a9ff;
-}
-
-.sound-option {
-    width: 100%;
-
-    min-height: 29px;
-
-    border: none;
-
-    border-radius: 7px;
+.scroll-area::-webkit-scrollbar-track {
 
     background: transparent;
-
-    color: #b8cbd3;
-
-    text-align: left;
-
-    padding: 4px 6px;
-
-    font-size: 11.5px;
 }
 
-.sound-option.selected {
-    background:
-        rgba(98,225,174,.18);
+.scroll-area::-webkit-scrollbar-thumb {
 
-    color: white;
+    background: rgba(255,255,255,.18);
+
+    border-radius: 10px;
 }
 
 
 /* =========================================================
-   BOUTONS
+   BOUTON DÉMARRER
 ========================================================= */
 
 .start-button {
+
     width: 100%;
 
-    height: 51px;
+    height: 54px;
 
     border: none;
 
@@ -553,10 +380,13 @@ body {
 
     font-weight: 600;
 
-    margin-top: 2px;
+    flex-shrink: 0;
+
+    margin: 0 0 10px 0;
 }
 
 .stop-button {
+
     display: none;
 
     background:
@@ -568,204 +398,169 @@ body {
 }
 
 .start-button:active {
+
     transform: scale(.985);
 }
 
 
 /* =========================================================
-   PARAMÈTRES DE L'ALARME
+   CARTES
 ========================================================= */
 
-.settings-button {
-    width: 100%;
+.card {
 
-    height: 43px;
-
-    margin-top: 9px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background:
-        rgba(255,255,255,.07);
-
-    color: #c9d8de;
-
-    font-size: 14px;
-}
-
-.settings-panel {
-    display: none;
-
-    width: 100%;
-
-    background:
-        rgba(12,48,65,.96);
+    background: rgba(19,67,87,.76);
 
     border:
-        1px solid rgba(180,220,230,.14);
+        1px solid
+        rgba(180,220,230,.13);
 
-    border-radius: 15px;
+    border-radius: 16px;
 
-    padding: 12px 13px;
+    padding: 11px 15px;
 
-    margin-top: 8px;
-
-    margin-bottom: 15px;
-}
-
-.settings-panel.open {
-    display: block;
-}
-
-.settings-row {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    min-height: 48px;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.07);
-
-    gap: 12px;
-}
-
-.settings-row:last-child {
-    border-bottom: none;
-}
-
-.settings-label {
-    color: #d9e5e9;
-
-    font-size: 13px;
-}
-
-
-/* =========================================================
-   SELECT
-========================================================= */
-
-.settings-row select {
-    min-width: 135px;
-
-    max-width: 160px;
-
-    padding: 8px 9px;
-
-    border-radius: 8px;
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    background: #174254;
-
-    color: white;
-
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   INTERRUPTEUR
-========================================================= */
-
-.switch {
-    position: relative;
-
-    width: 48px;
-    height: 28px;
+    margin-bottom: 9px;
 
     flex-shrink: 0;
 }
 
-.switch input {
-    opacity: 0;
+.card-title {
 
-    width: 0;
-    height: 0;
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 15px;
+
+    font-weight: 500;
 }
 
-.switch-slider {
-    position: absolute;
+.card-icon {
 
-    inset: 0;
+    font-size: 21px;
 
-    background: #52646c;
-
-    border-radius: 30px;
-
-    transition: .25s;
-}
-
-.switch-slider::before {
-    content: "";
-
-    position: absolute;
-
-    width: 22px;
-    height: 22px;
-
-    left: 3px;
-    top: 3px;
-
-    background: white;
-
-    border-radius: 50%;
-
-    transition: .25s;
-}
-
-.switch input:checked + .switch-slider {
-    background: #61dfa9;
-}
-
-.switch input:checked + .switch-slider::before {
-    transform: translateX(20px);
+    color: #52b9ff;
 }
 
 
 /* =========================================================
-   RAPPEL D'ALARME
+   RYTHME
 ========================================================= */
 
-.alarm-interval-section {
-    display: block;
+.breath-controls {
 
-    padding: 10px 0 12px;
+    display: flex;
 
-    border-bottom:
-        1px solid rgba(255,255,255,.07);
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 7px;
 }
 
-.alarm-interval-title {
-    color: #d9e5e9;
+.control-label {
 
-    font-size: 13px;
+    color: #dbe5e9;
 
-    margin-bottom: 5px;
+    font-size: 14px;
 }
 
-.alarm-interval-value {
+.adjust {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.small-button {
+
+    width: 32px;
+
+    height: 32px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.07);
+
+    color: white;
+
+    font-size: 21px;
+
+    line-height: 1;
+}
+
+.value {
+
+    min-width: 72px;
+
     text-align: center;
+
+    font-size: 16px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DURÉE
+========================================================= */
+
+.duration-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.remaining {
 
     color: #63e3ae;
 
-    font-size: 15px;
-
-    font-weight: 600;
-
-    margin-bottom: 7px;
+    font-size: 20px;
 }
 
-.alarm-slider {
+.duration-controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 25px;
+
+    margin-top: 5px;
+}
+
+.duration-value {
+
+    min-width: 75px;
+
+    text-align: center;
+
+    font-size: 17px;
+
+    font-weight: 600;
+}
+
+.slider {
+
     width: 100%;
 
     height: 5px;
 
-    margin: 0;
+    margin-top: 6px;
 
     appearance: none;
 
@@ -774,15 +569,17 @@ body {
     background:
         linear-gradient(
             90deg,
-            #61dfab var(--alarm-progress),
-            rgba(255,255,255,.18) var(--alarm-progress)
+            #61dfab var(--progress),
+            rgba(255,255,255,.18) var(--progress)
         );
 }
 
-.alarm-slider::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
+
     appearance: none;
 
     width: 22px;
+
     height: 22px;
 
     border-radius: 50%;
@@ -792,7 +589,8 @@ body {
     border: 3px solid #174c56;
 }
 
-.alarm-slider-labels {
+.slider-labels {
+
     display: flex;
 
     justify-content: space-between;
@@ -801,40 +599,94 @@ body {
 
     font-size: 10px;
 
-    margin-top: 5px;
+    margin-top: 2px;
 }
 
 
 /* =========================================================
-   BOUTON TEST ALARME
+   SONS
 ========================================================= */
 
-.test-alarm-button {
-    width: 100%;
+.sound-grid {
 
-    height: 42px;
+    display: grid;
 
-    margin-top: 10px;
+    grid-template-columns: 1fr 1fr;
 
-    border: 1px solid rgba(255,255,255,.12);
+    gap: 8px;
+
+    margin-top: 7px;
+}
+
+.sound-column {
+
+    background:
+        rgba(0,0,0,.10);
 
     border-radius: 10px;
 
-    background:
-        rgba(98,225,174,.12);
+    padding: 6px 8px;
+}
 
-    color: white;
+.sound-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
 
     font-size: 13px;
 
-    font-weight: 500;
+    margin-bottom: 4px;
 }
 
-.test-alarm-button:active {
-    transform: scale(.98);
+.sound-dot {
+
+    width: 13px;
+
+    height: 13px;
+
+    border-radius: 50%;
+}
+
+.green {
+
+    background: #61dfa9;
+}
+
+.blue {
+
+    background: #48a9ff;
+}
+
+.sound-option {
+
+    width: 100%;
+
+    height: 28px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #b8cbd3;
+
+    text-align: left;
+
+    padding: 0 6px;
+
+    font-size: 12px;
+}
+
+.sound-option.selected {
 
     background:
-        rgba(98,225,174,.20);
+        rgba(98,225,174,.18);
+
+    color: white;
 }
 
 
@@ -842,557 +694,494 @@ body {
    PETITS ÉCRANS
 ========================================================= */
 
-@media (max-width: 360px) {
+@media (max-height: 700px) {
 
-    .app {
-        padding-left: 12px;
-        padding-right: 12px;
-        padding-bottom: 55px;
+    .title {
+
+        font-size: 24px;
+    }
+
+    .subtitle {
+
+        font-size: 12px;
     }
 
     .breathing-area {
-        height: 270px;
+
+        height: 220px;
     }
 
     .breathing-ring {
-        width: 200px;
-        height: 200px;
+
+        width: 190px;
+
+        height: 190px;
     }
 
-    .sound-grid {
-        gap: 5px;
+    .phase {
+
+        font-size: 23px;
     }
 
-    .sound-column {
-        padding-left: 5px;
-        padding-right: 5px;
+    .seconds {
+
+        font-size: 16px;
     }
 
-    .sound-option {
-        font-size: 10px;
-        padding-left: 4px;
+    .lungs {
+
+        font-size: 30px;
+
+        margin-top: 8px;
     }
 
-    .settings-row select {
-        min-width: 110px;
-        font-size: 11px;
+    .instruction {
+
+        margin-bottom: 6px;
     }
+
 }
 
 
 /* =========================================================
-   ÉCRANS TRÈS COURTS
+   ÉCRANS TRÈS PETITS
 ========================================================= */
 
-@media (max-height: 650px) {
+@media (max-height: 600px) {
 
     .breathing-area {
-        height: 245px;
+
+        height: 190px;
     }
 
     .breathing-ring {
-        width: 190px;
-        height: 190px;
+
+        width: 165px;
+
+        height: 165px;
     }
+
+    .phase {
+
+        font-size: 21px;
+    }
+
+    .lungs {
+
+        font-size: 27px;
+    }
+
 }
 
 </style>
+
 </head>
 
 
 <body>
 
+
 <div class="app">
 
 
-<header class="header">
+    <!-- =====================================================
+         PARTIE FIXE
+    ====================================================== -->
 
-    <div class="title">
-        Cohérence cardiaque
-    </div>
-
-    <div class="subtitle">
-
-        <span id="headerBreath">5</span>
-        secondes inspiration
-
-        •
-
-        <span id="headerBreath2">5</span>
-        secondes expiration
-
-    </div>
-
-</header>
+    <div class="fixed-top">
 
 
-<section class="breathing-area">
+        <!-- TITRE -->
 
-    <div
-        id="breathingRing"
-        class="breathing-ring exhale">
+        <header class="header">
 
-        <div class="breathing-content">
+            <div class="title">
+
+                Cohérence cardiaque
+
+            </div>
+
+            <div class="subtitle">
+
+                <span id="headerBreath">5</span>
+                secondes inspiration
+
+                •
+
+                <span id="headerBreath2">5</span>
+                secondes expiration
+
+            </div>
+
+        </header>
+
+
+        <!-- CERCLE -->
+
+        <section class="breathing-area">
 
             <div
-                id="phase"
-                class="phase">
-
-                Prêt
-
-            </div>
-
-            <div class="seconds">
-
-                <span id="phaseSeconds">5</span>
-                secondes
-
-            </div>
-
-            <div class="meditation">
-                🧘
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<div class="instruction">
-
-    Restez détendu et respirez naturellement.
-
-</div>
-
-
-<section class="card">
-
-    <div class="card-title">
-
-        <span class="card-icon">〰</span>
-
-        <span>
-            Rythme respiratoire
-        </span>
-
-    </div>
-
-
-    <div class="breath-controls">
-
-        <div class="control-label">
-            Inspiration / expiration
-        </div>
-
-
-        <div class="adjust">
-
-            <button
-                class="small-button"
-                onclick="changeBreath(-1)">
-                −
-            </button>
-
-
-            <div class="value">
-
-                <span id="breathValue">5</span> s
-
-            </div>
-
-
-            <button
-                class="small-button"
-                onclick="changeBreath(1)">
-                +
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="card">
-
-    <div class="duration-top">
-
-        <div class="card-title">
-
-            <span class="card-icon">◷</span>
-
-            <span>
-                Durée
-            </span>
-
-        </div>
-
-
-        <div
-            id="remaining"
-            class="remaining">
-
-            05:00
-
-        </div>
-
-    </div>
-
-
-    <div class="duration-controls">
-
-        <button
-            class="small-button"
-            onclick="changeDuration(-1)">
-            −
-        </button>
-
-
-        <div
-            id="durationValue"
-            class="duration-value">
-
-            5 min
-
-        </div>
-
-
-        <button
-            class="small-button"
-            onclick="changeDuration(1)">
-            +
-        </button>
-
-    </div>
-
-
-    <input
-        id="durationSlider"
-        class="slider"
-        type="range"
-        min="1"
-        max="60"
-        value="5"
-        oninput="sliderDuration(this.value)"
-    >
-
-
-    <div class="slider-labels">
-
-        <span>1 min</span>
-
-        <span>30 min</span>
-
-        <span>60 min</span>
-
-    </div>
-
-</section>
-
-
-<section class="card">
-
-    <div class="card-title">
-
-        <span class="card-icon">♫</span>
-
-        <span>
-            Sons
-        </span>
-
-    </div>
-
-
-    <div class="sound-grid">
-
-
-        <div class="sound-column">
-
-            <div class="sound-heading">
-
-                <div class="sound-dot green"></div>
-
-                Inspiration
-
-            </div>
-
-
-            <button
-                id="inspireBell"
-                class="sound-option selected"
-                onclick="selectSound('inhale','bell')">
-
-                🔔 Cloche douce
-
-            </button>
-
-
-            <button
-                id="inspireTone"
-                class="sound-option"
-                onclick="selectSound('inhale','tone')">
-
-                ✨ Ton cristallin
-
-            </button>
-
-
-            <button
-                id="inspirePulse"
-                class="sound-option"
-                onclick="selectSound('inhale','pulse')">
-
-                🔔 Pulsation douce
-
-            </button>
-
-
-            <button
-                id="inspireGong"
-                class="sound-option"
-                onclick="selectSound('inhale','gong')">
-
-                🪷 Gong 5 secondes
-
-            </button>
-
-        </div>
-
-
-        <div class="sound-column">
-
-            <div class="sound-heading">
-
-                <div class="sound-dot blue"></div>
-
-                Expiration
-
-            </div>
-
-
-            <button
-                id="expireBowl"
-                class="sound-option selected"
-                onclick="selectSound('exhale','bowl')">
-
-                🪷 Bol tibétain
-
-            </button>
-
-
-            <button
-                id="expireTone"
-                class="sound-option"
-                onclick="selectSound('exhale','tone')">
-
-                ✨ Ton profond
-
-            </button>
-
-
-            <button
-                id="expirePulse"
-                class="sound-option"
-                onclick="selectSound('exhale','pulse')">
-
-                🌊 Pulsation douce
-
-            </button>
-
-
-            <button
-                id="expireGong"
-                class="sound-option"
-                onclick="selectSound('exhale','gong')">
-
-                🪷 Gong 5 secondes
-
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<button
-    id="startButton"
-    class="start-button"
-    onclick="startSession()">
-
-    ▶ &nbsp; Démarrer
-
-</button>
-
-
-<button
-    id="stopButton"
-    class="start-button stop-button"
-    onclick="stopSession()">
-
-    ■ &nbsp; Arrêter
-
-</button>
-
-
-<button
-    id="settingsButton"
-    class="settings-button"
-    onclick="toggleSettings()">
-
-    ⚙️ &nbsp; Paramètres de l'alarme
-
-</button>
-
-
-<div
-    id="settingsPanel"
-    class="settings-panel">
-
-
-    <div class="settings-row">
-
-        <div class="settings-label">
-            Alarme de fin
-        </div>
-
-
-        <label class="switch">
-
-            <input
-                id="alarmEnabled"
-                type="checkbox"
-                checked
+                id="breathingRing"
+                class="breathing-ring exhale"
             >
 
-            <span class="switch-slider"></span>
+                <div class="breathing-content">
 
-        </label>
+                    <div
+                        id="phase"
+                        class="phase"
+                    >
+                        Prêt
+                    </div>
+
+                    <div class="seconds">
+
+                        <span id="phaseSeconds">
+                            5
+                        </span>
+
+                        secondes
+
+                    </div>
+
+                    <div class="lungs">
+
+                        ♧
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INSTRUCTION -->
+
+        <div class="instruction">
+
+            Restez détendu et respirez naturellement.
+
+        </div>
+
 
     </div>
-
-
-    <div class="alarm-interval-section">
-
-        <div class="alarm-interval-title">
-            Rappel d'alarme
-        </div>
-
-
-        <div
-            id="alarmIntervalValue"
-            class="alarm-interval-value">
-
-            5 minutes
-
-        </div>
-
-
-        <input
-            id="alarmIntervalSlider"
-            class="alarm-slider"
-            type="range"
-            min="1"
-            max="300"
-            value="300"
-            step="1"
-            oninput="changeAlarmInterval(this.value)"
-        >
-
-
-        <div class="alarm-slider-labels">
-
-            <span>1 seconde</span>
-
-            <span>5 minutes</span>
-
-        </div>
-
-    </div>
-
-
-    <div class="settings-row">
-
-        <div class="settings-label">
-            Son de l'alarme
-        </div>
-
-
-        <select id="alarmSound">
-
-            <option value="gong" selected>
-                🪷 Gong profond
-            </option>
-
-            <option value="chime">
-                ✨ Carillon doux
-            </option>
-
-            <option value="bells">
-                🔔 Cloches
-            </option>
-
-            <option value="double">
-                🔔 Double alarme
-            </option>
-
-            <option value="urgent">
-                🚨 Alarme insistante
-            </option>
-
-            <option value="rapid">
-                ⚠️ Alarme rapide
-            </option>
-
-        </select>
-
-    </div>
-
-
-    <button
-        id="testAlarmButton"
-        class="test-alarm-button"
-        onclick="testAlarmSound()">
-
-        ▶️ &nbsp; Tester le son de l'alarme
-
-    </button>
 
 
     <!-- =====================================================
-         SAUVEGARDE AUTOMATIQUE
-    ===================================================== -->
+         PARTIE QUI DÉFILE
+    ====================================================== -->
 
-    <div class="settings-row">
-
-        <div class="settings-label">
-            Sauvegarde automatique
-        </div>
+    <div class="scroll-area">
 
 
-        <label class="switch">
+        <!-- =================================================
+             DÉMARRER = PREMIÈRE OPTION
+        ================================================== -->
+
+        <button
+            id="startButton"
+            class="start-button"
+            onclick="startSession()"
+        >
+
+            ▶ &nbsp; Démarrer
+
+        </button>
+
+
+        <button
+            id="stopButton"
+            class="start-button stop-button"
+            onclick="stopSession()"
+        >
+
+            ■ &nbsp; Arrêter
+
+        </button>
+
+
+        <!-- =================================================
+             RYTHME
+        ================================================== -->
+
+        <section class="card">
+
+            <div class="card-title">
+
+                <span class="card-icon">
+                    〰
+                </span>
+
+                <span>
+                    Rythme respiratoire
+                </span>
+
+            </div>
+
+
+            <div class="breath-controls">
+
+                <div class="control-label">
+
+                    Inspiration / expiration
+
+                </div>
+
+
+                <div class="adjust">
+
+                    <button
+                        class="small-button"
+                        onclick="changeBreath(-1)"
+                    >
+                        −
+                    </button>
+
+
+                    <div class="value">
+
+                        <span id="breathValue">
+                            5
+                        </span>
+
+                        s
+
+                    </div>
+
+
+                    <button
+                        class="small-button"
+                        onclick="changeBreath(1)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DURÉE
+        ================================================== -->
+
+        <section class="card">
+
+
+            <div class="duration-top">
+
+
+                <div class="card-title">
+
+                    <span class="card-icon">
+                        ◷
+                    </span>
+
+                    <span>
+                        Durée
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="remaining"
+                    class="remaining"
+                >
+                    05:00
+                </div>
+
+
+            </div>
+
+
+            <div class="duration-controls">
+
+
+                <button
+                    class="small-button"
+                    onclick="changeDuration(-1)"
+                >
+                    −
+                </button>
+
+
+                <div
+                    id="durationValue"
+                    class="duration-value"
+                >
+                    5 min
+                </div>
+
+
+                <button
+                    class="small-button"
+                    onclick="changeDuration(1)"
+                >
+                    +
+                </button>
+
+
+            </div>
+
 
             <input
-                id="autoSaveEnabled"
-                type="checkbox"
-                checked
+                id="durationSlider"
+                class="slider"
+                type="range"
+                min="1"
+                max="60"
+                value="5"
+                oninput="sliderDuration(this.value)"
             >
 
-            <span class="switch-slider"></span>
 
-        </label>
+            <div class="slider-labels">
+
+                <span>
+                    1 min
+                </span>
+
+                <span>
+                    30 min
+                </span>
+
+                <span>
+                    60 min
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             SONS
+        ================================================== -->
+
+        <section class="card">
+
+
+            <div class="card-title">
+
+                <span class="card-icon">
+                    ♫
+                </span>
+
+                <span>
+                    Sons
+                </span>
+
+            </div>
+
+
+            <div class="sound-grid">
+
+
+                <!-- INSPIRATION -->
+
+                <div class="sound-column">
+
+
+                    <div class="sound-heading">
+
+                        <div class="sound-dot green"></div>
+
+                        Inspiration
+
+                    </div>
+
+
+                    <button
+                        id="inspireBell"
+                        class="sound-option selected"
+                        onclick="selectSound('inhale','bell')"
+                    >
+                        🔔 Cloche douce
+                    </button>
+
+
+                    <button
+                        id="inspireTone"
+                        class="sound-option"
+                        onclick="selectSound('inhale','tone')"
+                    >
+                        ✨ Ton cristallin
+                    </button>
+
+
+                    <button
+                        id="inspirePulse"
+                        class="sound-option"
+                        onclick="selectSound('inhale','pulse')"
+                    >
+                        🔔 Pulsation douce
+                    </button>
+
+
+                </div>
+
+
+                <!-- EXPIRATION -->
+
+                <div class="sound-column">
+
+
+                    <div class="sound-heading">
+
+                        <div class="sound-dot blue"></div>
+
+                        Expiration
+
+                    </div>
+
+
+                    <button
+                        id="expireBowl"
+                        class="sound-option selected"
+                        onclick="selectSound('exhale','bowl')"
+                    >
+                        🪷 Bol tibétain
+                    </button>
+
+
+                    <button
+                        id="expireTone"
+                        class="sound-option"
+                        onclick="selectSound('exhale','tone')"
+                    >
+                        ✨ Ton profond
+                    </button>
+
+
+                    <button
+                        id="expirePulse"
+                        class="sound-option"
+                        onclick="selectSound('exhale','pulse')"
+                    >
+                        🌊 Pulsation douce
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
 
     </div>
 
 
 </div>
 
-
-</div>
 
 
 <script>
@@ -1425,202 +1214,6 @@ let exhaleSound = "bowl";
 
 
 /* =========================================================
-   ALARME
-========================================================= */
-
-let alarmEnabled = true;
-
-let snoozeInterval = 300;
-
-let alarmSound = "gong";
-
-let alarmTimer = null;
-
-
-/* =========================================================
-   SAUVEGARDE
-========================================================= */
-
-let autoSaveEnabled = true;
-
-const STORAGE_KEY =
-    "coherenceCardiaqueSettings";
-
-
-function saveSettings() {
-
-    if (!autoSaveEnabled) {
-        return;
-    }
-
-
-    const settings = {
-
-        breathSeconds:
-            breathSeconds,
-
-        durationMinutes:
-            durationMinutes,
-
-        inhaleSound:
-            inhaleSound,
-
-        exhaleSound:
-            exhaleSound,
-
-        alarmEnabled:
-            alarmEnabled,
-
-        snoozeInterval:
-            snoozeInterval,
-
-        alarmSound:
-            alarmSound,
-
-        autoSaveEnabled:
-            autoSaveEnabled
-
-    };
-
-
-    try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(settings)
-        );
-
-    } catch (error) {
-
-        console.log(
-            "Impossible de sauvegarder les paramètres.",
-            error
-        );
-
-    }
-
-}
-
-
-function loadSettings() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
-
-
-        if (!saved) {
-
-            return;
-
-        }
-
-
-        const settings =
-            JSON.parse(saved);
-
-
-        if (
-            typeof settings.breathSeconds === "number" &&
-            settings.breathSeconds >= 2 &&
-            settings.breathSeconds <= 20
-        ) {
-
-            breathSeconds =
-                settings.breathSeconds;
-
-        }
-
-
-        if (
-            typeof settings.durationMinutes === "number" &&
-            settings.durationMinutes >= 1 &&
-            settings.durationMinutes <= 60
-        ) {
-
-            durationMinutes =
-                settings.durationMinutes;
-
-        }
-
-
-        if (
-            typeof settings.inhaleSound === "string"
-        ) {
-
-            inhaleSound =
-                settings.inhaleSound;
-
-        }
-
-
-        if (
-            typeof settings.exhaleSound === "string"
-        ) {
-
-            exhaleSound =
-                settings.exhaleSound;
-
-        }
-
-
-        if (
-            typeof settings.alarmEnabled === "boolean"
-        ) {
-
-            alarmEnabled =
-                settings.alarmEnabled;
-
-        }
-
-
-        if (
-            typeof settings.snoozeInterval === "number" &&
-            settings.snoozeInterval >= 1 &&
-            settings.snoozeInterval <= 300
-        ) {
-
-            snoozeInterval =
-                settings.snoozeInterval;
-
-        }
-
-
-        if (
-            typeof settings.alarmSound === "string"
-        ) {
-
-            alarmSound =
-                settings.alarmSound;
-
-        }
-
-
-        if (
-            typeof settings.autoSaveEnabled === "boolean"
-        ) {
-
-            autoSaveEnabled =
-                settings.autoSaveEnabled;
-
-        }
-
-    } catch (error) {
-
-        console.log(
-            "Impossible de charger les paramètres.",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
    AUDIO
 ========================================================= */
 
@@ -1650,8 +1243,7 @@ function createAudio() {
 function playTone(
     frequency,
     duration,
-    type = "sine",
-    volume = .22
+    type = "sine"
 ) {
 
     createAudio();
@@ -1659,6 +1251,7 @@ function playTone(
 
     const oscillator =
         audioContext.createOscillator();
+
 
     const gain =
         audioContext.createGain();
@@ -1671,8 +1264,7 @@ function playTone(
     );
 
 
-    oscillator.type =
-        type;
+    oscillator.type = type;
 
     oscillator.frequency.value =
         frequency;
@@ -1689,8 +1281,8 @@ function playTone(
 
 
     gain.gain.exponentialRampToValueAtTime(
-        volume,
-        now + .04
+        .22,
+        now + .03
     );
 
 
@@ -1709,67 +1301,6 @@ function playTone(
 }
 
 
-/* =========================================================
-   GONG DE 5 SECONDES
-========================================================= */
-
-function playFiveSecondGong() {
-
-    createAudio();
-
-
-    playTone(
-        196,
-        5.2,
-        "sine",
-        .28
-    );
-
-
-    setTimeout(
-        () => {
-
-            if (audioContext) {
-
-                playTone(
-                    294,
-                    4.8,
-                    "sine",
-                    .18
-                );
-
-            }
-
-        },
-        120
-    );
-
-
-    setTimeout(
-        () => {
-
-            if (audioContext) {
-
-                playTone(
-                    392,
-                    4.5,
-                    "sine",
-                    .10
-                );
-
-            }
-
-        },
-        240
-    );
-
-}
-
-
-/* =========================================================
-   SONS RESPIRATION
-========================================================= */
-
 function playBreathSound(sound) {
 
     createAudio();
@@ -1779,8 +1310,7 @@ function playBreathSound(sound) {
 
         playTone(
             660,
-            .65,
-            "sine"
+            .55
         );
 
     }
@@ -1790,26 +1320,7 @@ function playBreathSound(sound) {
 
         playTone(
             520,
-            .55,
-            "sine"
-        );
-
-
-        setTimeout(
-            () => {
-
-                if (audioContext) {
-
-                    playTone(
-                        620,
-                        .65,
-                        "sine"
-                    );
-
-                }
-
-            },
-            240
+            .65
         );
 
     }
@@ -1818,45 +1329,18 @@ function playBreathSound(sound) {
     else if (sound === "pulse") {
 
         playTone(
-            660,
-            .35,
-            "sine"
+            440,
+            .25
         );
 
 
         setTimeout(
-            () => {
-
-                if (audioContext) {
-
-                    playTone(
-                        440,
-                        .35,
-                        "sine"
-                    );
-
-                }
-
-            },
+            () =>
+                playTone(
+                    520,
+                    .25
+                ),
             180
-        );
-
-
-        setTimeout(
-            () => {
-
-                if (audioContext) {
-
-                    playTone(
-                        660,
-                        .50,
-                        "sine"
-                    );
-
-                }
-
-            },
-            360
         );
 
     }
@@ -1866,508 +1350,53 @@ function playBreathSound(sound) {
 
         playTone(
             390,
-            .9,
-            "sine"
+            .9
         );
 
 
         setTimeout(
-            () => {
-
-                if (audioContext) {
-
-                    playTone(
-                        520,
-                        .7,
-                        "sine"
-                    );
-
-                }
-
-            },
+            () =>
+                playTone(
+                    520,
+                    .7
+                ),
             120
         );
 
     }
 
-
-    else if (sound === "gong") {
-
-        playFiveSecondGong();
-
-    }
-
 }
 
 
 /* =========================================================
-   SONS D'ALARME
+   SON DE FIN
 ========================================================= */
 
-function playAlarm() {
-
-    if (!alarmEnabled) {
-        return;
-    }
-
-    playSelectedAlarmSound();
-
-}
-
-
-function playSelectedAlarmSound() {
+function playEndSound() {
 
     createAudio();
 
 
-    if (alarmSound === "gong") {
-
-        playFiveSecondGong();
-
-    }
+    const notes =
+        [523, 659, 784, 1046];
 
 
-    else if (alarmSound === "chime") {
+    notes.forEach(
+        (frequency, index) => {
 
-        playTone(
-            784,
-            .8,
-            "sine",
-            .20
-        );
-
-
-        setTimeout(
-            () => {
-
-                if (audioContext) {
-
+            setTimeout(
+                () =>
                     playTone(
-                        988,
-                        1.0,
-                        "sine",
-                        .18
-                    );
-
-                }
-
-            },
-            350
-        );
-
-
-        setTimeout(
-            () => {
-
-                if (audioContext) {
-
-                    playTone(
-                        1175,
-                        1.4,
-                        "sine",
-                        .15
-                    );
-
-                }
-
-            },
-            750
-        );
-
-    }
-
-
-    else if (alarmSound === "bells") {
-
-        const notes =
-            [523, 659, 784, 659, 523];
-
-
-        notes.forEach(
-            (frequency, index) => {
-
-                setTimeout(
-                    () => {
-
-                        if (audioContext) {
-
-                            playTone(
-                                frequency,
-                                .8,
-                                "sine",
-                                .23
-                            );
-
-                        }
-
-                    },
-                    index * 500
-                );
-
-            }
-        );
-
-    }
-
-
-    else if (alarmSound === "double") {
-
-        playTone(
-            880,
-            .9,
-            "square",
-            .20
-        );
-
-
-        setTimeout(
-            () => {
-
-                if (audioContext) {
-
-                    playTone(
-                        660,
-                        .9,
-                        "square",
-                        .20
-                    );
-
-                }
-
-            },
-            1000
-        );
-
-    }
-
-
-    else if (alarmSound === "urgent") {
-
-        const notes =
-            [880, 660, 880, 660, 880, 660];
-
-
-        notes.forEach(
-            (frequency, index) => {
-
-                setTimeout(
-                    () => {
-
-                        if (audioContext) {
-
-                            playTone(
-                                frequency,
-                                .45,
-                                "square",
-                                .25
-                            );
-
-                        }
-
-                    },
-                    index * 500
-                );
-
-            }
-        );
-
-    }
-
-
-    else if (alarmSound === "rapid") {
-
-        const notes =
-            [
-                1000,
-                700,
-                1000,
-                700,
-                1000,
-                700,
-                1000,
-                700
-            ];
-
-
-        notes.forEach(
-            (frequency, index) => {
-
-                setTimeout(
-                    () => {
-
-                        if (audioContext) {
-
-                            playTone(
-                                frequency,
-                                .25,
-                                "square",
-                                .28
-                            );
-
-                        }
-
-                    },
-                    index * 300
-                );
-
-            }
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   TEST DU SON
-========================================================= */
-
-function testAlarmSound() {
-
-    createAudio();
-
-    playSelectedAlarmSound();
-
-}
-
-
-/* =========================================================
-   RAPPEL D'ALARME
-========================================================= */
-
-function scheduleSnooze() {
-
-    clearTimeout(
-        alarmTimer
-    );
-
-
-    if (
-        !alarmEnabled ||
-        snoozeInterval <= 0
-    ) {
-
-        return;
-
-    }
-
-
-    alarmTimer =
-        setTimeout(
-            () => {
-
-                playAlarm();
-
-                scheduleSnooze();
-
-            },
-            snoozeInterval * 1000
-        );
-
-}
-
-
-/* =========================================================
-   FORMAT DU RAPPEL
-========================================================= */
-
-function formatAlarmInterval(seconds) {
-
-    seconds =
-        parseInt(seconds);
-
-
-    if (seconds < 60) {
-
-        if (seconds === 1) {
-
-            return "1 seconde";
-
-        }
-
-        return seconds + " secondes";
-
-    }
-
-
-    const minutes =
-        Math.floor(seconds / 60);
-
-    const remainingSeconds =
-        seconds % 60;
-
-
-    if (remainingSeconds === 0) {
-
-        if (minutes === 1) {
-
-            return "1 minute";
-
-        }
-
-        return minutes + " minutes";
-
-    }
-
-
-    return (
-        minutes +
-        " min " +
-        remainingSeconds +
-        " s"
-    );
-
-}
-
-
-/* =========================================================
-   MODIFIER LE RAPPEL
-========================================================= */
-
-function changeAlarmInterval(value) {
-
-    snoozeInterval =
-        parseInt(value);
-
-
-    document.getElementById(
-        "alarmIntervalValue"
-    ).textContent =
-        formatAlarmInterval(
-            snoozeInterval
-        );
-
-
-    const progress =
-        (
-            (snoozeInterval - 1)
-            / 299
-        ) * 100;
-
-
-    document.getElementById(
-        "alarmIntervalSlider"
-    ).style.setProperty(
-        "--alarm-progress",
-        progress + "%"
-    );
-
-
-    if (running) {
-
-        clearTimeout(
-            alarmTimer
-        );
-
-    }
-
-
-    saveSettings();
-
-}
-
-
-/* =========================================================
-   PARAMÈTRES
-========================================================= */
-
-function toggleSettings() {
-
-    const panel =
-        document.getElementById(
-            "settingsPanel"
-        );
-
-
-    const isOpening =
-        !panel.classList.contains(
-            "open"
-        );
-
-
-    panel.classList.toggle(
-        "open"
-    );
-
-
-    if (isOpening) {
-
-        setTimeout(
-            () => {
-
-                panel.scrollIntoView({
-                    behavior: "smooth",
-                    block: "nearest"
-                });
-
-            },
-            100
-        );
-
-    }
-
-}
-
-
-document.getElementById(
-    "alarmEnabled"
-).addEventListener(
-    "change",
-    function() {
-
-        alarmEnabled =
-            this.checked;
-
-
-        if (!alarmEnabled) {
-
-            clearTimeout(
-                alarmTimer
+                        frequency,
+                        .65
+                    ),
+                index * 190
             );
 
         }
+    );
 
-
-        saveSettings();
-
-    }
-);
-
-
-document.getElementById(
-    "alarmSound"
-).addEventListener(
-    "change",
-    function() {
-
-        alarmSound =
-            this.value;
-
-
-        saveSettings();
-
-    }
-);
-
-
-document.getElementById(
-    "autoSaveEnabled"
-).addEventListener(
-    "change",
-    function() {
-
-        autoSaveEnabled =
-            this.checked;
-
-
-        if (autoSaveEnabled) {
-
-            saveSettings();
-
-        }
-
-    }
-);
+}
 
 
 /* =========================================================
@@ -2375,6 +1404,9 @@ document.getElementById(
 ========================================================= */
 
 function changeBreath(amount) {
+
+    if (running) return;
+
 
     breathSeconds += amount;
 
@@ -2394,8 +1426,6 @@ function changeBreath(amount) {
 
 
     updateBreathDisplay();
-
-    saveSettings();
 
 }
 
@@ -2420,14 +1450,10 @@ function updateBreathDisplay() {
         breathSeconds;
 
 
-    if (!running) {
-
-        document.getElementById(
-            "phaseSeconds"
-        ).textContent =
-            breathSeconds;
-
-    }
+    document.getElementById(
+        "phaseSeconds"
+    ).textContent =
+        breathSeconds;
 
 }
 
@@ -2437,6 +1463,9 @@ function updateBreathDisplay() {
 ========================================================= */
 
 function changeDuration(amount) {
+
+    if (running) return;
+
 
     durationMinutes += amount;
 
@@ -2457,20 +1486,19 @@ function changeDuration(amount) {
 
     updateDuration();
 
-    saveSettings();
-
 }
 
 
 function sliderDuration(value) {
+
+    if (running) return;
+
 
     durationMinutes =
         parseInt(value);
 
 
     updateDuration();
-
-    saveSettings();
 
 }
 
@@ -2501,13 +1529,9 @@ function updateDuration() {
     );
 
 
-    if (!running) {
-
-        updateRemaining(
-            durationMinutes * 60
-        );
-
-    }
+    updateRemaining(
+        durationMinutes * 60
+    );
 
 }
 
@@ -2521,15 +1545,17 @@ function selectSound(
     sound
 ) {
 
+    if (running) return;
+
+
     if (type === "inhale") {
 
-        inhaleSound =
-            sound;
+        inhaleSound = sound;
 
 
         document
             .querySelectorAll(
-                "#inspireBell, #inspireTone, #inspirePulse, #inspireGong"
+                "#inspireBell, #inspireTone, #inspirePulse"
             )
             .forEach(
                 button =>
@@ -2547,22 +1573,19 @@ function selectSound(
         );
 
 
-        playBreathSound(
-            sound
-        );
+        playBreathSound(sound);
 
     }
 
 
     else {
 
-        exhaleSound =
-            sound;
+        exhaleSound = sound;
 
 
         document
             .querySelectorAll(
-                "#expireBowl, #expireTone, #expirePulse, #expireGong"
+                "#expireBowl, #expireTone, #expirePulse"
             )
             .forEach(
                 button =>
@@ -2580,14 +1603,9 @@ function selectSound(
         );
 
 
-        playBreathSound(
-            sound
-        );
+        playBreathSound(sound);
 
     }
-
-
-    saveSettings();
 
 }
 
@@ -2607,11 +1625,6 @@ function capitalize(text) {
 function startSession() {
 
     createAudio();
-
-
-    clearTimeout(
-        alarmTimer
-    );
 
 
     running = true;
@@ -2815,9 +1828,7 @@ function updateRemaining(
 ) {
 
     const minutes =
-        Math.floor(
-            seconds / 60
-        );
+        Math.floor(seconds / 60);
 
 
     const secs =
@@ -2827,7 +1838,8 @@ function updateRemaining(
     const formatted =
         String(minutes)
             .padStart(2, "0")
-        + ":" +
+        + ":"
+        +
         String(secs)
             .padStart(2, "0");
 
@@ -2856,11 +1868,6 @@ function stopSession() {
 
     clearInterval(
         sessionTimer
-    );
-
-
-    clearTimeout(
-        alarmTimer
     );
 
 
@@ -2930,11 +1937,6 @@ function finishSession() {
     );
 
 
-    clearTimeout(
-        alarmTimer
-    );
-
-
     document.getElementById(
         "phase"
     ).textContent =
@@ -2965,13 +1967,7 @@ function finishSession() {
         "none";
 
 
-    if (alarmEnabled) {
-
-        playAlarm();
-
-        scheduleSnooze();
-
-    }
+    playEndSound();
 
 }
 
@@ -2980,100 +1976,9 @@ function finishSession() {
    INITIALISATION
 ========================================================= */
 
-loadSettings();
-
 updateBreathDisplay();
 
 updateDuration();
-
-
-document.getElementById(
-    "alarmEnabled"
-).checked =
-    alarmEnabled;
-
-
-document.getElementById(
-    "alarmSound"
-).value =
-    alarmSound;
-
-
-document.getElementById(
-    "autoSaveEnabled"
-).checked =
-    autoSaveEnabled;
-
-
-document.getElementById(
-    "alarmIntervalSlider"
-).value =
-    snoozeInterval;
-
-
-changeAlarmInterval(
-    snoozeInterval
-);
-
-
-/* Restaurer le son sélectionné - inspiration */
-
-document
-    .querySelectorAll(
-        "#inspireBell, #inspireTone, #inspirePulse, #inspireGong"
-    )
-    .forEach(
-        button =>
-            button.classList.remove(
-                "selected"
-            )
-    );
-
-
-const savedInhaleButton =
-    document.getElementById(
-        "inspire" +
-        capitalize(inhaleSound)
-    );
-
-
-if (savedInhaleButton) {
-
-    savedInhaleButton.classList.add(
-        "selected"
-    );
-
-}
-
-
-/* Restaurer le son sélectionné - expiration */
-
-document
-    .querySelectorAll(
-        "#expireBowl, #expireTone, #expirePulse, #expireGong"
-    )
-    .forEach(
-        button =>
-            button.classList.remove(
-                "selected"
-            )
-    );
-
-
-const savedExhaleButton =
-    document.getElementById(
-        "expire" +
-        capitalize(exhaleSound)
-    );
-
-
-if (savedExhaleButton) {
-
-    savedExhaleButton.classList.add(
-        "selected"
-    );
-
-}
 
 </script>
 
