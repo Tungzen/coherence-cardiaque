@@ -30,14 +30,17 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
+
     background: #06253a;
     color: white;
+
     font-family:
         -apple-system,
         BlinkMacSystemFont,
         "SF Pro Display",
         Arial,
         sans-serif;
+
     overflow: hidden;
 }
 
@@ -55,12 +58,11 @@ body {
     width: 100%;
     max-width: 520px;
     height: 100vh;
-    min-height: 620px;
 
     padding:
         max(18px, env(safe-area-inset-top))
         20px
-        env(safe-area-inset-bottom);
+        max(15px, env(safe-area-inset-bottom));
 
     display: flex;
     flex-direction: column;
@@ -70,15 +72,12 @@ body {
 
 
 /* =========================================================
-   PARTIE FIXE
+   PARTIE FIXE DU HAUT
 ========================================================= */
 
 .fixed-top {
-    width: 100%;
     flex-shrink: 0;
-
-    display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
 
@@ -94,6 +93,7 @@ body {
 .title {
     font-size: 27px;
     font-weight: 500;
+
     margin-top: 3px;
     margin-bottom: 3px;
 }
@@ -109,13 +109,13 @@ body {
 ========================================================= */
 
 .breathing-area {
-    width: 100%;
     height: 300px;
-    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    flex-shrink: 0;
 }
 
 .breathing-ring {
@@ -123,6 +123,7 @@ body {
     height: min(245px, 54vw);
 
     border-radius: 50%;
+
     position: relative;
 
     display: flex;
@@ -154,6 +155,7 @@ body {
     content: "";
 
     position: absolute;
+
     inset: -7px;
 
     border-radius: 50%;
@@ -202,18 +204,23 @@ body {
     font-weight: 500;
 
     line-height: 1.1;
+
     margin: 0;
 }
 
 .seconds {
     font-size: 18px;
+
     margin-top: 7px;
+
     color: white;
 }
 
 .lungs {
     font-size: 38px;
+
     line-height: 1;
+
     margin-top: 13px;
 }
 
@@ -230,17 +237,16 @@ body {
     font-size: 14px;
 
     margin-bottom: 10px;
-
-    flex-shrink: 0;
 }
 
 
 /* =========================================================
-   ZONE DÉFILANTE
+   ZONE QUI SCROLLE
 ========================================================= */
 
 .scroll-area {
     flex: 1;
+
     min-height: 0;
 
     overflow-y: auto;
@@ -255,11 +261,7 @@ body {
 }
 
 .scroll-area::-webkit-scrollbar {
-    width: 4px;
-}
-
-.scroll-area::-webkit-scrollbar-track {
-    background: transparent;
+    width: 3px;
 }
 
 .scroll-area::-webkit-scrollbar-thumb {
@@ -269,12 +271,12 @@ body {
 
 
 /* =========================================================
-   BOUTONS PRINCIPAUX
+   BOUTONS
 ========================================================= */
 
 .start-button {
     width: 100%;
-    height: 54px;
+    height: 51px;
 
     border: none;
     border-radius: 15px;
@@ -291,7 +293,7 @@ body {
     font-size: 18px;
     font-weight: 600;
 
-    margin: 0 0 10px 0;
+    margin-bottom: 10px;
 
     flex-shrink: 0;
 }
@@ -368,7 +370,6 @@ body {
 
 .adjust {
     display: flex;
-
     align-items: center;
 
     gap: 12px;
@@ -400,7 +401,6 @@ body {
     text-align: center;
 
     font-size: 16px;
-
     font-weight: 600;
 }
 
@@ -438,7 +438,6 @@ body {
     text-align: center;
 
     font-size: 17px;
-
     font-weight: 600;
 }
 
@@ -512,7 +511,6 @@ body {
 
 .sound-heading {
     display: flex;
-
     align-items: center;
 
     gap: 7px;
@@ -540,7 +538,7 @@ body {
 .sound-option {
     width: 100%;
 
-    height: 28px;
+    min-height: 28px;
 
     border: none;
 
@@ -552,7 +550,7 @@ body {
 
     text-align: left;
 
-    padding: 0 6px;
+    padding: 4px 6px;
 
     font-size: 12px;
 }
@@ -566,23 +564,142 @@ body {
 
 
 /* =========================================================
-   PARAMÈTRES DE L'ALARME
+   BOUTON PARAMÈTRES ALARME
 ========================================================= */
 
-.alarm-sounds {
+.alarm-settings-button {
+    width: 100%;
+
+    min-height: 51px;
+
     display: flex;
 
+    align-items: center;
+    justify-content: space-between;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background:
+        rgba(19,67,87,.76);
+
+    border:
+        1px solid
+        rgba(180,220,230,.13);
+
+    color: white;
+
+    padding: 0 15px;
+
+    margin-bottom: 9px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    text-align: left;
+}
+
+.alarm-settings-button:active {
+    transform: scale(.985);
+}
+
+.alarm-button-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.alarm-button-icon {
+    color: #52b9ff;
+    font-size: 21px;
+}
+
+.alarm-arrow {
+    color: #8faab5;
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   SOUS-MENU ALARME
+========================================================= */
+
+.alarm-menu {
+    display: none;
+
+    background:
+        rgba(13,54,72,.98);
+
+    border:
+        1px solid
+        rgba(180,220,230,.16);
+
+    border-radius: 17px;
+
+    padding: 14px;
+
+    margin-bottom: 12px;
+}
+
+.alarm-menu.open {
+    display: block;
+}
+
+.alarm-menu-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.alarm-menu-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.close-alarm-button {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color: white;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   6 SONS D'ALARME
+========================================================= */
+
+.alarm-label {
+    color: #aebfc7;
+
+    font-size: 12px;
+
+    margin-bottom: 6px;
+}
+
+.alarm-options {
+    display: flex;
     flex-direction: column;
 
     gap: 5px;
-
-    margin-top: 8px;
 }
 
 .alarm-option {
     width: 100%;
 
-    min-height: 36px;
+    min-height: 38px;
 
     border: none;
 
@@ -613,7 +730,7 @@ body {
 
 
 /* =========================================================
-   RÉPÉTITION DE L'ALARME
+   RÉPÉTITION
 ========================================================= */
 
 .alarm-repeat-row {
@@ -622,9 +739,9 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    margin-top: 13px;
+    margin-top: 14px;
 
-    padding-top: 11px;
+    padding-top: 12px;
 
     border-top:
         1px solid
@@ -638,7 +755,7 @@ body {
 
 
 /* =========================================================
-   INTERRUPTEUR
+   SWITCH
 ========================================================= */
 
 .switch {
@@ -659,8 +776,6 @@ body {
 
 .switch-slider {
     position: absolute;
-
-    cursor: pointer;
 
     inset: 0;
 
@@ -700,13 +815,13 @@ body {
 
 
 /* =========================================================
-   DÉLAI DE RÉPÉTITION
+   DÉLAI RÉPÉTITION
 ========================================================= */
 
 .repeat-settings {
-    margin-top: 10px;
-
     display: none;
+
+    margin-top: 10px;
 }
 
 .repeat-settings.visible {
@@ -736,21 +851,20 @@ body {
     text-align: center;
 
     font-size: 16px;
-
     font-weight: 600;
 }
 
 
 /* =========================================================
-   DÉSACTIVER L'ALARME
+   DÉSACTIVER ALARME
 ========================================================= */
 
 .disable-alarm-button {
     width: 100%;
 
-    height: 42px;
+    height: 43px;
 
-    margin-top: 13px;
+    margin-top: 14px;
 
     border-radius: 10px;
 
@@ -821,15 +935,10 @@ body {
 
 }
 
-
-/* =========================================================
-   TRÈS PETITS ÉCRANS
-========================================================= */
-
 @media (max-height: 600px) {
 
     .breathing-area {
-        height: 190px;
+        height: 185px;
     }
 
     .breathing-ring {
@@ -841,6 +950,10 @@ body {
         font-size: 21px;
     }
 
+    .seconds {
+        font-size: 14px;
+    }
+
     .lungs {
         font-size: 27px;
     }
@@ -848,7 +961,6 @@ body {
 }
 
 </style>
-
 </head>
 
 
@@ -864,8 +976,6 @@ body {
 
     <div class="fixed-top">
 
-
-        <!-- TITRE -->
 
         <header class="header">
 
@@ -933,12 +1043,8 @@ body {
         </section>
 
 
-        <!-- INSTRUCTION -->
-
         <div class="instruction">
-
             Restez détendu et respirez naturellement.
-
         </div>
 
 
@@ -946,14 +1052,14 @@ body {
 
 
     <!-- =====================================================
-         PARTIE DÉFILANTE
+         PARTIE QUI DÉFILE
     ====================================================== -->
 
     <div class="scroll-area">
 
 
         <!-- =================================================
-             DÉMARRER
+             DÉMARRER — PREMIER BOUTON
         ================================================== -->
 
         <button
@@ -961,9 +1067,7 @@ body {
             class="start-button"
             onclick="startSession()"
         >
-
             ▶ &nbsp; Démarrer
-
         </button>
 
 
@@ -972,14 +1076,12 @@ body {
             class="start-button stop-button"
             onclick="stopSession()"
         >
-
             ■ &nbsp; Arrêter
-
         </button>
 
 
         <!-- =================================================
-             RYTHME RESPIRATOIRE
+             RYTHME
         ================================================== -->
 
         <section class="card">
@@ -1048,7 +1150,6 @@ body {
 
             <div class="duration-top">
 
-
                 <div class="card-title">
 
                     <span class="card-icon">
@@ -1069,12 +1170,10 @@ body {
                     05:00
                 </div>
 
-
             </div>
 
 
             <div class="duration-controls">
-
 
                 <button
                     class="small-button"
@@ -1098,7 +1197,6 @@ body {
                 >
                     +
                 </button>
-
 
             </div>
 
@@ -1130,7 +1228,6 @@ body {
 
             </div>
 
-
         </section>
 
 
@@ -1139,7 +1236,6 @@ body {
         ================================================== -->
 
         <section class="card">
-
 
             <div class="card-title">
 
@@ -1160,7 +1256,6 @@ body {
                 <!-- INSPIRATION -->
 
                 <div class="sound-column">
-
 
                     <div class="sound-heading">
 
@@ -1198,13 +1293,20 @@ body {
                     </button>
 
 
+                    <button
+                        id="inspireGong"
+                        class="sound-option"
+                        onclick="selectSound('inhale','gong')"
+                    >
+                        🪷 Gong — 5 secondes
+                    </button>
+
                 </div>
 
 
                 <!-- EXPIRATION -->
 
                 <div class="sound-column">
-
 
                     <div class="sound-heading">
 
@@ -1242,25 +1344,34 @@ body {
                     </button>
 
 
+                    <button
+                        id="expireGong"
+                        class="sound-option"
+                        onclick="selectSound('exhale','gong')"
+                    >
+                        🪷 Gong — 5 secondes
+                    </button>
+
                 </div>
 
-
             </div>
-
 
         </section>
 
 
         <!-- =================================================
-             PARAMÈTRES DE L'ALARME
+             BOUTON PARAMÈTRES ALARME
         ================================================== -->
 
-        <section class="card">
+        <button
+            id="alarmSettingsButton"
+            class="alarm-settings-button"
+            onclick="toggleAlarmMenu()"
+        >
 
+            <div class="alarm-button-left">
 
-            <div class="card-title">
-
-                <span class="card-icon">
+                <span class="alarm-button-icon">
                     ⏰
                 </span>
 
@@ -1271,11 +1382,49 @@ body {
             </div>
 
 
-            <!-- =============================================
-                 6 SONS
-            ============================================== -->
+            <span
+                id="alarmArrow"
+                class="alarm-arrow"
+            >
+                ›
+            </span>
 
-            <div class="alarm-sounds">
+        </button>
+
+
+        <!-- =================================================
+             SOUS-MENU ALARME
+        ================================================== -->
+
+        <section
+            id="alarmMenu"
+            class="alarm-menu"
+        >
+
+
+            <div class="alarm-menu-header">
+
+                <div class="alarm-menu-title">
+                    Paramètres de l'alarme
+                </div>
+
+
+                <button
+                    class="close-alarm-button"
+                    onclick="toggleAlarmMenu()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="alarm-label">
+                Choisissez le son de fin de séance
+            </div>
+
+
+            <div class="alarm-options">
 
 
                 <button
@@ -1283,7 +1432,7 @@ body {
                     class="alarm-option selected"
                     onclick="selectAlarmSound(1)"
                 >
-                    🔔 1 — Très douce
+                    ① Carillon très doux
                 </button>
 
 
@@ -1292,7 +1441,7 @@ body {
                     class="alarm-option"
                     onclick="selectAlarmSound(2)"
                 >
-                    🔔 2 — Douce
+                    ② Double carillon doux
                 </button>
 
 
@@ -1301,7 +1450,7 @@ body {
                     class="alarm-option"
                     onclick="selectAlarmSound(3)"
                 >
-                    🔔 3 — Modérée
+                    ③ Trois notes insistantes
                 </button>
 
 
@@ -1310,7 +1459,7 @@ body {
                     class="alarm-option"
                     onclick="selectAlarmSound(4)"
                 >
-                    🔔 4 — Claire
+                    ④ Pulsation régulière
                 </button>
 
 
@@ -1319,7 +1468,7 @@ body {
                     class="alarm-option"
                     onclick="selectAlarmSound(5)"
                 >
-                    🔔 5 — Forte
+                    ⑤ Signal pressant
                 </button>
 
 
@@ -1328,24 +1477,19 @@ body {
                     class="alarm-option"
                     onclick="selectAlarmSound(6)"
                 >
-                    🔔 6 — Très forte
+                    ⑥ Alerte insistante
                 </button>
 
 
             </div>
 
 
-            <!-- =============================================
-                 RÉPÉTER
-            ============================================== -->
+            <!-- RÉPÉTITION -->
 
             <div class="alarm-repeat-row">
 
-
                 <div class="alarm-repeat-label">
-
                     Répéter l'alarme
-
                 </div>
 
 
@@ -1361,13 +1505,10 @@ body {
 
                 </label>
 
-
             </div>
 
 
-            <!-- =============================================
-                 DÉLAI
-            ============================================== -->
+            <!-- DÉLAI -->
 
             <div
                 id="repeatSettings"
@@ -1375,9 +1516,7 @@ body {
             >
 
                 <div class="repeat-title">
-
                     Délai entre les alarmes
-
                 </div>
 
 
@@ -1410,22 +1549,17 @@ body {
 
                 </div>
 
-
             </div>
 
 
-            <!-- =============================================
-                 DÉSACTIVER L'ALARME
-            ============================================== -->
+            <!-- DERNIER BOUTON -->
 
             <button
                 id="disableAlarmButton"
                 class="disable-alarm-button"
                 onclick="toggleAlarmEnabled()"
             >
-
                 🔕 Désactiver l'alarme
-
             </button>
 
 
@@ -1433,7 +1567,6 @@ body {
 
 
     </div>
-
 
 </div>
 
@@ -1464,7 +1597,9 @@ let sessionTimer = null;
 let audioContext = null;
 
 
-/* Sons respiration */
+/* =========================================================
+   SONS RESPIRATION
+========================================================= */
 
 let inhaleSound = "bell";
 
@@ -1475,44 +1610,13 @@ let exhaleSound = "bowl";
    ALARME
 ========================================================= */
 
-/*
-   1 = très douce
-   2 = douce
-   3 = modérée
-   4 = claire
-   5 = forte
-   6 = très forte
-*/
-
 let alarmSound = 1;
-
-
-/*
-   Répétition désactivée par défaut
-*/
 
 let repeatAlarm = false;
 
-
-/*
-   Délai de répétition
-   Minimum : 5 secondes
-   Maximum : 60 secondes
-*/
-
 let repeatDelay = 5;
 
-
-/*
-   Alarme activée par défaut
-*/
-
 let alarmEnabled = true;
-
-
-/*
-   Timer de répétition
-*/
 
 let alarmRepeatTimer = null;
 
@@ -1533,6 +1637,7 @@ function createAudio() {
 
     }
 
+
     if (
         audioContext.state === "suspended"
     ) {
@@ -1543,6 +1648,10 @@ function createAudio() {
 
 }
 
+
+/* =========================================================
+   TON SIMPLE
+========================================================= */
 
 function playTone(
     frequency,
@@ -1571,8 +1680,10 @@ function playTone(
 
     oscillator.type = type;
 
-    oscillator.frequency.value =
-        frequency;
+    oscillator.frequency.setValueAtTime(
+        frequency,
+        audioContext.currentTime
+    );
 
 
     const now =
@@ -1608,7 +1719,96 @@ function playTone(
 
 
 /* =========================================================
-   SONS DE RESPIRATION
+   GONG 5 SECONDES
+========================================================= */
+
+function playGong() {
+
+    createAudio();
+
+
+    const now =
+        audioContext.currentTime;
+
+
+    /*
+       Plusieurs oscillateurs sont superposés
+       afin de donner un son long et métallique.
+    */
+
+    const frequencies = [
+        110,
+        165,
+        220,
+        330
+    ];
+
+
+    frequencies.forEach(
+        (frequency, index) => {
+
+            const oscillator =
+                audioContext.createOscillator();
+
+
+            const gain =
+                audioContext.createGain();
+
+
+            oscillator.connect(gain);
+
+            gain.connect(
+                audioContext.destination
+            );
+
+
+            oscillator.type =
+                "sine";
+
+
+            oscillator.frequency.setValueAtTime(
+                frequency,
+                now
+            );
+
+
+            const start =
+                now + index * .035;
+
+
+            gain.gain.setValueAtTime(
+                .0001,
+                start
+            );
+
+
+            gain.gain.exponentialRampToValueAtTime(
+                .16 / (index + 1),
+                start + .08
+            );
+
+
+            gain.gain.exponentialRampToValueAtTime(
+                .0001,
+                start + 5
+            );
+
+
+            oscillator.start(start);
+
+
+            oscillator.stop(
+                start + 5.1
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SONS RESPIRATION
 ========================================================= */
 
 function playBreathSound(sound) {
@@ -1620,7 +1820,9 @@ function playBreathSound(sound) {
 
         playTone(
             660,
-            .55
+            .55,
+            "sine",
+            .22
         );
 
     }
@@ -1630,7 +1832,9 @@ function playBreathSound(sound) {
 
         playTone(
             520,
-            .65
+            .65,
+            "triangle",
+            .20
         );
 
     }
@@ -1640,7 +1844,9 @@ function playBreathSound(sound) {
 
         playTone(
             440,
-            .25
+            .25,
+            "sine",
+            .18
         );
 
 
@@ -1648,7 +1854,9 @@ function playBreathSound(sound) {
             () =>
                 playTone(
                     520,
-                    .25
+                    .25,
+                    "sine",
+                    .18
                 ),
             180
         );
@@ -1660,7 +1868,9 @@ function playBreathSound(sound) {
 
         playTone(
             390,
-            .9
+            .9,
+            "sine",
+            .20
         );
 
 
@@ -1668,204 +1878,141 @@ function playBreathSound(sound) {
             () =>
                 playTone(
                     520,
-                    .7
+                    .7,
+                    "sine",
+                    .15
                 ),
             120
         );
 
     }
 
+
+    else if (sound === "gong") {
+
+        playGong();
+
+    }
+
 }
 
 
 /* =========================================================
-   ALARMES — 6 NIVEAUX
+   SÉLECTION SON RESPIRATION
 ========================================================= */
 
-function playAlarm() {
+function selectSound(
+    type,
+    sound
+) {
 
-    if (!alarmEnabled) {
+    if (running) return;
 
-        return;
+
+    if (type === "inhale") {
+
+        inhaleSound = sound;
+
+
+        document
+            .querySelectorAll(
+                "#inspireBell, #inspireTone, #inspirePulse, #inspireGong"
+            )
+            .forEach(
+                button =>
+                    button.classList.remove(
+                        "selected"
+                    )
+            );
+
+
+        document.getElementById(
+            "inspire" +
+            capitalize(sound)
+        ).classList.add(
+            "selected"
+        );
+
+
+        playBreathSound(sound);
 
     }
 
 
-    createAudio();
+    else {
+
+        exhaleSound = sound;
 
 
-    /*
-       Chaque niveau possède un son progressivement
-       plus présent.
-    */
+        document
+            .querySelectorAll(
+                "#expireBowl, #expireTone, #expirePulse, #expireGong"
+            )
+            .forEach(
+                button =>
+                    button.classList.remove(
+                        "selected"
+                    )
+            );
 
-    if (alarmSound === 1) {
 
-        playTone(
-            520,
-            .55,
-            "sine",
-            .16
+        document.getElementById(
+            "expire" +
+            capitalize(sound)
+        ).classList.add(
+            "selected"
         );
+
+
+        playBreathSound(sound);
 
     }
 
+}
 
-    else if (alarmSound === 2) {
 
-        playTone(
-            580,
-            .65,
-            "sine",
-            .18
+function capitalize(text) {
+
+    return text.charAt(0).toUpperCase()
+        + text.slice(1);
+
+}
+
+
+/* =========================================================
+   PARAMÈTRES ALARME — OUVRIR / FERMER
+========================================================= */
+
+function toggleAlarmMenu() {
+
+    const menu =
+        document.getElementById(
+            "alarmMenu"
         );
 
-        setTimeout(
-            () =>
-                playTone(
-                    700,
-                    .45,
-                    "sine",
-                    .16
-                ),
-            150
+
+    const arrow =
+        document.getElementById(
+            "alarmArrow"
         );
+
+
+    menu.classList.toggle(
+        "open"
+    );
+
+
+    if (
+        menu.classList.contains("open")
+    ) {
+
+        arrow.textContent = "⌄";
 
     }
 
+    else {
 
-    else if (alarmSound === 3) {
-
-        playTone(
-            600,
-            .45,
-            "sine",
-            .20
-        );
-
-        setTimeout(
-            () =>
-                playTone(
-                    760,
-                    .45,
-                    "sine",
-                    .20
-                ),
-            180
-        );
-
-    }
-
-
-    else if (alarmSound === 4) {
-
-        playTone(
-            700,
-            .35,
-            "triangle",
-            .22
-        );
-
-        setTimeout(
-            () =>
-                playTone(
-                    900,
-                    .35,
-                    "triangle",
-                    .22
-                ),
-            160
-        );
-
-        setTimeout(
-            () =>
-                playTone(
-                    700,
-                    .35,
-                    "triangle",
-                    .22
-                ),
-            320
-        );
-
-    }
-
-
-    else if (alarmSound === 5) {
-
-        playTone(
-            800,
-            .35,
-            "square",
-            .25
-        );
-
-        setTimeout(
-            () =>
-                playTone(
-                    1000,
-                    .35,
-                    "square",
-                    .25
-                ),
-            180
-        );
-
-        setTimeout(
-            () =>
-                playTone(
-                    800,
-                    .35,
-                    "square",
-                    .25
-                ),
-            360
-        );
-
-    }
-
-
-    else if (alarmSound === 6) {
-
-        playTone(
-            900,
-            .30,
-            "square",
-            .28
-        );
-
-        setTimeout(
-            () =>
-                playTone(
-                    1150,
-                    .30,
-                    "square",
-                    .28
-                ),
-            160
-        );
-
-        setTimeout(
-            () =>
-                playTone(
-                    900,
-                    .30,
-                    "square",
-                    .28
-                ),
-            320
-        );
-
-        setTimeout(
-            () =>
-                playTone(
-                    1150,
-                    .30,
-                    "square",
-                    .28
-                ),
-            480
-        );
+        arrow.textContent = "›";
 
     }
 
@@ -1873,7 +2020,7 @@ function playAlarm() {
 
 
 /* =========================================================
-   TESTER UN SON D'ALARME
+   ALARME — 6 SIGNATURES DIFFÉRENTES
 ========================================================= */
 
 function selectAlarmSound(number) {
@@ -1902,17 +2049,234 @@ function selectAlarmSound(number) {
 
 
     /*
-       Le son est joué immédiatement pour permettre
-       de choisir facilement le niveau souhaité.
+       Jouer un aperçu du son choisi.
     */
 
-    playAlarm();
+    playAlarm(number);
 
 }
 
 
 /* =========================================================
-   RÉPÉTITION
+   JOUER UNE ALARME
+========================================================= */
+
+function playAlarm(number = alarmSound) {
+
+    if (!alarmEnabled) {
+        return;
+    }
+
+
+    createAudio();
+
+
+    /*
+       IMPORTANT :
+       Les six sons ne sont PAS simplement six volumes.
+
+       Ils utilisent des rythmes, des fréquences,
+       des formes d'onde et des séquences différentes.
+    */
+
+
+    /* -----------------------------------------------------
+       1 — CARILLON TRÈS DOUX
+    ----------------------------------------------------- */
+
+    if (number === 1) {
+
+        playTone(
+            523,
+            .65,
+            "sine",
+            .18
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       2 — DOUBLE CARILLON
+    ----------------------------------------------------- */
+
+    else if (number === 2) {
+
+        playTone(
+            523,
+            .45,
+            "sine",
+            .18
+        );
+
+
+        setTimeout(
+            () =>
+                playTone(
+                    659,
+                    .60,
+                    "sine",
+                    .18
+                ),
+            280
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       3 — TROIS NOTES
+    ----------------------------------------------------- */
+
+    else if (number === 3) {
+
+        playTone(
+            523,
+            .32,
+            "triangle",
+            .20
+        );
+
+
+        setTimeout(
+            () =>
+                playTone(
+                    659,
+                    .32,
+                    "triangle",
+                    .20
+                ),
+            250
+        );
+
+
+        setTimeout(
+            () =>
+                playTone(
+                    784,
+                    .55,
+                    "triangle",
+                    .20
+                ),
+            500
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       4 — PULSATION RÉGULIÈRE
+    ----------------------------------------------------- */
+
+    else if (number === 4) {
+
+        const sequence = [
+            440,
+            440,
+            554,
+            440,
+            554
+        ];
+
+
+        sequence.forEach(
+            (frequency, index) => {
+
+                setTimeout(
+                    () =>
+                        playTone(
+                            frequency,
+                            .22,
+                            "sawtooth",
+                            .18
+                        ),
+                    index * 280
+                );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       5 — SIGNAL PRESSANT
+    ----------------------------------------------------- */
+
+    else if (number === 5) {
+
+        const sequence = [
+            660,
+            880,
+            660,
+            880,
+            1046,
+            880
+        ];
+
+
+        sequence.forEach(
+            (frequency, index) => {
+
+                setTimeout(
+                    () =>
+                        playTone(
+                            frequency,
+                            .18,
+                            "square",
+                            .20
+                        ),
+                    index * 210
+                );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       6 — ALERTE INSISTANTE
+    ----------------------------------------------------- */
+
+    else if (number === 6) {
+
+        const sequence = [
+            700,
+            1000,
+            700,
+            1000,
+            700,
+            1200,
+            700,
+            1200
+        ];
+
+
+        sequence.forEach(
+            (frequency, index) => {
+
+                setTimeout(
+                    () =>
+                        playTone(
+                            frequency,
+                            .16,
+                            "square",
+                            .22
+                        ),
+                    index * 170
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RÉPÉTITION ALARME
 ========================================================= */
 
 function toggleRepeatAlarm() {
@@ -1946,6 +2310,7 @@ function toggleRepeatAlarm() {
             "visible"
         );
 
+
         clearTimeout(
             alarmRepeatTimer
         );
@@ -1954,10 +2319,6 @@ function toggleRepeatAlarm() {
 
 }
 
-
-/* =========================================================
-   DÉLAI DE RÉPÉTITION
-========================================================= */
 
 function changeRepeatDelay(amount) {
 
@@ -2012,7 +2373,7 @@ function updateRepeatDelayDisplay() {
 
 
 /* =========================================================
-   DÉSACTIVER / RÉACTIVER L'ALARME
+   DÉSACTIVER / RÉACTIVER ALARME
 ========================================================= */
 
 function toggleAlarmEnabled() {
@@ -2035,8 +2396,14 @@ function toggleAlarmEnabled() {
         button.textContent =
             "🔕 Alarme désactivée";
 
+
         button.classList.add(
             "active"
+        );
+
+
+        clearTimeout(
+            alarmRepeatTimer
         );
 
     }
@@ -2045,6 +2412,7 @@ function toggleAlarmEnabled() {
 
         button.textContent =
             "🔔 Désactiver l'alarme";
+
 
         button.classList.remove(
             "active"
@@ -2193,88 +2561,6 @@ function updateDuration() {
 
 
 /* =========================================================
-   SÉLECTION DES SONS RESPIRATOIRES
-========================================================= */
-
-function selectSound(
-    type,
-    sound
-) {
-
-    if (running) return;
-
-
-    if (type === "inhale") {
-
-        inhaleSound = sound;
-
-
-        document
-            .querySelectorAll(
-                "#inspireBell, #inspireTone, #inspirePulse"
-            )
-            .forEach(
-                button =>
-                    button.classList.remove(
-                        "selected"
-                    )
-            );
-
-
-        document.getElementById(
-            "inspire" +
-            capitalize(sound)
-        ).classList.add(
-            "selected"
-        );
-
-
-        playBreathSound(sound);
-
-    }
-
-
-    else {
-
-        exhaleSound = sound;
-
-
-        document
-            .querySelectorAll(
-                "#expireBowl, #expireTone, #expirePulse"
-            )
-            .forEach(
-                button =>
-                    button.classList.remove(
-                        "selected"
-                    )
-            );
-
-
-        document.getElementById(
-            "expire" +
-            capitalize(sound)
-        ).classList.add(
-            "selected"
-        );
-
-
-        playBreathSound(sound);
-
-    }
-
-}
-
-
-function capitalize(text) {
-
-    return text.charAt(0).toUpperCase()
-        + text.slice(1);
-
-}
-
-
-/* =========================================================
    DÉMARRER
 ========================================================= */
 
@@ -2282,10 +2568,6 @@ function startSession() {
 
     createAudio();
 
-
-    /*
-       Annuler une éventuelle répétition précédente.
-    */
 
     clearTimeout(
         alarmRepeatTimer
@@ -2638,7 +2920,7 @@ function finishSession() {
 
 
     /*
-       Première alarme
+       Première alarme.
     */
 
     if (alarmEnabled) {
@@ -2648,7 +2930,7 @@ function finishSession() {
 
         /*
            Si répétition activée,
-           programmer les suivantes.
+           on programme les suivantes.
         */
 
         if (repeatAlarm) {
@@ -2687,17 +2969,13 @@ function scheduleAlarmRepeat() {
         setTimeout(
             () => {
 
-                /*
-                   Vérification supplémentaire
-                   avant de jouer l'alarme.
-                */
-
                 if (
                     alarmEnabled &&
                     repeatAlarm
                 ) {
 
                     playAlarm();
+
 
                     scheduleAlarmRepeat();
 
