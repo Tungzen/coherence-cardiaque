@@ -45,7 +45,6 @@ body {
     overflow-y: auto;
 
     -webkit-overflow-scrolling: touch;
-
     overscroll-behavior-y: auto;
 }
 
@@ -503,7 +502,7 @@ body {
 .sound-option {
     width: 100%;
 
-    height: 29px;
+    min-height: 29px;
 
     border: none;
 
@@ -515,7 +514,7 @@ body {
 
     text-align: left;
 
-    padding: 0 6px;
+    padding: 4px 6px;
 
     font-size: 11.5px;
 }
@@ -723,6 +722,67 @@ body {
 
 .switch input:checked + .switch-slider::before {
     transform: translateX(20px);
+}
+
+
+/* =========================================================
+   RAPPEL D'ALARME
+========================================================= */
+
+.alarm-slider {
+    width: 100%;
+
+    height: 5px;
+
+    margin-top: 9px;
+
+    appearance: none;
+
+    border-radius: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #61dfab var(--alarm-progress),
+            rgba(255,255,255,.18) var(--alarm-progress)
+        );
+}
+
+.alarm-slider::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 22px;
+    height: 22px;
+
+    border-radius: 50%;
+
+    background: #62dfac;
+
+    border: 3px solid #174c56;
+}
+
+.alarm-slider-labels {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #8faab5;
+
+    font-size: 10px;
+
+    margin-top: 4px;
+}
+
+.alarm-interval-value {
+    text-align: center;
+
+    color: #63e3ae;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    margin-top: 4px;
 }
 
 
@@ -1059,6 +1119,16 @@ body {
 
             </button>
 
+
+            <button
+                id="inspireGong"
+                class="sound-option"
+                onclick="selectSound('inhale','gong')">
+
+                🪷 Gong 5 secondes
+
+            </button>
+
         </div>
 
 
@@ -1101,6 +1171,16 @@ body {
                 onclick="selectSound('exhale','pulse')">
 
                 🌊 Pulsation douce
+
+            </button>
+
+
+            <button
+                id="expireGong"
+                class="sound-option"
+                onclick="selectSound('exhale','gong')">
+
+                🪷 Gong 5 secondes
 
             </button>
 
@@ -1159,9 +1239,7 @@ body {
     <div class="settings-row">
 
         <div class="settings-label">
-
             Alarme de fin
-
         </div>
 
 
@@ -1182,38 +1260,46 @@ body {
 
     <!-- RAPPEL -->
 
-    <div class="settings-row">
+    <div class="settings-row"
+         style="display:block; padding:8px 0 10px;">
 
-        <div class="settings-label">
+        <div
+            class="settings-label"
+            style="margin-bottom:5px;">
 
             Rappel d'alarme
 
         </div>
 
 
-        <select id="snoozeInterval">
+        <div
+            id="alarmIntervalValue"
+            class="alarm-interval-value">
 
-            <option value="0">
-                Aucun
-            </option>
+            5 minutes
 
-            <option value="1">
-                1 minute
-            </option>
+        </div>
 
-            <option value="2">
-                2 minutes
-            </option>
 
-            <option value="5" selected>
-                5 minutes
-            </option>
+        <input
+            id="alarmIntervalSlider"
+            class="alarm-slider"
+            type="range"
+            min="1"
+            max="300"
+            value="300"
+            step="1"
+            oninput="changeAlarmInterval(this.value)"
+        >
 
-            <option value="10">
-                10 minutes
-            </option>
 
-        </select>
+        <div class="alarm-slider-labels">
+
+            <span>1 seconde</span>
+
+            <span>5 minutes</span>
+
+        </div>
 
     </div>
 
@@ -1223,24 +1309,34 @@ body {
     <div class="settings-row">
 
         <div class="settings-label">
-
             Son de l'alarme
-
         </div>
 
 
         <select id="alarmSound">
 
             <option value="gong" selected>
-                Gong
+                🪷 Gong profond
             </option>
 
             <option value="chime">
-                Carillon
+                ✨ Carillon doux
             </option>
 
             <option value="bells">
-                Cloches
+                🔔 Cloches
+            </option>
+
+            <option value="double">
+                🔔🔔 Double alarme
+            </option>
+
+            <option value="urgent">
+                🚨 Alarme insistante
+            </option>
+
+            <option value="rapid">
+                ⚠️ Alarme rapide
             </option>
 
         </select>
@@ -1288,7 +1384,7 @@ let exhaleSound = "bowl";
 
 let alarmEnabled = true;
 
-let snoozeInterval = 5;
+let snoozeInterval = 300;
 
 let alarmSound = "gong";
 
@@ -1379,6 +1475,63 @@ function playTone(
 
     oscillator.stop(
         now + duration + .05
+    );
+
+}
+
+
+/* =========================================================
+   GONG 5 SECONDES
+========================================================= */
+
+function playFiveSecondGong() {
+
+    createAudio();
+
+
+    playTone(
+        196,
+        5.2,
+        "sine",
+        .28
+    );
+
+
+    setTimeout(
+        () => {
+
+            if (audioContext) {
+
+                playTone(
+                    294,
+                    4.8,
+                    "sine",
+                    .18
+                );
+
+            }
+
+        },
+        120
+    );
+
+
+    setTimeout(
+        () => {
+
+            if (audioContext) {
+
+                playTone(
+                    392,
+                    4.5,
+                    "sine",
+                    .10
+                );
+
+            }
+
+        },
+        240
     );
 
 }
@@ -1516,11 +1669,20 @@ function playBreathSound(sound) {
 
     }
 
+
+    /* GONG 5 SECONDES */
+
+    else if (sound === "gong") {
+
+        playFiveSecondGong();
+
+    }
+
 }
 
 
 /* =========================================================
-   ALARME
+   ALARMES
 ========================================================= */
 
 function playAlarm() {
@@ -1535,66 +1697,24 @@ function playAlarm() {
     createAudio();
 
 
-    /* GONG : AU MOINS 5 SECONDES */
+    /* GONG PROFOND */
 
     if (alarmSound === "gong") {
 
-        playTone(
-            196,
-            5.2,
-            "sine",
-            .28
-        );
-
-
-        setTimeout(
-            () => {
-
-                if (audioContext) {
-
-                    playTone(
-                        294,
-                        4.8,
-                        "sine",
-                        .18
-                    );
-
-                }
-
-            },
-            120
-        );
-
-
-        setTimeout(
-            () => {
-
-                if (audioContext) {
-
-                    playTone(
-                        392,
-                        4.5,
-                        "sine",
-                        .10
-                    );
-
-                }
-
-            },
-            240
-        );
+        playFiveSecondGong();
 
     }
 
 
-    /* CARILLON */
+    /* CARILLON DOUX */
 
     else if (alarmSound === "chime") {
 
         playTone(
             784,
             .8,
-            "sine"
+            "sine",
+            .20
         );
 
 
@@ -1606,7 +1726,8 @@ function playAlarm() {
                     playTone(
                         988,
                         1.0,
-                        "sine"
+                        "sine",
+                        .18
                     );
 
                 }
@@ -1624,7 +1745,8 @@ function playAlarm() {
                     playTone(
                         1175,
                         1.4,
-                        "sine"
+                        "sine",
+                        .15
                     );
 
                 }
@@ -1651,13 +1773,109 @@ function playAlarm() {
                             playTone(
                                 frequency,
                                 .8,
-                                "sine"
+                                "sine",
+                                .23
                             );
 
                         }
 
                     },
                     index * 500
+                );
+
+            }
+        );
+
+    }
+
+
+    /* DOUBLE ALARME */
+
+    else if (alarmSound === "double") {
+
+        playTone(
+            880,
+            .9,
+            "square",
+            .20
+        );
+
+
+        setTimeout(
+            () => {
+
+                if (audioContext) {
+
+                    playTone(
+                        660,
+                        .9,
+                        "square",
+                        .20
+                    );
+
+                }
+
+            },
+            1000
+        );
+
+    }
+
+
+    /* ALARME INSISTANTE */
+
+    else if (alarmSound === "urgent") {
+
+        [880,660,880,660,880,660].forEach(
+            (frequency, index) => {
+
+                setTimeout(
+                    () => {
+
+                        if (audioContext) {
+
+                            playTone(
+                                frequency,
+                                .45,
+                                "square",
+                                .25
+                            );
+
+                        }
+
+                    },
+                    index * 500
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ALARME RAPIDE */
+
+    else if (alarmSound === "rapid") {
+
+        [1000,700,1000,700,1000,700,1000,700].forEach(
+            (frequency, index) => {
+
+                setTimeout(
+                    () => {
+
+                        if (audioContext) {
+
+                            playTone(
+                                frequency,
+                                .25,
+                                "square",
+                                .28
+                            );
+
+                        }
+
+                    },
+                    index * 300
                 );
 
             }
@@ -1698,8 +1916,105 @@ function scheduleSnooze() {
                 scheduleSnooze();
 
             },
-            snoozeInterval * 60 * 1000
+            snoozeInterval * 1000
         );
+
+}
+
+
+/* =========================================================
+   FORMAT DU RAPPEL
+========================================================= */
+
+function formatAlarmInterval(seconds) {
+
+    seconds =
+        parseInt(seconds);
+
+
+    if (seconds < 60) {
+
+        if (seconds === 1) {
+
+            return "1 seconde";
+
+        }
+
+        return seconds + " secondes";
+
+    }
+
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const remainingSeconds =
+        seconds % 60;
+
+
+    if (remainingSeconds === 0) {
+
+        if (minutes === 1) {
+
+            return "1 minute";
+
+        }
+
+        return minutes + " minutes";
+
+    }
+
+
+    return (
+        minutes +
+        " min " +
+        remainingSeconds +
+        " s"
+    );
+
+}
+
+
+/* =========================================================
+   MODIFICATION RAPPEL
+========================================================= */
+
+function changeAlarmInterval(value) {
+
+    snoozeInterval =
+        parseInt(value);
+
+
+    document.getElementById(
+        "alarmIntervalValue"
+    ).textContent =
+        formatAlarmInterval(
+            snoozeInterval
+        );
+
+
+    const progress =
+        (
+            (snoozeInterval - 1)
+            / 299
+        ) * 100;
+
+
+    document.getElementById(
+        "alarmIntervalSlider"
+    ).style.setProperty(
+        "--alarm-progress",
+        progress + "%"
+    );
+
+
+    if (running) {
+
+        clearTimeout(
+            alarmTimer
+        );
+
+    }
 
 }
 
@@ -1726,12 +2041,6 @@ function toggleSettings() {
         "open"
     );
 
-
-    /*
-       Sur iPhone, on force le navigateur
-       à faire défiler la page lorsque
-       le panneau est ouvert.
-    */
 
     if (isOpening) {
 
@@ -1775,21 +2084,6 @@ document.getElementById(
 
 
 document.getElementById(
-    "snoozeInterval"
-).addEventListener(
-    "change",
-    function() {
-
-        snoozeInterval =
-            parseInt(
-                this.value
-            );
-
-    }
-);
-
-
-document.getElementById(
     "alarmSound"
 ).addEventListener(
     "change",
@@ -1826,6 +2120,13 @@ function changeBreath(amount) {
 
 
     updateBreathDisplay();
+
+
+    /*
+       Si la séance est en cours,
+       le nouveau rythme est appliqué
+       à la prochaine phase.
+    */
 
 }
 
@@ -1939,7 +2240,7 @@ function updateDuration() {
 
 
 /* =========================================================
-   SONS
+   SÉLECTION DES SONS
 ========================================================= */
 
 function selectSound(
@@ -1955,7 +2256,7 @@ function selectSound(
 
         document
             .querySelectorAll(
-                "#inspireBell, #inspireTone, #inspirePulse"
+                "#inspireBell, #inspireTone, #inspirePulse, #inspireGong"
             )
             .forEach(
                 button =>
@@ -1988,7 +2289,7 @@ function selectSound(
 
         document
             .querySelectorAll(
-                "#expireBowl, #expireTone, #expirePulse"
+                "#expireBowl, #expireTone, #expirePulse, #expireGong"
             )
             .forEach(
                 button =>
@@ -2401,6 +2702,12 @@ function finishSession() {
 updateBreathDisplay();
 
 updateDuration();
+
+changeAlarmInterval(
+    document.getElementById(
+        "alarmIntervalSlider"
+    ).value
+);
 
 </script>
 
