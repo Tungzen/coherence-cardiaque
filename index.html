@@ -645,11 +645,13 @@ body {
 
 
 /* =========================================================
-   SELECTS
+   SELECT
 ========================================================= */
 
 .settings-row select {
-    min-width: 125px;
+    min-width: 135px;
+
+    max-width: 160px;
 
     padding: 8px 9px;
 
@@ -729,12 +731,41 @@ body {
    RAPPEL D'ALARME
 ========================================================= */
 
+.alarm-interval-section {
+    display: block;
+
+    padding: 10px 0 12px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+}
+
+.alarm-interval-title {
+    color: #d9e5e9;
+
+    font-size: 13px;
+
+    margin-bottom: 5px;
+}
+
+.alarm-interval-value {
+    text-align: center;
+
+    color: #63e3ae;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    margin-bottom: 7px;
+}
+
 .alarm-slider {
     width: 100%;
 
     height: 5px;
 
-    margin-top: 9px;
+    margin: 0;
 
     appearance: none;
 
@@ -770,19 +801,40 @@ body {
 
     font-size: 10px;
 
-    margin-top: 4px;
+    margin-top: 5px;
 }
 
-.alarm-interval-value {
-    text-align: center;
 
-    color: #63e3ae;
+/* =========================================================
+   BOUTON TEST ALARME
+========================================================= */
 
-    font-size: 15px;
+.test-alarm-button {
+    width: 100%;
 
-    font-weight: 600;
+    height: 42px;
 
-    margin-top: 4px;
+    margin-top: 10px;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    border-radius: 10px;
+
+    background:
+        rgba(98,225,174,.12);
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+.test-alarm-button:active {
+    transform: scale(.98);
+
+    background:
+        rgba(98,225,174,.20);
 }
 
 
@@ -822,7 +874,7 @@ body {
     }
 
     .settings-row select {
-        min-width: 105px;
+        min-width: 110px;
         font-size: 11px;
     }
 }
@@ -1216,7 +1268,7 @@ body {
 
 
 <!-- =====================================================
-     PARAMÈTRES
+     PARAMÈTRES DE L'ALARME
 ===================================================== -->
 
 <button
@@ -1260,15 +1312,10 @@ body {
 
     <!-- RAPPEL -->
 
-    <div class="settings-row"
-         style="display:block; padding:8px 0 10px;">
+    <div class="alarm-interval-section">
 
-        <div
-            class="settings-label"
-            style="margin-bottom:5px;">
-
+        <div class="alarm-interval-title">
             Rappel d'alarme
-
         </div>
 
 
@@ -1304,7 +1351,7 @@ body {
     </div>
 
 
-    <!-- SON -->
+    <!-- SON DE L'ALARME -->
 
     <div class="settings-row">
 
@@ -1328,7 +1375,7 @@ body {
             </option>
 
             <option value="double">
-                🔔🔔 Double alarme
+                🔔 Double alarme
             </option>
 
             <option value="urgent">
@@ -1342,6 +1389,19 @@ body {
         </select>
 
     </div>
+
+
+    <!-- TEST DU SON -->
+
+    <button
+        id="testAlarmButton"
+        class="test-alarm-button"
+        onclick="testAlarmSound()">
+
+        ▶️ &nbsp; Tester le son de l'alarme
+
+    </button>
+
 
 </div>
 
@@ -1481,7 +1541,7 @@ function playTone(
 
 
 /* =========================================================
-   GONG 5 SECONDES
+   GONG DE 5 SECONDES
 ========================================================= */
 
 function playFiveSecondGong() {
@@ -1639,7 +1699,7 @@ function playBreathSound(sound) {
     }
 
 
-    /* BOL */
+    /* BOL TIBÉTAIN */
 
     else if (sound === "bowl") {
 
@@ -1682,22 +1742,32 @@ function playBreathSound(sound) {
 
 
 /* =========================================================
-   ALARMES
+   SONS D'ALARME
 ========================================================= */
 
 function playAlarm() {
 
     if (!alarmEnabled) {
-
         return;
-
     }
 
+    playSelectedAlarmSound();
+
+}
+
+
+/* =========================================================
+   JOUER LE SON SÉLECTIONNÉ
+========================================================= */
+
+function playSelectedAlarmSound() {
 
     createAudio();
 
 
-    /* GONG PROFOND */
+    /* =====================================================
+       1 — GONG PROFOND
+    ===================================================== */
 
     if (alarmSound === "gong") {
 
@@ -1706,7 +1776,9 @@ function playAlarm() {
     }
 
 
-    /* CARILLON DOUX */
+    /* =====================================================
+       2 — CARILLON DOUX
+    ===================================================== */
 
     else if (alarmSound === "chime") {
 
@@ -1758,11 +1830,17 @@ function playAlarm() {
     }
 
 
-    /* CLOCHES */
+    /* =====================================================
+       3 — CLOCHES
+    ===================================================== */
 
     else if (alarmSound === "bells") {
 
-        [523,659,784,659,523].forEach(
+        const notes =
+            [523, 659, 784, 659, 523];
+
+
+        notes.forEach(
             (frequency, index) => {
 
                 setTimeout(
@@ -1789,7 +1867,9 @@ function playAlarm() {
     }
 
 
-    /* DOUBLE ALARME */
+    /* =====================================================
+       4 — DOUBLE ALARME
+    ===================================================== */
 
     else if (alarmSound === "double") {
 
@@ -1822,11 +1902,17 @@ function playAlarm() {
     }
 
 
-    /* ALARME INSISTANTE */
+    /* =====================================================
+       5 — ALARME INSISTANTE
+    ===================================================== */
 
     else if (alarmSound === "urgent") {
 
-        [880,660,880,660,880,660].forEach(
+        const notes =
+            [880, 660, 880, 660, 880, 660];
+
+
+        notes.forEach(
             (frequency, index) => {
 
                 setTimeout(
@@ -1853,11 +1939,26 @@ function playAlarm() {
     }
 
 
-    /* ALARME RAPIDE */
+    /* =====================================================
+       6 — ALARME RAPIDE
+    ===================================================== */
 
     else if (alarmSound === "rapid") {
 
-        [1000,700,1000,700,1000,700,1000,700].forEach(
+        const notes =
+            [
+                1000,
+                700,
+                1000,
+                700,
+                1000,
+                700,
+                1000,
+                700
+            ];
+
+
+        notes.forEach(
             (frequency, index) => {
 
                 setTimeout(
@@ -1887,7 +1988,20 @@ function playAlarm() {
 
 
 /* =========================================================
-   RAPPEL
+   TEST DU SON DE L'ALARME
+========================================================= */
+
+function testAlarmSound() {
+
+    createAudio();
+
+    playSelectedAlarmSound();
+
+}
+
+
+/* =========================================================
+   RAPPEL D'ALARME
 ========================================================= */
 
 function scheduleSnooze() {
@@ -1976,7 +2090,7 @@ function formatAlarmInterval(seconds) {
 
 
 /* =========================================================
-   MODIFICATION RAPPEL
+   MODIFIER LE RAPPEL
 ========================================================= */
 
 function changeAlarmInterval(value) {
@@ -2120,13 +2234,6 @@ function changeBreath(amount) {
 
 
     updateBreathDisplay();
-
-
-    /*
-       Si la séance est en cours,
-       le nouveau rythme est appliqué
-       à la prochaine phase.
-    */
 
 }
 
@@ -2651,6 +2758,11 @@ function finishSession() {
 
     clearInterval(
         sessionTimer
+    );
+
+
+    clearTimeout(
+        alarmTimer
     );
 
 
