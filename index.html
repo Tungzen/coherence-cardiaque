@@ -2,28 +2,18 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0, user-scalable=no">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Cohérence">
-
 <title>Cohérence cardiaque</title>
-
 <style>
-
 /* =========================================================
    BASE
 ========================================================= */
-
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
-
 html,
 body {
     margin: 0;
@@ -40,89 +30,66 @@ body {
         sans-serif;
     overflow: hidden;
 }
-
 body {
     width: 100%;
 }
-
 /* =========================================================
    APPLICATION
 ========================================================= */
-
 .app {
     width: 100%;
     max-width: 520px;
     height: 100dvh;
-
     margin: 0 auto;
-
     display: flex;
     flex-direction: column;
-
     padding-top: max(12px, env(safe-area-inset-top));
 }
-
 /* =========================================================
    PARTIE FIXE DU HAUT
 ========================================================= */
-
 .fixed-top {
     flex-shrink: 0;
-
     background: #06253a;
-
     position: relative;
     z-index: 20;
 }
-
 /* =========================================================
    TITRE
 ========================================================= */
-
 .header {
     text-align: center;
     padding: 0 20px 4px;
 }
-
 .title {
     font-size: 27px;
     font-weight: 500;
     margin: 0;
 }
-
 .subtitle {
     color: #c5d6dd;
     font-size: 14px;
     margin-top: 2px;
 }
-
 /* =========================================================
    CERCLE
 ========================================================= */
-
 .breathing-area {
     height: 270px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     position: relative;
 }
-
 .breathing-ring {
     width: min(245px, 58vw);
     height: min(245px, 58vw);
-
     border-radius: 50%;
-
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background:
         radial-gradient(
             circle,
@@ -130,138 +97,99 @@ body {
             #0b3446 70%,
             #092e40 100%
         );
-
     border: 7px solid #54dcae;
-
     box-shadow:
         0 0 25px rgba(82,220,174,.12),
         inset 0 0 30px rgba(0,0,0,.12);
-
     transform: scale(.84);
-
     transition:
         transform var(--breath-duration, 5s) ease-in-out,
         border-color .5s ease;
 }
-
 .breathing-ring::after {
     content: "";
-
     position: absolute;
     inset: -7px;
-
     border-radius: 50%;
-
     border: 3px solid rgba(67,183,255,.75);
-
     border-right-color: #60dfa9;
     border-bottom-color: #60dfa9;
-
     pointer-events: none;
 }
-
 .breathing-ring.inhale {
     transform: scale(1.02);
 }
-
 .breathing-ring.exhale {
     transform: scale(.84);
 }
-
 .breathing-content {
     width: 100%;
     height: 100%;
-
     display: flex;
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
-
     text-align: center;
-
     position: relative;
     z-index: 2;
 }
-
 .phase {
     color: #61e3ae;
     font-size: 28px;
     font-weight: 500;
     line-height: 1.1;
 }
-
 .seconds {
     font-size: 18px;
     margin-top: 7px;
 }
-
 .lungs {
     font-size: 38px;
     line-height: 1;
     margin-top: 13px;
 }
-
 /* =========================================================
    ZONE QUI DÉFILE
 ========================================================= */
-
 .scroll-area {
     flex: 1;
-
     min-height: 0;
-
     overflow-y: auto;
     overflow-x: hidden;
-
     -webkit-overflow-scrolling: touch;
-
     padding: 8px 20px 25px;
 }
-
 /* =========================================================
    INSTRUCTION
 ========================================================= */
-
 .instruction {
     text-align: center;
     color: #aebfc7;
     font-size: 14px;
-
     margin: 0 0 10px;
 }
-
 /* =========================================================
    BOUTONS
 ========================================================= */
-
 .start-button {
     width: 100%;
     height: 51px;
-
     border: none;
     border-radius: 15px;
-
     background:
         linear-gradient(
             90deg,
             #61dfa9,
             #5edbaa
         );
-
     color: white;
-
     font-size: 18px;
     font-weight: 600;
-
     margin: 0 0 9px;
-
     flex-shrink: 0;
 }
-
 .stop-button {
     display: none;
-
     background:
         linear-gradient(
             90deg,
@@ -269,141 +197,100 @@ body {
             #c85862
         );
 }
-
 .start-button:active,
 .small-button:active,
-.alarm-menu-button:active {
+.alarm-menu-button:active,
+.screen-option:active {
     transform: scale(.985);
 }
-
 /* =========================================================
    CARTES
 ========================================================= */
-
 .card {
     background: rgba(19,67,87,.76);
-
     border: 1px solid rgba(180,220,230,.13);
-
     border-radius: 16px;
-
     padding: 11px 15px;
-
     margin-bottom: 9px;
-
     flex-shrink: 0;
 }
-
 .card-title {
     display: flex;
     align-items: center;
-
     gap: 9px;
-
     font-size: 15px;
     font-weight: 500;
 }
-
 .card-icon {
     font-size: 21px;
     color: #52b9ff;
 }
-
 /* =========================================================
    RYTHME
 ========================================================= */
-
 .breath-controls {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-top: 7px;
 }
-
 .control-label {
     color: #dbe5e9;
     font-size: 14px;
 }
-
 .adjust {
     display: flex;
     align-items: center;
-
     gap: 12px;
 }
-
 .small-button {
     width: 32px;
     height: 32px;
-
     border-radius: 50%;
-
     border: 1px solid rgba(255,255,255,.12);
-
     background: rgba(255,255,255,.07);
-
     color: white;
-
     font-size: 21px;
     line-height: 1;
-
     flex-shrink: 0;
 }
-
 .value {
     min-width: 72px;
-
     text-align: center;
-
     font-size: 16px;
     font-weight: 600;
 }
-
 /* =========================================================
    DURÉE
 ========================================================= */
-
 .duration-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 .remaining {
     color: #63e3ae;
     font-size: 20px;
 }
-
 .duration-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-
     gap: 25px;
-
     margin-top: 5px;
 }
-
 .duration-value {
     min-width: 75px;
-
     text-align: center;
-
     font-size: 17px;
     font-weight: 600;
 }
-
 .slider {
     width: 100%;
     height: 5px;
-
     margin-top: 6px;
-
     appearance: none;
-
     border-radius: 5px;
-
     background:
         linear-gradient(
             90deg,
@@ -411,1295 +298,968 @@ body {
             rgba(255,255,255,.18) var(--progress, 7%)
         );
 }
-
 .slider::-webkit-slider-thumb {
     appearance: none;
-
     width: 22px;
     height: 22px;
-
     border-radius: 50%;
-
     background: #62dfac;
-
     border: 3px solid #174c56;
 }
-
 .slider-labels {
     display: flex;
     justify-content: space-between;
-
     color: #8faab5;
-
     font-size: 10px;
-
     margin-top: 2px;
 }
-
 /* =========================================================
    SONS RESPIRATION
 ========================================================= */
-
 .sound-grid {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 8px;
-
     margin-top: 7px;
 }
-
 .sound-column {
     background: rgba(0,0,0,.10);
-
     border-radius: 10px;
-
     padding: 6px 8px;
 }
-
 .sound-heading {
     display: flex;
     align-items: center;
-
     gap: 7px;
-
     font-size: 13px;
-
     margin-bottom: 4px;
 }
-
 .sound-dot {
     width: 13px;
     height: 13px;
-
     border-radius: 50%;
-
     flex-shrink: 0;
 }
-
 .green {
     background: #61dfa9;
 }
-
 .blue {
     background: #48a9ff;
 }
-
 .sound-option {
     width: 100%;
     min-height: 29px;
-
     border: none;
-
     border-radius: 7px;
-
     background: transparent;
-
     color: #b8cbd3;
-
     text-align: left;
-
     padding: 3px 6px;
-
     font-size: 12px;
 }
-
 .sound-option.selected {
     background: rgba(98,225,174,.18);
-
     color: white;
 }
-
+/* =========================================================
+   PARAMÈTRE ÉCRAN
+========================================================= */
+.screen-option {
+    width: 100%;
+    min-height: 51px;
+    border-radius: 15px;
+    border: 1px solid rgba(180,220,230,.13);
+    background: rgba(19,67,87,.90);
+    color: white;
+    font-size: 15px;
+    text-align: left;
+    padding: 8px 14px;
+    margin-bottom: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform .15s ease;
+}
+.screen-option-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+.screen-icon {
+    font-size: 21px;
+    color: #52b9ff;
+    flex-shrink: 0;
+}
+.screen-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.screen-title {
+    font-size: 15px;
+    font-weight: 500;
+}
+.screen-description {
+    color: #8faab5;
+    font-size: 11px;
+    line-height: 1.3;
+}
+/* =========================================================
+   INTERRUPTEUR
+========================================================= */
+.toggle {
+    width: 50px;
+    height: 30px;
+    border-radius: 30px;
+    background: rgba(255,255,255,.18);
+    position: relative;
+    flex-shrink: 0;
+    transition:
+        background .2s ease;
+}
+.toggle::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    top: 3px;
+    left: 3px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.35);
+    transition:
+        transform .2s ease;
+}
+.toggle.active {
+    background: #61dfa9;
+}
+.toggle.active::after {
+    transform: translateX(20px);
+}
+.screen-status {
+    color: #61dfa9;
+    font-size: 11px;
+    margin-top: 2px;
+}
+.screen-status.unsupported {
+    color: #e5a06b;
+}
 /* =========================================================
    PARAMÈTRES DE L'ALARME
 ========================================================= */
-
 .alarm-menu-button {
     width: 100%;
-
     min-height: 51px;
-
     border-radius: 15px;
-
     border: 1px solid rgba(180,220,230,.13);
-
     background: rgba(19,67,87,.90);
-
     color: white;
-
     font-size: 16px;
     font-weight: 500;
-
     text-align: left;
-
     padding: 0 17px;
-
     margin-bottom: 9px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
 .alarm-menu-left {
     display: flex;
     align-items: center;
-
     gap: 10px;
 }
-
 .alarm-icon {
     font-size: 21px;
     color: #52b9ff;
 }
-
 .alarm-arrow {
     font-size: 20px;
-
     color: #8faab5;
-
     transition: transform .25s ease;
 }
-
 .alarm-menu-button.open .alarm-arrow {
     transform: rotate(180deg);
 }
-
 /* =========================================================
    SOUS-MENU ALARME
 ========================================================= */
-
 .alarm-settings {
     display: none;
-
     background: rgba(19,67,87,.76);
-
     border: 1px solid rgba(180,220,230,.13);
-
     border-radius: 16px;
-
     padding: 13px 15px;
-
     margin-bottom: 9px;
 }
-
 .alarm-settings.open {
     display: block;
 }
-
 .alarm-section-title {
     color: #dbe5e9;
-
     font-size: 14px;
     font-weight: 500;
-
     margin-bottom: 8px;
 }
-
 .alarm-description {
     color: #91aab5;
-
     font-size: 12px;
-
     line-height: 1.4;
-
     margin-bottom: 10px;
 }
-
 .alarm-option {
     width: 100%;
-
     min-height: 39px;
-
     border: none;
-
     border-radius: 9px;
-
     background: transparent;
-
     color: #b8cbd3;
-
     text-align: left;
-
     padding: 7px 10px;
-
     font-size: 13px;
-
     display: flex;
     align-items: center;
-
     justify-content: space-between;
-
     margin-bottom: 3px;
 }
-
 .alarm-option.selected {
     background: rgba(98,225,174,.18);
-
     color: white;
 }
-
 .alarm-check {
     color: #61dfa9;
-
     font-size: 17px;
-
     visibility: hidden;
 }
-
 .alarm-option.selected .alarm-check {
     visibility: visible;
 }
-
 /* =========================================================
    RÉPÉTITION
 ========================================================= */
-
 .repeat-row {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     margin-top: 12px;
-
     padding-top: 12px;
-
     border-top: 1px solid rgba(255,255,255,.08);
 }
-
 .repeat-label {
     color: #dbe5e9;
-
     font-size: 14px;
 }
-
 .repeat-controls {
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 }
-
 .repeat-value {
     min-width: 66px;
-
     text-align: center;
-
     font-size: 15px;
-
     font-weight: 600;
 }
-
 /* =========================================================
    ALARME DÉSACTIVÉE
 ========================================================= */
-
 .alarm-disabled {
     color: #e27a7a !important;
 }
-
 /* =========================================================
    PETITS ÉCRANS
 ========================================================= */
-
 @media (max-height: 700px) {
-
     .title {
         font-size: 24px;
     }
-
     .subtitle {
         font-size: 12px;
     }
-
     .breathing-area {
         height: 220px;
     }
-
     .breathing-ring {
         width: 190px;
         height: 190px;
     }
-
     .phase {
         font-size: 23px;
     }
-
     .seconds {
         font-size: 16px;
     }
-
     .lungs {
         font-size: 30px;
         margin-top: 8px;
     }
-
     .card {
         padding: 8px 12px;
         margin-bottom: 6px;
     }
-
     .alarm-menu-button {
         min-height: 47px;
     }
-
+    .screen-option {
+        min-height: 47px;
+    }
     .instruction {
         margin-bottom: 6px;
     }
-
 }
-
 /* =========================================================
    TRÈS PETITS ÉCRANS
 ========================================================= */
-
 @media (max-height: 620px) {
-
     .breathing-area {
         height: 185px;
     }
-
     .breathing-ring {
         width: 160px;
         height: 160px;
     }
-
     .phase {
         font-size: 20px;
     }
-
     .seconds {
         font-size: 14px;
         margin-top: 4px;
     }
-
     .lungs {
         font-size: 25px;
         margin-top: 5px;
     }
-
 }
-
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
-    <!-- =====================================================
-         PARTIE FIXE
-    ====================================================== -->
-
-    <div class="fixed-top">
-
-        <header class="header">
-
-            <div class="title">
-                Cohérence cardiaque
-            </div>
-
-            <div class="subtitle">
-                <span id="headerBreath">5</span>
-                secondes inspiration
-                •
-                <span id="headerBreath2">5</span>
-                secondes expiration
-            </div>
-
-        </header>
-
-
-        <section class="breathing-area">
-
-            <div
-                id="breathingRing"
-                class="breathing-ring exhale">
-
-                <div class="breathing-content">
-
-                    <div
-                        id="phase"
-                        class="phase">
-                        Prêt
-                    </div>
-
-                    <div class="seconds">
-
-                        <span id="phaseSeconds">
-                            5
-                        </span>
-
-                        secondes
-
-                    </div>
-
-                    <div class="lungs">
-                        ♧
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </div>
-
-
-    <!-- =====================================================
-         PARTIE DÉFILANTE
-    ====================================================== -->
-
-    <main class="scroll-area">
-
-        <div class="instruction">
-            Restez détendu et respirez naturellement.
+<!-- =====================================================
+     PARTIE FIXE
+====================================================== -->
+<div class="fixed-top">
+    <header class="header">
+        <div class="title">
+            Cohérence cardiaque
         </div>
-
-
-        <!-- =================================================
-             DÉMARRER — PREMIER BOUTON
-        ================================================== -->
-
-        <button
-            id="startButton"
-            class="start-button"
-            onclick="startSession()">
-
-            ▶ &nbsp; Démarrer
-
-        </button>
-
-
-        <button
-            id="stopButton"
-            class="start-button stop-button"
-            onclick="stopSession()">
-
-            ■ &nbsp; Arrêter
-
-        </button>
-
-
-        <!-- =================================================
-             RYTHME
-        ================================================== -->
-
-        <section class="card">
-
-            <div class="card-title">
-
-                <span class="card-icon">
-                    〰
-                </span>
-
-                <span>
-                    Rythme respiratoire
-                </span>
-
-            </div>
-
-            <div class="breath-controls">
-
-                <div class="control-label">
-                    Inspiration / expiration
-                </div>
-
-                <div class="adjust">
-
-                    <button
-                        class="small-button"
-                        onclick="changeBreath(-1)">
-                        −
-                    </button>
-
-                    <div class="value">
-
-                        <span id="breathValue">
-                            5
-                        </span>
-                        s
-
-                    </div>
-
-                    <button
-                        class="small-button"
-                        onclick="changeBreath(1)">
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             DURÉE
-        ================================================== -->
-
-        <section class="card">
-
-            <div class="duration-top">
-
-                <div class="card-title">
-
-                    <span class="card-icon">
-                        ◷
-                    </span>
-
-                    <span>
-                        Durée
-                    </span>
-
-                </div>
-
+        <div class="subtitle">
+            <span id="headerBreath">5</span>
+            secondes inspiration
+            •
+            <span id="headerBreath2">5</span>
+            secondes expiration
+        </div>
+    </header>
+    <section class="breathing-area">
+        <div
+            id="breathingRing"
+            class="breathing-ring exhale">
+            <div class="breathing-content">
                 <div
-                    id="remaining"
-                    class="remaining">
-
-                    05:00
-
+                    id="phase"
+                    class="phase">
+                    Prêt
                 </div>
-
+                <div class="seconds">
+                    <span id="phaseSeconds">
+                        5
+                    </span>
+                    secondes
+                </div>
+                <div class="lungs">
+                    ♧
+                </div>
             </div>
-
-
-            <div class="duration-controls">
-
+        </div>
+    </section>
+</div>
+<!-- =====================================================
+     PARTIE DÉFILANTE
+====================================================== -->
+<main class="scroll-area">
+    <div class="instruction">
+        Restez détendu et respirez naturellement.
+    </div>
+    <!-- =================================================
+         DÉMARRER — PREMIER BOUTON
+    ================================================== -->
+    <button
+        id="startButton"
+        class="start-button"
+        onclick="startSession()">
+        ▶ &nbsp; Démarrer
+    </button>
+    <button
+        id="stopButton"
+        class="start-button stop-button"
+        onclick="stopSession()">
+        ■ &nbsp; Arrêter
+    </button>
+    <!-- =================================================
+         RYTHME
+    ================================================== -->
+    <section class="card">
+        <div class="card-title">
+            <span class="card-icon">
+                〰
+            </span>
+            <span>
+                Rythme respiratoire
+            </span>
+        </div>
+        <div class="breath-controls">
+            <div class="control-label">
+                Inspiration / expiration
+            </div>
+            <div class="adjust">
                 <button
                     class="small-button"
-                    onclick="changeDuration(-1)">
+                    onclick="changeBreath(-1)">
                     −
                 </button>
-
-                <div
-                    id="durationValue"
-                    class="duration-value">
-
-                    5 min
-
+                <div class="value">
+                    <span id="breathValue">
+                        5
+                    </span>
+                    s
                 </div>
-
                 <button
                     class="small-button"
-                    onclick="changeDuration(1)">
+                    onclick="changeBreath(1)">
                     +
                 </button>
-
             </div>
-
-
-            <input
-                id="durationSlider"
-                class="slider"
-                type="range"
-                min="1"
-                max="60"
-                value="5"
-                oninput="sliderDuration(this.value)"
-            >
-
-            <div class="slider-labels">
-
-                <span>
-                    1 min
-                </span>
-
-                <span>
-                    30 min
-                </span>
-
-                <span>
-                    60 min
-                </span>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SONS
-        ================================================== -->
-
-        <section class="card">
-
+        </div>
+    </section>
+    <!-- =================================================
+         DURÉE
+    ================================================== -->
+    <section class="card">
+        <div class="duration-top">
             <div class="card-title">
-
                 <span class="card-icon">
-                    ♫
+                    ◷
                 </span>
-
                 <span>
-                    Sons
+                    Durée
                 </span>
-
             </div>
-
-
-            <div class="sound-grid">
-
-                <!-- INSPIRATION -->
-
-                <div class="sound-column">
-
-                    <div class="sound-heading">
-
-                        <div class="sound-dot green"></div>
-
-                        Inspiration
-
-                    </div>
-
-
-                    <button
-                        id="inspireBell"
-                        class="sound-option selected"
-                        onclick="selectSound('inhale','bell')">
-
-                        🔔 Cloche douce
-
-                    </button>
-
-
-                    <button
-                        id="inspireTone"
-                        class="sound-option"
-                        onclick="selectSound('inhale','tone')">
-
-                        ✨ Ton cristallin
-
-                    </button>
-
-
-                    <button
-                        id="inspirePulse"
-                        class="sound-option"
-                        onclick="selectSound('inhale','pulse')">
-
-                        🔔 Pulsation douce
-
-                    </button>
-
-
-                    <button
-                        id="inspireGong"
-                        class="sound-option"
-                        onclick="selectSound('inhale','gong')">
-
-                        🪷 Gong — 5 secondes
-
-                    </button>
-
-                </div>
-
-
-                <!-- EXPIRATION -->
-
-                <div class="sound-column">
-
-                    <div class="sound-heading">
-
-                        <div class="sound-dot blue"></div>
-
-                        Expiration
-
-                    </div>
-
-
-                    <button
-                        id="expireBowl"
-                        class="sound-option selected"
-                        onclick="selectSound('exhale','bowl')">
-
-                        🪷 Bol tibétain
-
-                    </button>
-
-
-                    <button
-                        id="expireTone"
-                        class="sound-option"
-                        onclick="selectSound('exhale','tone')">
-
-                        ✨ Ton profond
-
-                    </button>
-
-
-                    <button
-                        id="expirePulse"
-                        class="sound-option"
-                        onclick="selectSound('exhale','pulse')">
-
-                        🌊 Pulsation douce
-
-                    </button>
-
-
-                    <button
-                        id="expireGong"
-                        class="sound-option"
-                        onclick="selectSound('exhale','gong')">
-
-                        🪷 Gong — 5 secondes
-
-                    </button>
-
-                </div>
-
+            <div
+                id="remaining"
+                class="remaining">
+                05:00
             </div>
-
-        </section>
-
-
-        <!-- =================================================
-             BOUTON PARAMÈTRES DE L'ALARME
-        ================================================== -->
-
+        </div>
+        <div class="duration-controls">
+            <button
+                class="small-button"
+                onclick="changeDuration(-1)">
+                −
+            </button>
+            <div
+                id="durationValue"
+                class="duration-value">
+                5 min
+            </div>
+            <button
+                class="small-button"
+                onclick="changeDuration(1)">
+                +
+            </button>
+        </div>
+        <input
+            id="durationSlider"
+            class="slider"
+            type="range"
+            min="1"
+            max="60"
+            value="5"
+            oninput="sliderDuration(this.value)"
+        >
+        <div class="slider-labels">
+            <span>
+                1 min
+            </span>
+            <span>
+                30 min
+            </span>
+            <span>
+                60 min
+            </span>
+        </div>
+    </section>
+    <!-- =================================================
+         SONS
+    ================================================== -->
+    <section class="card">
+        <div class="card-title">
+            <span class="card-icon">
+                ♫
+            </span>
+            <span>
+                Sons
+            </span>
+        </div>
+        <div class="sound-grid">
+            <!-- INSPIRATION -->
+            <div class="sound-column">
+                <div class="sound-heading">
+                    <div class="sound-dot green"></div>
+                    Inspiration
+                </div>
+                <button
+                    id="inspireBell"
+                    class="sound-option selected"
+                    onclick="selectSound('inhale','bell')">
+                    🔔 Cloche douce
+                </button>
+                <button
+                    id="inspireTone"
+                    class="sound-option"
+                    onclick="selectSound('inhale','tone')">
+                    ✨ Ton cristallin
+                </button>
+                <button
+                    id="inspirePulse"
+                    class="sound-option"
+                    onclick="selectSound('inhale','pulse')">
+                    🔔 Pulsation douce
+                </button>
+                <button
+                    id="inspireGong"
+                    class="sound-option"
+                    onclick="selectSound('inhale','gong')">
+                    🪷 Gong — 5 secondes
+                </button>
+            </div>
+            <!-- EXPIRATION -->
+            <div class="sound-column">
+                <div class="sound-heading">
+                    <div class="sound-dot blue"></div>
+                    Expiration
+                </div>
+                <button
+                    id="expireBowl"
+                    class="sound-option selected"
+                    onclick="selectSound('exhale','bowl')">
+                    🪷 Bol tibétain
+                </button>
+                <button
+                    id="expireTone"
+                    class="sound-option"
+                    onclick="selectSound('exhale','tone')">
+                    ✨ Ton profond
+                </button>
+                <button
+                    id="expirePulse"
+                    class="sound-option"
+                    onclick="selectSound('exhale','pulse')">
+                    🌊 Pulsation douce
+                </button>
+                <button
+                    id="expireGong"
+                    class="sound-option"
+                    onclick="selectSound('exhale','gong')">
+                    🪷 Gong — 5 secondes
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+         GARDER L'ÉCRAN ALLUMÉ
+    ================================================== -->
+    <button
+        id="screenOption"
+        class="screen-option"
+        onclick="toggleKeepScreenOn()">
+        <span class="screen-option-left">
+            <span class="screen-icon">
+                📱
+            </span>
+            <span class="screen-text">
+                <span class="screen-title">
+                    Garder l'écran allumé
+                </span>
+                <span
+                    id="screenDescription"
+                    class="screen-description">
+                    Empêche l'écran de se verrouiller pendant la séance.
+                </span>
+                <span
+                    id="screenStatus"
+                    class="screen-status">
+                    Désactivé
+                </span>
+            </span>
+        </span>
+        <span
+            id="screenToggle"
+            class="toggle">
+        </span>
+    </button>
+    <!-- =================================================
+         BOUTON PARAMÈTRES DE L'ALARME
+    ================================================== -->
+    <button
+        id="alarmMenuButton"
+        class="alarm-menu-button"
+        onclick="toggleAlarmSettings()">
+        <span class="alarm-menu-left">
+            <span class="alarm-icon">
+                ⏰
+            </span>
+            <span>
+                Paramètres de l'alarme
+            </span>
+        </span>
+        <span
+            id="alarmArrow"
+            class="alarm-arrow">
+            ▼
+        </span>
+    </button>
+    <!-- =================================================
+         SOUS-MENU PARAMÈTRES ALARME
+    ================================================== -->
+    <section
+        id="alarmSettings"
+        class="alarm-settings">
+        <div class="alarm-section-title">
+            Son de l'alarme
+        </div>
+        <div class="alarm-description">
+            L'alarme se déclenche lorsque le délai
+            sélectionné entre les respirations est atteint.
+            Les six sons ont chacun un caractère différent :
+            la progression est basée sur l'insistance du son,
+            et non simplement sur son volume.
+        </div>
+        <!-- SON 1 -->
         <button
-            id="alarmMenuButton"
-            class="alarm-menu-button"
-            onclick="toggleAlarmSettings()">
-
-            <span class="alarm-menu-left">
-
-                <span class="alarm-icon">
-                    ⏰
-                </span>
-
-                <span>
-                    Paramètres de l'alarme
-                </span>
-
+            id="alarmSound1"
+            class="alarm-option selected"
+            onclick="selectAlarmSound(1)">
+            <span>
+                1 — Carillon très doux
             </span>
-
-            <span
-                id="alarmArrow"
-                class="alarm-arrow">
-
-                ▼
-
+            <span class="alarm-check">
+                ✓
             </span>
-
         </button>
-
-
-        <!-- =================================================
-             SOUS-MENU PARAMÈTRES ALARME
-        ================================================== -->
-
-        <section
-            id="alarmSettings"
-            class="alarm-settings">
-
-            <div class="alarm-section-title">
-                Son de l'alarme
+        <!-- SON 2 -->
+        <button
+            id="alarmSound2"
+            class="alarm-option"
+            onclick="selectAlarmSound(2)">
+            <span>
+                2 — Cloche douce
+            </span>
+            <span class="alarm-check">
+                ✓
+            </span>
+        </button>
+        <!-- SON 3 -->
+        <button
+            id="alarmSound3"
+            class="alarm-option"
+            onclick="selectAlarmSound(3)">
+            <span>
+                3 — Double cloche
+            </span>
+            <span class="alarm-check">
+                ✓
+            </span>
+        </button>
+        <!-- SON 4 -->
+        <button
+            id="alarmSound4"
+            class="alarm-option"
+            onclick="selectAlarmSound(4)">
+            <span>
+                4 — Séquence insistante
+            </span>
+            <span class="alarm-check">
+                ✓
+            </span>
+        </button>
+        <!-- SON 5 -->
+        <button
+            id="alarmSound5"
+            class="alarm-option"
+            onclick="selectAlarmSound(5)">
+            <span>
+                5 — Alerte répétitive
+            </span>
+            <span class="alarm-check">
+                ✓
+            </span>
+        </button>
+        <!-- SON 6 -->
+        <button
+            id="alarmSound6"
+            class="alarm-option"
+            onclick="selectAlarmSound(6)">
+            <span>
+                6 — Alerte très insistante
+            </span>
+            <span class="alarm-check">
+                ✓
+            </span>
+        </button>
+        <!-- RÉPÉTITION -->
+        <div class="repeat-row">
+            <div class="repeat-label">
+                Répéter l'alarme
             </div>
-
-            <div class="alarm-description">
-                L'alarme se déclenche lorsque le délai
-                sélectionné entre les respirations est atteint.
-                Les six sons ont chacun un caractère différent :
-                la progression est basée sur l'insistance du son,
-                et non simplement sur son volume.
-            </div>
-
-
-            <!-- SON 1 -->
-
-            <button
-                id="alarmSound1"
-                class="alarm-option selected"
-                onclick="selectAlarmSound(1)">
-
-                <span>
-                    1 — Carillon très doux
-                </span>
-
-                <span class="alarm-check">
-                    ✓
-                </span>
-
-            </button>
-
-
-            <!-- SON 2 -->
-
-            <button
-                id="alarmSound2"
-                class="alarm-option"
-                onclick="selectAlarmSound(2)">
-
-                <span>
-                    2 — Cloche douce
-                </span>
-
-                <span class="alarm-check">
-                    ✓
-                </span>
-
-            </button>
-
-
-            <!-- SON 3 -->
-
-            <button
-                id="alarmSound3"
-                class="alarm-option"
-                onclick="selectAlarmSound(3)">
-
-                <span>
-                    3 — Double cloche
-                </span>
-
-                <span class="alarm-check">
-                    ✓
-                </span>
-
-            </button>
-
-
-            <!-- SON 4 -->
-
-            <button
-                id="alarmSound4"
-                class="alarm-option"
-                onclick="selectAlarmSound(4)">
-
-                <span>
-                    4 — Séquence insistante
-                </span>
-
-                <span class="alarm-check">
-                    ✓
-                </span>
-
-            </button>
-
-
-            <!-- SON 5 -->
-
-            <button
-                id="alarmSound5"
-                class="alarm-option"
-                onclick="selectAlarmSound(5)">
-
-                <span>
-                    5 — Alerte répétitive
-                </span>
-
-                <span class="alarm-check">
-                    ✓
-                </span>
-
-            </button>
-
-
-            <!-- SON 6 -->
-
-            <button
-                id="alarmSound6"
-                class="alarm-option"
-                onclick="selectAlarmSound(6)">
-
-                <span>
-                    6 — Alerte très insistante
-                </span>
-
-                <span class="alarm-check">
-                    ✓
-                </span>
-
-            </button>
-
-
-            <!-- RÉPÉTITION -->
-
-            <div class="repeat-row">
-
-                <div class="repeat-label">
-                    Répéter l'alarme
+            <div class="repeat-controls">
+                <button
+                    class="small-button"
+                    onclick="changeAlarmRepeat(-5)">
+                    −
+                </button>
+                <div
+                    id="alarmRepeatValue"
+                    class="repeat-value">
+                    5 s
                 </div>
-
-                <div class="repeat-controls">
-
-                    <button
-                        class="small-button"
-                        onclick="changeAlarmRepeat(-5)">
-                        −
-                    </button>
-
-                    <div
-                        id="alarmRepeatValue"
-                        class="repeat-value">
-
-                        5 s
-
-                    </div>
-
-                    <button
-                        class="small-button"
-                        onclick="changeAlarmRepeat(5)">
-                        +
-
-                    </button>
-
-                </div>
-
+                <button
+                    class="small-button"
+                    onclick="changeAlarmRepeat(5)">
+                    +
+                </button>
             </div>
-
-
-            <!-- DÉSACTIVER -->
-
-            <button
-                id="alarmDisabled"
-                class="alarm-option"
-                onclick="disableAlarm()">
-
-                <span class="alarm-disabled">
-                    Désactiver l'alarme
-                </span>
-
-                <span class="alarm-check">
-                    ✓
-                </span>
-
-            </button>
-
-        </section>
-
-
-        <!-- ESPACE POUR LE DÉFILEMENT -->
-
-        <div style="height: 15px;"></div>
-
-    </main>
-
+        </div>
+        <!-- DÉSACTIVER -->
+        <button
+            id="alarmDisabled"
+            class="alarm-option"
+            onclick="disableAlarm()">
+            <span class="alarm-disabled">
+                Désactiver l'alarme
+            </span>
+            <span class="alarm-check">
+                ✓
+            </span>
+        </button>
+    </section>
+    <!-- ESPACE POUR LE DÉFILEMENT -->
+    <div style="height: 15px;"></div>
+</main>
 </div>
-
-
 <script>
-
 /* =========================================================
    VARIABLES PRINCIPALES
 ========================================================= */
-
 let breathSeconds = 5;
-
 let durationMinutes = 5;
-
 let phase = "inhale";
-
 let phaseRemaining = 5;
-
 let sessionRemaining = 300;
-
 let running = false;
-
 let phaseTimer = null;
-
 let sessionTimer = null;
-
 let audioContext = null;
-
 let inhaleSound = "bell";
-
 let exhaleSound = "bowl";
-
-
 /* =========================================================
    VARIABLES ALARME
 ========================================================= */
-
 let alarmEnabled = true;
-
 let alarmSound = 1;
-
 let alarmRepeatSeconds = 5;
-
 let alarmRepeatTimer = null;
-
-
+/* =========================================================
+   VARIABLES ÉCRAN
+========================================================= */
+let keepScreenOn = false;
+let wakeLock = null;
 /* =========================================================
    AUDIO
 ========================================================= */
-
 function createAudio() {
-
     if (!audioContext) {
-
         audioContext =
             new (
                 window.AudioContext ||
                 window.webkitAudioContext
             )();
-
     }
-
     if (
         audioContext.state === "suspended"
     ) {
-
         audioContext.resume();
-
     }
-
 }
-
-
 /* =========================================================
    TON SIMPLE
 ========================================================= */
-
 function playTone(
     frequency,
     duration,
     type = "sine",
     volume = .22
 ) {
-
     createAudio();
-
     const oscillator =
         audioContext.createOscillator();
-
     const gain =
         audioContext.createGain();
-
     oscillator.connect(gain);
-
     gain.connect(
         audioContext.destination
     );
-
     oscillator.type = type;
-
     oscillator.frequency.value =
         frequency;
-
     const now =
         audioContext.currentTime;
-
     gain.gain.setValueAtTime(
         .0001,
         now
     );
-
     gain.gain.exponentialRampToValueAtTime(
         volume,
         now + .03
     );
-
     gain.gain.exponentialRampToValueAtTime(
         .0001,
         now + duration
     );
-
     oscillator.start(now);
-
     oscillator.stop(
         now + duration + .05
     );
-
 }
-
-
 /* =========================================================
    GONG 5 SECONDES
 ========================================================= */
-
 function playGong() {
-
     createAudio();
-
     const frequencies = [
         196,
         294,
         392
     ];
-
     frequencies.forEach(
         (frequency, index) => {
-
             const oscillator =
                 audioContext.createOscillator();
-
             const gain =
                 audioContext.createGain();
-
             oscillator.connect(gain);
-
             gain.connect(
                 audioContext.destination
             );
-
             oscillator.type = "sine";
-
             oscillator.frequency.value =
                 frequency;
-
             const now =
                 audioContext.currentTime;
-
             const delay =
                 index * .035;
-
             gain.gain.setValueAtTime(
                 .0001,
                 now + delay
             );
-
             gain.gain.exponentialRampToValueAtTime(
                 .18,
                 now + delay + .08
             );
-
             gain.gain.exponentialRampToValueAtTime(
                 .0001,
                 now + delay + 5
             );
-
             oscillator.start(
                 now + delay
             );
-
             oscillator.stop(
                 now + delay + 5.1
             );
-
         }
     );
-
 }
-
-
 /* =========================================================
    SONS RESPIRATION
 ========================================================= */
-
 function playBreathSound(sound) {
-
     createAudio();
-
     if (sound === "bell") {
-
         playTone(
             660,
             .55,
             "sine",
             .22
         );
-
     }
-
     else if (sound === "tone") {
-
         playTone(
             520,
             .65,
             "sine",
             .22
         );
-
     }
-
     else if (sound === "pulse") {
-
         playTone(
             440,
             .25,
             "sine",
             .20
         );
-
         setTimeout(
             () => {
-
                 if (audioContext) {
-
                     playTone(
                         520,
                         .25,
                         "sine",
                         .20
                     );
-
                 }
-
             },
             180
         );
-
     }
-
     else if (sound === "bowl") {
-
         playTone(
             390,
             .9,
             "sine",
             .20
         );
-
         setTimeout(
             () => {
-
                 if (audioContext) {
-
                     playTone(
                         520,
                         .7,
                         "sine",
                         .16
                     );
-
                 }
-
             },
             120
         );
-
     }
-
     else if (sound === "gong") {
-
         playGong();
-
     }
-
 }
-
-
 /* =========================================================
    ALARME — 6 SONS DIFFÉRENTS
 ========================================================= */
-
 function playAlarmSound(number) {
-
     createAudio();
-
-
     /* -----------------------------------------------
        1 — CARILLON TRÈS DOUX
     ----------------------------------------------- */
-
     if (number === 1) {
-
         playTone(
             880,
             .8,
             "sine",
             .18
         );
-
         setTimeout(
             () => playTone(
                 1175,
@@ -1709,23 +1269,17 @@ function playAlarmSound(number) {
             ),
             180
         );
-
     }
-
-
     /* -----------------------------------------------
        2 — CLOCHE DOUCE
     ----------------------------------------------- */
-
     else if (number === 2) {
-
         playTone(
             660,
             .7,
             "sine",
             .22
         );
-
         setTimeout(
             () => playTone(
                 880,
@@ -1735,23 +1289,17 @@ function playAlarmSound(number) {
             ),
             220
         );
-
     }
-
-
     /* -----------------------------------------------
        3 — DOUBLE CLOCHE
     ----------------------------------------------- */
-
     else if (number === 3) {
-
         playTone(
             620,
             .45,
             "triangle",
             .22
         );
-
         setTimeout(
             () => playTone(
                 760,
@@ -1761,7 +1309,6 @@ function playAlarmSound(number) {
             ),
             230
         );
-
         setTimeout(
             () => playTone(
                 620,
@@ -1771,26 +1318,19 @@ function playAlarmSound(number) {
             ),
             460
         );
-
     }
-
-
     /* -----------------------------------------------
        4 — SÉQUENCE INSISTANTE
     ----------------------------------------------- */
-
     else if (number === 4) {
-
         const notes = [
             500,
             650,
             500,
             650
         ];
-
         notes.forEach(
             (frequency, index) => {
-
                 setTimeout(
                     () => playTone(
                         frequency,
@@ -1800,19 +1340,13 @@ function playAlarmSound(number) {
                     ),
                     index * 220
                 );
-
             }
         );
-
     }
-
-
     /* -----------------------------------------------
        5 — ALERTE RÉPÉTITIVE
     ----------------------------------------------- */
-
     else if (number === 5) {
-
         const notes = [
             550,
             700,
@@ -1820,10 +1354,8 @@ function playAlarmSound(number) {
             700,
             550
         ];
-
         notes.forEach(
             (frequency, index) => {
-
                 setTimeout(
                     () => playTone(
                         frequency,
@@ -1833,19 +1365,13 @@ function playAlarmSound(number) {
                     ),
                     index * 180
                 );
-
             }
         );
-
     }
-
-
     /* -----------------------------------------------
        6 — ALERTE TRÈS INSISTANTE
     ----------------------------------------------- */
-
     else if (number === 6) {
-
         const notes = [
             600,
             780,
@@ -1854,10 +1380,8 @@ function playAlarmSound(number) {
             600,
             780
         ];
-
         notes.forEach(
             (frequency, index) => {
-
                 setTimeout(
                     () => playTone(
                         frequency,
@@ -1867,875 +1391,799 @@ function playAlarmSound(number) {
                     ),
                     index * 145
                 );
-
             }
         );
-
     }
-
 }
-
-
 /* =========================================================
    LANCER L'ALARME
 ========================================================= */
-
 function triggerAlarm() {
-
     if (!alarmEnabled) {
         return;
     }
-
     clearTimeout(
         alarmRepeatTimer
     );
-
     playAlarmSound(
         alarmSound
     );
-
     scheduleAlarmRepeat();
-
 }
-
-
 /* =========================================================
    RÉPÉTITION ALARME
 ========================================================= */
-
 function scheduleAlarmRepeat() {
-
     if (!alarmEnabled) {
         return;
     }
-
     alarmRepeatTimer =
         setTimeout(
             () => {
-
                 if (
                     alarmEnabled &&
                     !running
                 ) {
-
                     playAlarmSound(
                         alarmSound
                     );
-
                     scheduleAlarmRepeat();
-
                 }
-
             },
             alarmRepeatSeconds * 1000
         );
-
 }
-
-
 /* =========================================================
    PARAMÈTRES ALARME — OUVERTURE
 ========================================================= */
-
 function toggleAlarmSettings() {
-
     const menu =
         document.getElementById(
             "alarmSettings"
         );
-
     const button =
         document.getElementById(
             "alarmMenuButton"
         );
-
     menu.classList.toggle(
         "open"
     );
-
     button.classList.toggle(
         "open"
     );
-
 }
-
-
 /* =========================================================
    CHOIX SON ALARME
 ========================================================= */
-
 function selectAlarmSound(number) {
-
     alarmEnabled = true;
-
     alarmSound = number;
-
-    updateAlarmDisplay();
-
-    saveSettings();
-
-    playAlarmSound(
-        number
-    );
-
-}
-
-
-/* =========================================================
-   DÉSACTIVER ALARME
-========================================================= */
-
-function disableAlarm() {
-
-    alarmEnabled = false;
-
     clearTimeout(
         alarmRepeatTimer
     );
-
     alarmRepeatTimer = null;
-
     updateAlarmDisplay();
-
     saveSettings();
-
+    playAlarmSound(
+        number
+    );
 }
-
-
+/* =========================================================
+   DÉSACTIVER ALARME
+========================================================= */
+function disableAlarm() {
+    alarmEnabled = false;
+    clearTimeout(
+        alarmRepeatTimer
+    );
+    alarmRepeatTimer = null;
+    updateAlarmDisplay();
+    saveSettings();
+}
 /* =========================================================
    AFFICHAGE ALARME
 ========================================================= */
-
 function updateAlarmDisplay() {
-
     for (
         let i = 1;
         i <= 6;
         i++
     ) {
-
         const button =
             document.getElementById(
                 "alarmSound" + i
             );
-
         button.classList.toggle(
             "selected",
             alarmEnabled &&
             alarmSound === i
         );
-
     }
-
     const disabled =
         document.getElementById(
             "alarmDisabled"
         );
-
     disabled.classList.toggle(
         "selected",
         !alarmEnabled
     );
-
     document.getElementById(
         "alarmRepeatValue"
     ).textContent =
         formatAlarmRepeat(
             alarmRepeatSeconds
         );
-
 }
-
-
 /* =========================================================
    FORMAT RÉPÉTITION
 ========================================================= */
-
 function formatAlarmRepeat(seconds) {
-
     if (seconds < 60) {
-
         return seconds + " s";
-
     }
-
     return "1 min";
-
 }
-
-
 /* =========================================================
    MODIFIER RÉPÉTITION
 ========================================================= */
-
 function changeAlarmRepeat(amount) {
-
     alarmRepeatSeconds += amount;
-
     if (
         alarmRepeatSeconds < 5
     ) {
-
         alarmRepeatSeconds = 5;
-
     }
-
     if (
         alarmRepeatSeconds > 60
     ) {
-
         alarmRepeatSeconds = 60;
-
     }
-
     updateAlarmDisplay();
-
     saveSettings();
-
 }
-
-
+/* =========================================================
+   GARDER L'ÉCRAN ALLUMÉ — WAKE LOCK
+========================================================= */
+async function requestWakeLock() {
+    if (!keepScreenOn) {
+        return;
+    }
+    if (
+        !("wakeLock" in navigator)
+    ) {
+        updateScreenDisplay(
+            "unsupported"
+        );
+        return;
+    }
+    try {
+        if (
+            wakeLock &&
+            !wakeLock.released
+        ) {
+            return;
+        }
+        wakeLock =
+            await navigator.wakeLock.request(
+                "screen"
+            );
+        updateScreenDisplay(
+            "active"
+        );
+        wakeLock.addEventListener(
+            "release",
+            () => {
+                wakeLock = null;
+                if (
+                    keepScreenOn &&
+                    running &&
+                    document.visibilityState === "visible"
+                ) {
+                    setTimeout(
+                        () => {
+                            requestWakeLock();
+                        },
+                        300
+                    );
+                }
+                else {
+                    updateScreenDisplay();
+                }
+            }
+        );
+    }
+    catch (error) {
+        console.log(
+            "Wake Lock impossible :",
+            error
+        );
+        wakeLock = null;
+        updateScreenDisplay(
+            "error"
+        );
+    }
+}
+/* =========================================================
+   LIBÉRER LE WAKE LOCK
+========================================================= */
+async function releaseWakeLock() {
+    if (wakeLock) {
+        try {
+            await wakeLock.release();
+        }
+        catch (error) {
+            console.log(
+                "Libération Wake Lock impossible :",
+                error
+            );
+        }
+        wakeLock = null;
+    }
+    updateScreenDisplay();
+}
+/* =========================================================
+   ACTIVER / DÉSACTIVER L'ÉCRAN ALLUMÉ
+========================================================= */
+function toggleKeepScreenOn() {
+    keepScreenOn =
+        !keepScreenOn;
+    saveSettings();
+    updateScreenDisplay();
+    if (
+        keepScreenOn &&
+        running
+    ) {
+        requestWakeLock();
+    }
+    else if (
+        !keepScreenOn
+    ) {
+        releaseWakeLock();
+    }
+}
+/* =========================================================
+   AFFICHAGE OPTION ÉCRAN
+========================================================= */
+function updateScreenDisplay(
+    state = ""
+) {
+    const toggle =
+        document.getElementById(
+            "screenToggle"
+        );
+    const status =
+        document.getElementById(
+            "screenStatus"
+        );
+    const description =
+        document.getElementById(
+            "screenDescription"
+        );
+    toggle.classList.toggle(
+        "active",
+        keepScreenOn
+    );
+    status.classList.remove(
+        "unsupported"
+    );
+    if (
+        state === "unsupported"
+    ) {
+        status.textContent =
+            "Non disponible sur cet appareil";
+        status.classList.add(
+            "unsupported"
+        );
+        description.textContent =
+            "Cette version du navigateur ne permet pas de garder l'écran allumé.";
+        return;
+    }
+    if (
+        state === "error"
+    ) {
+        status.textContent =
+            "Impossible d'activer";
+        status.classList.add(
+            "unsupported"
+        );
+        description.textContent =
+            "Vérifiez que l'application est au premier plan.";
+        return;
+    }
+    if (
+        state === "active"
+    ) {
+        status.textContent =
+            "Écran maintenu allumé";
+        description.textContent =
+            "L'écran restera allumé pendant la séance.";
+        return;
+    }
+    if (keepScreenOn) {
+        status.textContent =
+            "Activé";
+        description.textContent =
+            "L'écran sera maintenu allumé pendant la séance.";
+    }
+    else {
+        status.textContent =
+            "Désactivé";
+        description.textContent =
+            "Empêche l'écran de se verrouiller pendant la séance.";
+    }
+}
 /* =========================================================
    RYTHME
 ========================================================= */
-
 function changeBreath(amount) {
-
     if (running) {
         return;
     }
-
     breathSeconds += amount;
-
     if (breathSeconds < 2) {
         breathSeconds = 2;
     }
-
     if (breathSeconds > 20) {
         breathSeconds = 20;
     }
-
     updateBreathDisplay();
-
     saveSettings();
-
 }
-
-
 function updateBreathDisplay() {
-
     document.getElementById(
         "breathValue"
     ).textContent =
         breathSeconds;
-
     document.getElementById(
         "headerBreath"
     ).textContent =
         breathSeconds;
-
     document.getElementById(
         "headerBreath2"
     ).textContent =
         breathSeconds;
-
     document.getElementById(
         "phaseSeconds"
     ).textContent =
         breathSeconds;
-
 }
-
-
 /* =========================================================
    DURÉE
 ========================================================= */
-
 function changeDuration(amount) {
-
     if (running) {
         return;
     }
-
     durationMinutes += amount;
-
     if (durationMinutes < 1) {
         durationMinutes = 1;
     }
-
     if (durationMinutes > 60) {
         durationMinutes = 60;
     }
-
     updateDuration();
-
     saveSettings();
-
 }
-
-
 function sliderDuration(value) {
-
     if (running) {
         return;
     }
-
     durationMinutes =
         parseInt(
             value,
             10
         );
-
     updateDuration();
-
     saveSettings();
-
 }
-
-
 function updateDuration() {
-
     document.getElementById(
         "durationValue"
     ).textContent =
         durationMinutes + " min";
-
     document.getElementById(
         "durationSlider"
     ).value =
         durationMinutes;
-
     const progress =
         ((durationMinutes - 1) / 59) * 100;
-
     document.getElementById(
         "durationSlider"
     ).style.setProperty(
         "--progress",
         progress + "%"
     );
-
     updateRemaining(
         durationMinutes * 60
     );
-
 }
-
-
 /* =========================================================
    SÉLECTION SONS RESPIRATION
 ========================================================= */
-
 function selectSound(
     type,
     sound
 ) {
-
     if (running) {
         return;
     }
-
-
     if (
         type === "inhale"
     ) {
-
         inhaleSound = sound;
-
         document
             .querySelectorAll(
                 "#inspireBell, #inspireTone, #inspirePulse, #inspireGong"
             )
             .forEach(
                 button => {
-
                     button.classList.remove(
                         "selected"
                     );
-
                 }
             );
-
         document.getElementById(
             "inspire" +
             capitalize(sound)
         ).classList.add(
             "selected"
         );
-
         playBreathSound(
             sound
         );
-
     }
-
     else {
-
         exhaleSound = sound;
-
         document
             .querySelectorAll(
                 "#expireBowl, #expireTone, #expirePulse, #expireGong"
             )
             .forEach(
                 button => {
-
                     button.classList.remove(
                         "selected"
                     );
-
                 }
             );
-
         document.getElementById(
             "expire" +
             capitalize(sound)
         ).classList.add(
             "selected"
         );
-
         playBreathSound(
             sound
         );
-
     }
-
     saveSettings();
-
 }
-
-
 function capitalize(text) {
-
     return text.charAt(0).toUpperCase()
         + text.slice(1);
-
 }
-
-
 /* =========================================================
    DÉMARRER SESSION
 ========================================================= */
-
 function startSession() {
-
     createAudio();
-
     if (
         audioContext &&
         audioContext.state === "suspended"
     ) {
-
         audioContext.resume();
-
     }
-
     clearTimeout(
         alarmRepeatTimer
     );
-
     alarmRepeatTimer = null;
-
     running = true;
-
     sessionRemaining =
         durationMinutes * 60;
-
     phase =
         "inhale";
-
     phaseRemaining =
         breathSeconds;
-
     document.getElementById(
         "startButton"
     ).style.display =
         "none";
-
     document.getElementById(
         "stopButton"
     ).style.display =
         "block";
-
+    /*
+       Le Wake Lock est demandé uniquement
+       après l'action de l'utilisateur.
+    */
+    if (keepScreenOn) {
+        requestWakeLock();
+    }
     beginPhase();
-
     updateRemaining(
         sessionRemaining
     );
-
     sessionTimer =
         setInterval(
             () => {
-
                 sessionRemaining--;
-
                 updateRemaining(
                     sessionRemaining
                 );
-
                 if (
                     sessionRemaining <= 0
                 ) {
-
                     finishSession();
-
                 }
-
             },
             1000
         );
-
 }
-
-
 /* =========================================================
    RESPIRATION
 ========================================================= */
-
 function beginPhase() {
-
     clearInterval(
         phaseTimer
     );
-
     phaseRemaining =
         breathSeconds;
-
     const ring =
         document.getElementById(
             "breathingRing"
         );
-
     const phaseText =
         document.getElementById(
             "phase"
         );
-
     ring.style.setProperty(
         "--breath-duration",
         breathSeconds + "s"
     );
-
-
     if (
         phase === "inhale"
     ) {
-
         phaseText.textContent =
             "Inspiration";
-
         ring.classList.remove(
             "exhale"
         );
-
         ring.classList.add(
             "inhale"
         );
-
         playBreathSound(
             inhaleSound
         );
-
     }
-
     else {
-
         phaseText.textContent =
             "Expiration";
-
         ring.classList.remove(
             "inhale"
         );
-
         ring.classList.add(
             "exhale"
         );
-
         playBreathSound(
             exhaleSound
         );
-
     }
-
-
     document.getElementById(
         "phaseSeconds"
     ).textContent =
         phaseRemaining;
-
-
     phaseTimer =
         setInterval(
             () => {
-
                 phaseRemaining--;
-
                 if (
                     phaseRemaining < 0
                 ) {
-
                     phaseRemaining = 0;
-
                 }
-
                 document.getElementById(
                     "phaseSeconds"
                 ).textContent =
                     phaseRemaining;
-
-
                 if (
                     phaseRemaining <= 0
                 ) {
-
                     clearInterval(
                         phaseTimer
                     );
-
                     phase =
                         phase === "inhale"
                             ? "exhale"
                             : "inhale";
-
                     beginPhase();
-
                 }
-
             },
             1000
         );
-
 }
-
-
 /* =========================================================
    TEMPS RESTANT
 ========================================================= */
-
 function updateRemaining(
     seconds
 ) {
-
     const minutes =
         Math.floor(
             seconds / 60
         );
-
     const secs =
         seconds % 60;
-
     const formatted =
         String(minutes)
             .padStart(2, "0")
         + ":" +
         String(secs)
             .padStart(2, "0");
-
     document.getElementById(
         "remaining"
     ).textContent =
         formatted;
-
 }
-
-
 /* =========================================================
    ARRÊTER SESSION
 ========================================================= */
-
 function stopSession() {
-
     running = false;
-
     clearInterval(
         phaseTimer
     );
-
     clearInterval(
         sessionTimer
     );
-
     clearTimeout(
         alarmRepeatTimer
     );
-
     alarmRepeatTimer = null;
-
+    releaseWakeLock();
     const ring =
         document.getElementById(
             "breathingRing"
         );
-
     ring.classList.remove(
         "inhale"
     );
-
     ring.classList.add(
         "exhale"
     );
-
     document.getElementById(
         "phase"
     ).textContent =
         "Prêt";
-
     document.getElementById(
         "phaseSeconds"
     ).textContent =
         breathSeconds;
-
     document.getElementById(
         "startButton"
     ).style.display =
         "block";
-
     document.getElementById(
         "stopButton"
     ).style.display =
         "none";
-
     updateRemaining(
         durationMinutes * 60
     );
-
 }
-
-
 /* =========================================================
    FIN SESSION
 ========================================================= */
-
 function finishSession() {
-
     running = false;
-
     clearInterval(
         phaseTimer
     );
-
     clearInterval(
         sessionTimer
     );
-
+    releaseWakeLock();
     document.getElementById(
         "phase"
     ).textContent =
         "Terminé";
-
     document.getElementById(
         "phaseSeconds"
     ).textContent =
         "✓";
-
     document.getElementById(
         "remaining"
     ).textContent =
         "00:00";
-
     document.getElementById(
         "startButton"
     ).style.display =
         "block";
-
     document.getElementById(
         "stopButton"
     ).style.display =
         "none";
-
     /*
        L'alarme est déclenchée à la fin
        de la séance.
     */
-
     if (alarmEnabled) {
-
         triggerAlarm();
-
     }
-
 }
-
-
+/* =========================================================
+   VISIBILITÉ DE LA PAGE
+========================================================= */
+document.addEventListener(
+    "visibilitychange",
+    () => {
+        /*
+           Lorsque l'application revient
+           au premier plan, on redemande
+           le Wake Lock si nécessaire.
+        */
+        if (
+            document.visibilityState === "visible" &&
+            running &&
+            keepScreenOn
+        ) {
+            requestWakeLock();
+        }
+    }
+);
 /* =========================================================
    SAUVEGARDE DES PARAMÈTRES
 ========================================================= */
-
 function saveSettings() {
-
     try {
-
         const settings = {
-
             breathSeconds:
                 breathSeconds,
-
             durationMinutes:
                 durationMinutes,
-
             inhaleSound:
                 inhaleSound,
-
             exhaleSound:
                 exhaleSound,
-
             alarmEnabled:
                 alarmEnabled,
-
             alarmSound:
                 alarmSound,
-
             alarmRepeatSeconds:
-                alarmRepeatSeconds
-
+                alarmRepeatSeconds,
+            keepScreenOn:
+                keepScreenOn
         };
-
         localStorage.setItem(
             "coherenceSettings",
             JSON.stringify(
                 settings
             )
         );
-
     }
-
     catch (error) {
-
         console.log(
             "Sauvegarde impossible",
             error
         );
-
     }
-
 }
-
-
 /* =========================================================
    CHARGEMENT DES PARAMÈTRES
 ========================================================= */
-
 function loadSettings() {
-
     try {
-
         const saved =
             localStorage.getItem(
                 "coherenceSettings"
             );
-
         if (!saved) {
             return;
         }
-
         const settings =
             JSON.parse(saved);
-
-
         if (
             typeof settings.breathSeconds ===
             "number"
         ) {
-
             breathSeconds =
                 Math.min(
                     20,
@@ -2744,15 +2192,11 @@ function loadSettings() {
                         settings.breathSeconds
                     )
                 );
-
         }
-
-
         if (
             typeof settings.durationMinutes ===
             "number"
         ) {
-
             durationMinutes =
                 Math.min(
                     60,
@@ -2761,48 +2205,32 @@ function loadSettings() {
                         settings.durationMinutes
                     )
                 );
-
         }
-
-
         if (
             typeof settings.inhaleSound ===
             "string"
         ) {
-
             inhaleSound =
                 settings.inhaleSound;
-
         }
-
-
         if (
             typeof settings.exhaleSound ===
             "string"
         ) {
-
             exhaleSound =
                 settings.exhaleSound;
-
         }
-
-
         if (
             typeof settings.alarmEnabled ===
             "boolean"
         ) {
-
             alarmEnabled =
                 settings.alarmEnabled;
-
         }
-
-
         if (
             typeof settings.alarmSound ===
             "number"
         ) {
-
             alarmSound =
                 Math.min(
                     6,
@@ -2811,15 +2239,11 @@ function loadSettings() {
                         settings.alarmSound
                     )
                 );
-
         }
-
-
         if (
             typeof settings.alarmRepeatSeconds ===
             "number"
         ) {
-
             alarmRepeatSeconds =
                 Math.min(
                     60,
@@ -2828,44 +2252,37 @@ function loadSettings() {
                         settings.alarmRepeatSeconds
                     )
                 );
-
         }
-
+        if (
+            typeof settings.keepScreenOn ===
+            "boolean"
+        ) {
+            keepScreenOn =
+                settings.keepScreenOn;
+        }
     }
-
     catch (error) {
-
         console.log(
             "Chargement impossible",
             error
         );
-
     }
-
 }
-
-
 /* =========================================================
    MISE À JOUR VISUELLE DES SONS
 ========================================================= */
-
 function updateSoundDisplay() {
-
     document
         .querySelectorAll(
             "#inspireBell, #inspireTone, #inspirePulse, #inspireGong"
         )
         .forEach(
             button => {
-
                 button.classList.remove(
                     "selected"
                 );
-
             }
         );
-
-
     const inhaleButton =
         document.getElementById(
             "inspire" +
@@ -2873,31 +2290,22 @@ function updateSoundDisplay() {
                 inhaleSound
             )
         );
-
     if (inhaleButton) {
-
         inhaleButton.classList.add(
             "selected"
         );
-
     }
-
-
     document
         .querySelectorAll(
             "#expireBowl, #expireTone, #expirePulse, #expireGong"
         )
         .forEach(
             button => {
-
                 button.classList.remove(
                     "selected"
                 );
-
             }
         );
-
-
     const exhaleButton =
         document.getElementById(
             "expire" +
@@ -2905,33 +2313,21 @@ function updateSoundDisplay() {
                 exhaleSound
             )
         );
-
     if (exhaleButton) {
-
         exhaleButton.classList.add(
             "selected"
         );
-
     }
-
 }
-
-
 /* =========================================================
    INITIALISATION
 ========================================================= */
-
 loadSettings();
-
 updateBreathDisplay();
-
 updateDuration();
-
 updateSoundDisplay();
-
 updateAlarmDisplay();
-
+updateScreenDisplay();
 </script>
-
 </body>
 </html>
