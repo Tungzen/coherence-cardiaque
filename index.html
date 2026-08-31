@@ -905,10 +905,6 @@ body {
 <div class="app">
 
 
-<!-- =====================================================
-     TITRE
-===================================================== -->
-
 <header class="header">
 
     <div class="title">
@@ -929,10 +925,6 @@ body {
 
 </header>
 
-
-<!-- =====================================================
-     CERCLE
-===================================================== -->
 
 <section class="breathing-area">
 
@@ -974,10 +966,6 @@ body {
 
 </div>
 
-
-<!-- =====================================================
-     RYTHME
-===================================================== -->
 
 <section class="card">
 
@@ -1027,10 +1015,6 @@ body {
 
 </section>
 
-
-<!-- =====================================================
-     DURÉE
-===================================================== -->
 
 <section class="card">
 
@@ -1109,10 +1093,6 @@ body {
 </section>
 
 
-<!-- =====================================================
-     SONS
-===================================================== -->
-
 <section class="card">
 
     <div class="card-title">
@@ -1128,8 +1108,6 @@ body {
 
     <div class="sound-grid">
 
-
-        <!-- INSPIRATION -->
 
         <div class="sound-column">
 
@@ -1183,8 +1161,6 @@ body {
 
         </div>
 
-
-        <!-- EXPIRATION -->
 
         <div class="sound-column">
 
@@ -1243,10 +1219,6 @@ body {
 </section>
 
 
-<!-- =====================================================
-     DÉMARRER / ARRÊTER
-===================================================== -->
-
 <button
     id="startButton"
     class="start-button"
@@ -1267,10 +1239,6 @@ body {
 </button>
 
 
-<!-- =====================================================
-     PARAMÈTRES DE L'ALARME
-===================================================== -->
-
 <button
     id="settingsButton"
     class="settings-button"
@@ -1285,8 +1253,6 @@ body {
     id="settingsPanel"
     class="settings-panel">
 
-
-    <!-- ALARME ON / OFF -->
 
     <div class="settings-row">
 
@@ -1309,8 +1275,6 @@ body {
 
     </div>
 
-
-    <!-- RAPPEL -->
 
     <div class="alarm-interval-section">
 
@@ -1351,8 +1315,6 @@ body {
     </div>
 
 
-    <!-- SON DE L'ALARME -->
-
     <div class="settings-row">
 
         <div class="settings-label">
@@ -1391,8 +1353,6 @@ body {
     </div>
 
 
-    <!-- TEST DU SON -->
-
     <button
         id="testAlarmButton"
         class="test-alarm-button"
@@ -1401,6 +1361,32 @@ body {
         ▶️ &nbsp; Tester le son de l'alarme
 
     </button>
+
+
+    <!-- =====================================================
+         SAUVEGARDE AUTOMATIQUE
+    ===================================================== -->
+
+    <div class="settings-row">
+
+        <div class="settings-label">
+            Sauvegarde automatique
+        </div>
+
+
+        <label class="switch">
+
+            <input
+                id="autoSaveEnabled"
+                type="checkbox"
+                checked
+            >
+
+            <span class="switch-slider"></span>
+
+        </label>
+
+    </div>
 
 
 </div>
@@ -1449,6 +1435,189 @@ let snoozeInterval = 300;
 let alarmSound = "gong";
 
 let alarmTimer = null;
+
+
+/* =========================================================
+   SAUVEGARDE
+========================================================= */
+
+let autoSaveEnabled = true;
+
+const STORAGE_KEY =
+    "coherenceCardiaqueSettings";
+
+
+function saveSettings() {
+
+    if (!autoSaveEnabled) {
+        return;
+    }
+
+
+    const settings = {
+
+        breathSeconds:
+            breathSeconds,
+
+        durationMinutes:
+            durationMinutes,
+
+        inhaleSound:
+            inhaleSound,
+
+        exhaleSound:
+            exhaleSound,
+
+        alarmEnabled:
+            alarmEnabled,
+
+        snoozeInterval:
+            snoozeInterval,
+
+        alarmSound:
+            alarmSound,
+
+        autoSaveEnabled:
+            autoSaveEnabled
+
+    };
+
+
+    try {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(settings)
+        );
+
+    } catch (error) {
+
+        console.log(
+            "Impossible de sauvegarder les paramètres.",
+            error
+        );
+
+    }
+
+}
+
+
+function loadSettings() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if (!saved) {
+
+            return;
+
+        }
+
+
+        const settings =
+            JSON.parse(saved);
+
+
+        if (
+            typeof settings.breathSeconds === "number" &&
+            settings.breathSeconds >= 2 &&
+            settings.breathSeconds <= 20
+        ) {
+
+            breathSeconds =
+                settings.breathSeconds;
+
+        }
+
+
+        if (
+            typeof settings.durationMinutes === "number" &&
+            settings.durationMinutes >= 1 &&
+            settings.durationMinutes <= 60
+        ) {
+
+            durationMinutes =
+                settings.durationMinutes;
+
+        }
+
+
+        if (
+            typeof settings.inhaleSound === "string"
+        ) {
+
+            inhaleSound =
+                settings.inhaleSound;
+
+        }
+
+
+        if (
+            typeof settings.exhaleSound === "string"
+        ) {
+
+            exhaleSound =
+                settings.exhaleSound;
+
+        }
+
+
+        if (
+            typeof settings.alarmEnabled === "boolean"
+        ) {
+
+            alarmEnabled =
+                settings.alarmEnabled;
+
+        }
+
+
+        if (
+            typeof settings.snoozeInterval === "number" &&
+            settings.snoozeInterval >= 1 &&
+            settings.snoozeInterval <= 300
+        ) {
+
+            snoozeInterval =
+                settings.snoozeInterval;
+
+        }
+
+
+        if (
+            typeof settings.alarmSound === "string"
+        ) {
+
+            alarmSound =
+                settings.alarmSound;
+
+        }
+
+
+        if (
+            typeof settings.autoSaveEnabled === "boolean"
+        ) {
+
+            autoSaveEnabled =
+                settings.autoSaveEnabled;
+
+        }
+
+    } catch (error) {
+
+        console.log(
+            "Impossible de charger les paramètres.",
+            error
+        );
+
+    }
+
+}
 
 
 /* =========================================================
@@ -1606,8 +1775,6 @@ function playBreathSound(sound) {
     createAudio();
 
 
-    /* 1 NOTE */
-
     if (sound === "bell") {
 
         playTone(
@@ -1618,8 +1785,6 @@ function playBreathSound(sound) {
 
     }
 
-
-    /* 2 NOTES */
 
     else if (sound === "tone") {
 
@@ -1649,8 +1814,6 @@ function playBreathSound(sound) {
 
     }
 
-
-    /* 3 NOTES : HAUTE / BASSE / HAUTE */
 
     else if (sound === "pulse") {
 
@@ -1699,8 +1862,6 @@ function playBreathSound(sound) {
     }
 
 
-    /* BOL TIBÉTAIN */
-
     else if (sound === "bowl") {
 
         playTone(
@@ -1730,8 +1891,6 @@ function playBreathSound(sound) {
     }
 
 
-    /* GONG 5 SECONDES */
-
     else if (sound === "gong") {
 
         playFiveSecondGong();
@@ -1756,18 +1915,10 @@ function playAlarm() {
 }
 
 
-/* =========================================================
-   JOUER LE SON SÉLECTIONNÉ
-========================================================= */
-
 function playSelectedAlarmSound() {
 
     createAudio();
 
-
-    /* =====================================================
-       1 — GONG PROFOND
-    ===================================================== */
 
     if (alarmSound === "gong") {
 
@@ -1775,10 +1926,6 @@ function playSelectedAlarmSound() {
 
     }
 
-
-    /* =====================================================
-       2 — CARILLON DOUX
-    ===================================================== */
 
     else if (alarmSound === "chime") {
 
@@ -1830,10 +1977,6 @@ function playSelectedAlarmSound() {
     }
 
 
-    /* =====================================================
-       3 — CLOCHES
-    ===================================================== */
-
     else if (alarmSound === "bells") {
 
         const notes =
@@ -1867,10 +2010,6 @@ function playSelectedAlarmSound() {
     }
 
 
-    /* =====================================================
-       4 — DOUBLE ALARME
-    ===================================================== */
-
     else if (alarmSound === "double") {
 
         playTone(
@@ -1901,10 +2040,6 @@ function playSelectedAlarmSound() {
 
     }
 
-
-    /* =====================================================
-       5 — ALARME INSISTANTE
-    ===================================================== */
 
     else if (alarmSound === "urgent") {
 
@@ -1938,10 +2073,6 @@ function playSelectedAlarmSound() {
 
     }
 
-
-    /* =====================================================
-       6 — ALARME RAPIDE
-    ===================================================== */
 
     else if (alarmSound === "rapid") {
 
@@ -1988,7 +2119,7 @@ function playSelectedAlarmSound() {
 
 
 /* =========================================================
-   TEST DU SON DE L'ALARME
+   TEST DU SON
 ========================================================= */
 
 function testAlarmSound() {
@@ -2130,6 +2261,9 @@ function changeAlarmInterval(value) {
 
     }
 
+
+    saveSettings();
+
 }
 
 
@@ -2193,6 +2327,9 @@ document.getElementById(
 
         }
 
+
+        saveSettings();
+
     }
 );
 
@@ -2205,6 +2342,29 @@ document.getElementById(
 
         alarmSound =
             this.value;
+
+
+        saveSettings();
+
+    }
+);
+
+
+document.getElementById(
+    "autoSaveEnabled"
+).addEventListener(
+    "change",
+    function() {
+
+        autoSaveEnabled =
+            this.checked;
+
+
+        if (autoSaveEnabled) {
+
+            saveSettings();
+
+        }
 
     }
 );
@@ -2234,6 +2394,8 @@ function changeBreath(amount) {
 
 
     updateBreathDisplay();
+
+    saveSettings();
 
 }
 
@@ -2295,6 +2457,8 @@ function changeDuration(amount) {
 
     updateDuration();
 
+    saveSettings();
+
 }
 
 
@@ -2305,6 +2469,8 @@ function sliderDuration(value) {
 
 
     updateDuration();
+
+    saveSettings();
 
 }
 
@@ -2419,6 +2585,9 @@ function selectSound(
         );
 
     }
+
+
+    saveSettings();
 
 }
 
@@ -2811,15 +2980,100 @@ function finishSession() {
    INITIALISATION
 ========================================================= */
 
+loadSettings();
+
 updateBreathDisplay();
 
 updateDuration();
 
+
+document.getElementById(
+    "alarmEnabled"
+).checked =
+    alarmEnabled;
+
+
+document.getElementById(
+    "alarmSound"
+).value =
+    alarmSound;
+
+
+document.getElementById(
+    "autoSaveEnabled"
+).checked =
+    autoSaveEnabled;
+
+
+document.getElementById(
+    "alarmIntervalSlider"
+).value =
+    snoozeInterval;
+
+
 changeAlarmInterval(
-    document.getElementById(
-        "alarmIntervalSlider"
-    ).value
+    snoozeInterval
 );
+
+
+/* Restaurer le son sélectionné - inspiration */
+
+document
+    .querySelectorAll(
+        "#inspireBell, #inspireTone, #inspirePulse, #inspireGong"
+    )
+    .forEach(
+        button =>
+            button.classList.remove(
+                "selected"
+            )
+    );
+
+
+const savedInhaleButton =
+    document.getElementById(
+        "inspire" +
+        capitalize(inhaleSound)
+    );
+
+
+if (savedInhaleButton) {
+
+    savedInhaleButton.classList.add(
+        "selected"
+    );
+
+}
+
+
+/* Restaurer le son sélectionné - expiration */
+
+document
+    .querySelectorAll(
+        "#expireBowl, #expireTone, #expirePulse, #expireGong"
+    )
+    .forEach(
+        button =>
+            button.classList.remove(
+                "selected"
+            )
+    );
+
+
+const savedExhaleButton =
+    document.getElementById(
+        "expire" +
+        capitalize(exhaleSound)
+    );
+
+
+if (savedExhaleButton) {
+
+    savedExhaleButton.classList.add(
+        "selected"
+    );
+
+}
 
 </script>
 
