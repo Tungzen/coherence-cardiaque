@@ -204,6 +204,46 @@ body {
     transform: scale(.985);
 }
 /* =========================================================
+   BOUTON ÉCRAN TOUJOURS ALLUMÉ
+========================================================= */
+.wake-lock-button {
+    width: 100%;
+    min-height: 51px;
+    border-radius: 15px;
+    border: 1px solid rgba(180,220,230,.13);
+    background: rgba(19,67,87,.90);
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    padding: 0 17px;
+    margin-bottom: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+.wake-lock-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.wake-lock-icon {
+    font-size: 21px;
+    color: #52b9ff;
+}
+.wake-lock-status {
+    color: #8faab5;
+    font-size: 13px;
+}
+.wake-lock-button.active {
+    border-color: rgba(97,223,169,.35);
+    background: rgba(19,78,87,.95);
+}
+.wake-lock-button.active .wake-lock-status {
+    color: #61dfa9;
+}
+/* =========================================================
    CARTES
 ========================================================= */
 .card {
@@ -362,47 +402,6 @@ body {
     color: white;
 }
 /* =========================================================
-   GARDER L'ÉCRAN ALLUMÉ
-========================================================= */
-.wake-lock-button {
-    width: 100%;
-    min-height: 51px;
-    border-radius: 15px;
-    border: 1px solid rgba(180,220,230,.13);
-    background: rgba(19,67,87,.90);
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    text-align: left;
-    padding: 0 17px;
-    margin-bottom: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.wake-lock-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.wake-lock-icon {
-    font-size: 21px;
-    color: #52b9ff;
-}
-.wake-lock-status {
-    color: #8faab5;
-    font-size: 14px;
-}
-.wake-lock-button.enabled .wake-lock-status {
-    color: #61dfa9;
-}
-.wake-lock-description {
-    color: #91aab5;
-    font-size: 12px;
-    line-height: 1.4;
-    margin: -3px 2px 9px;
-}
-/* =========================================================
    PARAMÈTRES DE L'ALARME
 ========================================================= */
 .alarm-menu-button {
@@ -554,7 +553,9 @@ body {
         padding: 8px 12px;
         margin-bottom: 6px;
     }
-    .alarm-menu-button,
+    .alarm-menu-button {
+        min-height: 47px;
+    }
     .wake-lock-button {
         min-height: 47px;
     }
@@ -635,7 +636,9 @@ body {
     <div class="instruction">
         Restez détendu et respirez naturellement.
     </div>
-    <!-- DÉMARRER -->
+    <!-- =================================================
+         DÉMARRER
+    ================================================== -->
     <button
         id="startButton"
         class="start-button"
@@ -647,6 +650,27 @@ body {
         class="start-button stop-button"
         onclick="stopSession()">
         ■ &nbsp; Arrêter
+    </button>
+    <!-- =================================================
+         ÉCRAN TOUJOURS ALLUMÉ
+    ================================================== -->
+    <button
+        id="wakeLockButton"
+        class="wake-lock-button"
+        onclick="toggleWakeLock()">
+        <span class="wake-lock-left">
+            <span class="wake-lock-icon">
+                ☀
+            </span>
+            <span>
+                Écran toujours allumé
+            </span>
+        </span>
+        <span
+            id="wakeLockStatus"
+            class="wake-lock-status">
+            Désactivé
+        </span>
     </button>
     <!-- =================================================
          RYTHME
@@ -817,32 +841,7 @@ body {
         </div>
     </section>
     <!-- =================================================
-         GARDER L'ÉCRAN ALLUMÉ
-    ================================================== -->
-    <button
-        id="wakeLockButton"
-        class="wake-lock-button"
-        onclick="toggleWakeLockSetting()">
-        <span class="wake-lock-left">
-            <span class="wake-lock-icon">
-                ☀️
-            </span>
-            <span>
-                Garder l'écran allumé
-            </span>
-        </span>
-        <span
-            id="wakeLockStatus"
-            class="wake-lock-status">
-            Désactivé
-        </span>
-    </button>
-    <div class="wake-lock-description">
-        Empêche l'écran de l'iPhone de s'éteindre automatiquement
-        pendant votre séance de respiration.
-    </div>
-    <!-- =================================================
-         BOUTON PARAMÈTRES DE L'ALARME
+         PARAMÈTRES ALARME
     ================================================== -->
     <button
         id="alarmMenuButton"
@@ -862,9 +861,6 @@ body {
             ▼
         </span>
     </button>
-    <!-- =================================================
-         SOUS-MENU PARAMÈTRES ALARME
-    ================================================== -->
     <section
         id="alarmSettings"
         class="alarm-settings">
@@ -1004,10 +1000,122 @@ let alarmSound = 1;
 let alarmRepeatSeconds = 5;
 let alarmRepeatTimer = null;
 /* =========================================================
-   VARIABLES ÉCRAN ALLUMÉ
+   ÉCRAN TOUJOURS ALLUMÉ
 ========================================================= */
 let keepScreenOn = false;
 let wakeLock = null;
+/* =========================================================
+   ACTIVER LE WAKE LOCK
+========================================================= */
+async function requestWakeLock() {
+    if (
+        !("wakeLock" in navigator)
+    ) {
+        updateWakeLockDisplay();
+        return false;
+    }
+    try {
+        wakeLock =
+            await navigator.wakeLock.request(
+                "screen"
+            );
+        wakeLock.addEventListener(
+            "release",
+            () => {
+                wakeLock = null;
+                updateWakeLockDisplay();
+            }
+        );
+        updateWakeLockDisplay();
+        return true;
+    }
+    catch (error) {
+        console.log(
+            "Impossible de garder l'écran allumé",
+            error
+        );
+        wakeLock = null;
+        updateWakeLockDisplay();
+        return false;
+    }
+}
+/* =========================================================
+   LIBÉRER LE WAKE LOCK
+========================================================= */
+async function releaseWakeLock() {
+    if (wakeLock) {
+        try {
+            await wakeLock.release();
+        }
+        catch (error) {
+            console.log(
+                "Libération du Wake Lock impossible",
+                error
+            );
+        }
+        wakeLock = null;
+    }
+    updateWakeLockDisplay();
+}
+/* =========================================================
+   BOUTON ÉCRAN TOUJOURS ALLUMÉ
+========================================================= */
+async function toggleWakeLock() {
+    keepScreenOn =
+        !keepScreenOn;
+    saveSettings();
+    if (keepScreenOn) {
+        await requestWakeLock();
+    }
+    else {
+        await releaseWakeLock();
+    }
+    updateWakeLockDisplay();
+}
+/* =========================================================
+   AFFICHAGE WAKE LOCK
+========================================================= */
+function updateWakeLockDisplay() {
+    const button =
+        document.getElementById(
+            "wakeLockButton"
+        );
+    const status =
+        document.getElementById(
+            "wakeLockStatus"
+        );
+    if (!button || !status) {
+        return;
+    }
+    if (keepScreenOn) {
+        button.classList.add(
+            "active"
+        );
+        status.textContent =
+            "Activé";
+    }
+    else {
+        button.classList.remove(
+            "active"
+        );
+        status.textContent =
+            "Désactivé";
+    }
+}
+/* =========================================================
+   RÉACTIVER APRÈS RETOUR AU PREMIER PLAN
+========================================================= */
+document.addEventListener(
+    "visibilitychange",
+    async () => {
+        if (
+            document.visibilityState === "visible" &&
+            keepScreenOn
+        ) {
+            await requestWakeLock();
+        }
+    }
+);
 /* =========================================================
    AUDIO
 ========================================================= */
@@ -1025,109 +1133,6 @@ function createAudio() {
         audioContext.resume();
     }
 }
-/* =========================================================
-   MAINTIEN DE L'ÉCRAN ALLUMÉ
-========================================================= */
-async function requestWakeLock() {
-    if (!keepScreenOn) {
-        return;
-    }
-    if (!running) {
-        return;
-    }
-    if (
-        !("wakeLock" in navigator)
-    ) {
-        return;
-    }
-    try {
-        wakeLock =
-            await navigator.wakeLock.request(
-                "screen"
-            );
-        wakeLock.addEventListener(
-            "release",
-            () => {
-                wakeLock = null;
-                /*
-                   Si la séance continue, on tentera
-                   automatiquement de reprendre le Wake Lock
-                   lorsque la page redeviendra visible.
-                */
-            }
-        );
-    }
-    catch (error) {
-        console.log(
-            "Impossible de garder l'écran allumé",
-            error
-        );
-        wakeLock = null;
-    }
-}
-async function releaseWakeLock() {
-    if (!wakeLock) {
-        return;
-    }
-    try {
-        await wakeLock.release();
-    }
-    catch (error) {
-        console.log(
-            "Impossible de libérer le Wake Lock",
-            error
-        );
-    }
-    wakeLock = null;
-}
-async function toggleWakeLockSetting() {
-    keepScreenOn =
-        !keepScreenOn;
-    updateWakeLockDisplay();
-    saveSettings();
-    if (
-        keepScreenOn &&
-        running
-    ) {
-        await requestWakeLock();
-    }
-    else if (!keepScreenOn) {
-        await releaseWakeLock();
-    }
-}
-function updateWakeLockDisplay() {
-    const button =
-        document.getElementById(
-            "wakeLockButton"
-        );
-    const status =
-        document.getElementById(
-            "wakeLockStatus"
-        );
-    button.classList.toggle(
-        "enabled",
-        keepScreenOn
-    );
-    status.textContent =
-        keepScreenOn
-            ? "Activé"
-            : "Désactivé";
-}
-/* =========================================================
-   REPRISE APRÈS ARRIÈRE-PLAN
-========================================================= */
-document.addEventListener(
-    "visibilitychange",
-    () => {
-        if (
-            document.visibilityState === "visible" &&
-            running &&
-            keepScreenOn
-        ) {
-            requestWakeLock();
-        }
-    }
-);
 /* =========================================================
    TON SIMPLE
 ========================================================= */
@@ -1709,13 +1714,20 @@ function capitalize(text) {
 /* =========================================================
    DÉMARRER SESSION
 ========================================================= */
-async function startSession() {
+function startSession() {
     createAudio();
     if (
         audioContext &&
         audioContext.state === "suspended"
     ) {
         audioContext.resume();
+    }
+    /*
+       Si l'utilisateur a activé l'écran toujours allumé,
+       on demande le Wake Lock au moment où la session démarre.
+    */
+    if (keepScreenOn) {
+        requestWakeLock();
     }
     clearTimeout(
         alarmRepeatTimer
@@ -1736,14 +1748,6 @@ async function startSession() {
         "stopButton"
     ).style.display =
         "block";
-    /*
-       Activation du maintien de l'écran.
-       Seulement si l'utilisateur a activé
-       l'option.
-    */
-    if (keepScreenOn) {
-        await requestWakeLock();
-    }
     beginPhase();
     updateRemaining(
         sessionRemaining
@@ -1872,7 +1876,7 @@ function updateRemaining(
 /* =========================================================
    ARRÊTER SESSION
 ========================================================= */
-async function stopSession() {
+function stopSession() {
     running = false;
     clearInterval(
         phaseTimer
@@ -1884,7 +1888,6 @@ async function stopSession() {
         alarmRepeatTimer
     );
     alarmRepeatTimer = null;
-    await releaseWakeLock();
     const ring =
         document.getElementById(
             "breathingRing"
@@ -1918,7 +1921,7 @@ async function stopSession() {
 /* =========================================================
    FIN SESSION
 ========================================================= */
-async function finishSession() {
+function finishSession() {
     running = false;
     clearInterval(
         phaseTimer
@@ -1926,7 +1929,6 @@ async function finishSession() {
     clearInterval(
         sessionTimer
     );
-    await releaseWakeLock();
     document.getElementById(
         "phase"
     ).textContent =
