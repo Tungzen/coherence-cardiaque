@@ -788,6 +788,73 @@ body {
 
 }
 
+/* =========================================================
+   GARDER L'ÉCRAN ALLUMÉ
+========================================================= */
+
+.keep-awake-button {
+    width: 100%;
+
+    min-height: 51px;
+
+    border-radius: 15px;
+
+    border: 1px solid rgba(180,220,230,.13);
+
+    background: rgba(19,67,87,.90);
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    text-align: left;
+
+    padding: 0 17px;
+
+    margin-bottom: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.keep-awake-left {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.keep-awake-icon {
+    font-size: 21px;
+    color: #52b9ff;
+}
+
+.keep-awake-state {
+    font-size: 13px;
+
+    color: #8faab5;
+}
+
+.keep-awake-button.selected {
+    background: rgba(98,225,174,.18);
+}
+
+.keep-awake-button.selected .keep-awake-state {
+    color: #61dfa9;
+}
+
+.keep-awake-button.unavailable {
+    opacity: .55;
+
+    pointer-events: none;
+}
+
+.keep-awake-button:active {
+    transform: scale(.985);
+}
+
 </style>
 </head>
 
@@ -882,6 +949,37 @@ body {
             onclick="stopSession()">
 
             ■ &nbsp; Arrêter
+
+        </button>
+
+        <!-- =================================================
+             GARDER L'ÉCRAN ALLUMÉ
+        ================================================== -->
+
+        <button
+            id="keepAwakeButton"
+            class="keep-awake-button"
+            onclick="toggleKeepAwake()">
+
+            <span class="keep-awake-left">
+
+                <span class="keep-awake-icon">
+                    ⏻
+                </span>
+
+                <span>
+                    Garder l'écran allumé
+                </span>
+
+            </span>
+
+            <span
+                id="keepAwakeState"
+                class="keep-awake-state">
+
+                Désactivé
+
+            </span>
 
         </button>
 
@@ -1398,6 +1496,14 @@ let alarmSound = 1;
 let alarmRepeatSeconds = 5;
 
 let alarmRepeatTimer = null;
+
+/* =========================================================
+   VARIABLES ÉCRAN ALLUMÉ
+========================================================= */
+
+let keepAwakeEnabled = false;
+
+let wakeLock = null;
 
 /* =========================================================
    AUDIO
@@ -2282,6 +2388,8 @@ function startSession() {
 
     running = true;
 
+    requestWakeLock();
+
     sessionRemaining =
         durationMinutes * 60;
 
@@ -2484,6 +2592,8 @@ function stopSession() {
 
     running = false;
 
+    releaseWakeLock();
+
     clearInterval(
         phaseTimer
     );
@@ -2545,6 +2655,8 @@ function finishSession() {
 
     running = false;
 
+    releaseWakeLock();
+
     clearInterval(
         phaseTimer
     );
@@ -2592,6 +2704,150 @@ function finishSession() {
 }
 
 /* =========================================================
+   ÉCRAN ALLUMÉ — SUPPORT
+========================================================= */
+
+function isWakeLockSupported() {
+
+    return !!(
+        navigator.wakeLock &&
+        navigator.wakeLock.request
+    );
+
+}
+
+/* =========================================================
+   ÉCRAN ALLUMÉ — DEMANDER LE VERROU
+========================================================= */
+
+async function requestWakeLock() {
+
+    if (!keepAwakeEnabled) {
+        return;
+    }
+
+    if (!running) {
+        return;
+    }
+
+    if (!isWakeLockSupported()) {
+        return;
+    }
+
+    try {
+
+        wakeLock =
+            await navigator.wakeLock.request(
+                "screen"
+            );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Wake Lock impossible",
+            error
+        );
+
+    }
+
+}
+
+/* =========================================================
+   ÉCRAN ALLUMÉ — LIBÉRER LE VERROU
+========================================================= */
+
+function releaseWakeLock() {
+
+    if (wakeLock) {
+
+        wakeLock.release();
+
+        wakeLock = null;
+
+    }
+
+}
+
+/* =========================================================
+   ÉCRAN ALLUMÉ — BOUTON
+========================================================= */
+
+function toggleKeepAwake() {
+
+    if (!isWakeLockSupported()) {
+        return;
+    }
+
+    keepAwakeEnabled =
+        !keepAwakeEnabled;
+
+    updateKeepAwakeDisplay();
+
+    saveSettings();
+
+    if (
+        keepAwakeEnabled &&
+        running
+    ) {
+
+        requestWakeLock();
+
+    }
+
+    else {
+
+        releaseWakeLock();
+
+    }
+
+}
+
+/* =========================================================
+   ÉCRAN ALLUMÉ — AFFICHAGE
+========================================================= */
+
+function updateKeepAwakeDisplay() {
+
+    const button =
+        document.getElementById(
+            "keepAwakeButton"
+        );
+
+    const state =
+        document.getElementById(
+            "keepAwakeState"
+        );
+
+    if (!isWakeLockSupported()) {
+
+        button.classList.add(
+            "unavailable"
+        );
+
+        button.disabled = true;
+
+        state.textContent =
+            "Non disponible sur cet appareil";
+
+        return;
+
+    }
+
+    button.classList.toggle(
+        "selected",
+        keepAwakeEnabled
+    );
+
+    state.textContent =
+        keepAwakeEnabled
+            ? "Activé"
+            : "Désactivé";
+
+}
+
+/* =========================================================
    SAUVEGARDE DES PARAMÈTRES
 ========================================================= */
 
@@ -2620,7 +2876,10 @@ function saveSettings() {
                 alarmSound,
 
             alarmRepeatSeconds:
-                alarmRepeatSeconds
+                alarmRepeatSeconds,
+
+            keepAwakeEnabled:
+                keepAwakeEnabled
 
         };
 
@@ -2758,6 +3017,16 @@ function loadSettings() {
 
         }
 
+        if (
+            typeof settings.keepAwakeEnabled ===
+            "boolean"
+        ) {
+
+            keepAwakeEnabled =
+                settings.keepAwakeEnabled;
+
+        }
+
     }
 
     catch (error) {
@@ -2852,6 +3121,25 @@ updateDuration();
 updateSoundDisplay();
 
 updateAlarmDisplay();
+
+updateKeepAwakeDisplay();
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.visibilityState === "visible" &&
+            running &&
+            keepAwakeEnabled
+        ) {
+
+            requestWakeLock();
+
+        }
+
+    }
+);
 
 </script>
 
